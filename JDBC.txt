@@ -1,0 +1,110 @@
+JDBC connection 
+----------------
+1. Load the driver
+	Class.forName(oracle.jdbc.driver.OracleDriver);
+			OR
+	Driver orcldriver = new oracle.jdbc.driver.OracleDriver();
+	DriverManager.registerDriver(orclDriver);
+	
+2. Connection to a database
+
+		url format of oracle.jdbc.driver.OracleDriver -> jdbc:oracle:thin:@hostname:portnumber:databasename
+		
+		3 methods :
+			1. getConnection(String url);
+			2. getConnection(String url, Properties info); (info is a collection tag/value for username/passwords etc.)
+			3. getConnection(String url, String username, String Password);
+			
+		String url = "jdbc:oracle:thin:Mark/passwd@kecmachine:1521:edford";
+		Connection con = DriverManager.getConnection(url);
+					OR
+		String url = "jdbc:oracle:thin:@kecmachine:1521:edford";\
+		String user = "Mark";
+		String password = "passwd";
+		Connection conn = DriverManager.getConnection(url, user, password);
+		
+3. Executing SQL statements
+		1. creating Statemnt
+			
+				Statement stm = conn.createStatement();
+				ResultSet rs = stm.executeQuery("select * from course where type='online'");
+				
+		2. creating PreparedStatements
+				PreparedStatement ps = conn.prepareStatement("select * from course where type='online'");
+				ResultSet rs = ps.executeQuery();
+				
+		3. creating Callable Statements
+				CallableStatements cs = conn.prepareCall("{call registerStudent(?,?)}");\
+				cs.setInt(1, 1001);
+				cs.registerOutParameter(2, java.sql.Types.INTEGER);
+				cs.execute();
+				int rs = cs.getInt(2); (contains the result);
+				
+		4. process teh resultset
+		
+eg. 
+		import java.sql.Connection;
+		import java.sql.DriverManager;
+		import java.sql.PreparedStatement;
+		import java.sql.ResultSet;
+		import java.sql.SQLException;
+		
+		class StudentDAO{
+			public void getFaculty(int facultyId) throws SQLException{
+				Connection conn = null;
+				PreparedStatement ps = null;
+				ResultSet rs = null;
+				try{
+					// Loading and registering the driver
+					Class.forName(oracle.jdbc.driver.OracleDriver);
+					
+					// Create and get the connection
+					conn = DriverManager.getConnection("jdbc:oracle:thin:Mark/passwd@kecmachine:1521:edford");
+					
+					// Create the statement
+					ps.prepareStatement("select faculty_id, facu;ty_name from faculty where faculty_id=?");
+					
+					// Set the facultyId parameter
+					ps.setInt(1, facultyId);
+					
+					rs = ps.executeQuery();
+					
+					// Processing the result
+					while(rs.next()){
+						String fname = rs.getString("faculty_name");
+						System.out.println("Faculty ID is :"+facultyId);
+						System.out.println("Faculty name is :"+fname);
+					}
+				}
+				catch(ClassNotFoundException ce){
+					System/out.println("No suitable driver for DB found");
+					ce.printStackTrace();
+				}
+				catch(SQLException se){
+					System.out.println("SQL Exception occured");
+					se.printStackTrace();
+				}
+				finally{
+					if(ps != null)
+						ps.close();
+					if(conn != null)
+						conn.close();
+				}
+			}
+		}
+		
+eg. INSERT operations
+
+			PreparedStatement preStmt = conn.prepareStatement("Insert into Student values(?,?,?,?)")) {    // conn is the connection object
+ 
+			// Setting parameters
+			preStmt.setInt(1, 1001);
+			preStmt.setString(2, "John");
+			preStmt.setString(3, "Mysore");
+			preStmt.setLong(4, 9213456780l);
+			 
+			int rowsAffected = preStmt.executeUpdate();                // Executing the query
+			 
+			if(rowsAffected > 0){                                      // processing the result
+				System.out.println(rowsAffected + " rows inserted successfully");
+			}

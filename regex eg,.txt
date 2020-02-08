@@ -1,0 +1,501 @@
+--------------------------------
+1.  a regular expression to check if a text contains the substring http:// :
+
+	String text    =
+        "This is the text to be searched " +
+        "for occurrences of the http:// pattern.";
+
+	String regex = ".*http://.*";
+
+	boolean matches = Pattern.matches(regex, text);
+
+	System.out.println("matches = " + matches);
+--------------------------------
+2. uses the Matcher class to locate multiple occurrences of the substring "is" inside a text:
+
+	String text    =
+        "This is the text which is to be searched " +
+        "for occurrences of the word 'is'.";
+
+	String regex = "is";
+
+	Pattern pattern = Pattern.compile(regex);
+	Matcher matcher = pattern.matcher(text);
+
+	int count = 0;
+	while(matcher.find()) {
+    count++;
+    System.out.println("found: " + count + " : "
+            + matcher.start() + " - " + matcher.end());
+	}
+	
+OUTPUT :
+found: 1 : 2 - 4
+found: 2 : 5 - 7
+found: 3 : 23 - 25
+found: 4 : 70 - 72
+--------------------------------
+3. begining of a line
+
+	String text = "Line 1\nLine2\nLine3";
+
+	Pattern pattern = Pattern.compile("^");
+	Matcher matcher = pattern.matcher(text);
+
+	while(matcher.find()){
+    System.out.println("Found match at: "  + matcher.start() + " to " + matcher.end());
+	}
+	
+OUTPUT :
+Found match at: 0 to 0
+	
+	OR
+	
+	String text = "http://jenkov.com";
+
+	Pattern pattern = Pattern.compile("^http://");
+	Matcher matcher = pattern.matcher(text);
+
+	while(matcher.find()){
+    System.out.println("Found match at: "  + matcher.start() + " to " + matcher.end());
+	}
+	
+OUTPUT :
+Found match at: 0 to 7
+--------------------------------
+4. end of a line
+
+	String text = "http://jenkov.com";
+
+	Pattern pattern = Pattern.compile(".com$");
+	Matcher matcher = pattern.matcher(text);
+
+	while(matcher.find()){
+    System.out.println("Found match at: "  + matcher.start() + " to " + matcher.end());
+	}
+
+OUTPUT :
+Found match at: 13 to 17
+--------------------------------
+5. Word Boundary : lists all the locations where a word either starts or ends in the input string :As you can see, the indices of word beginnings point to the first character of the word, whereas endings of a word points to the first character after the word.
+
+	String text = "Mary had a little lamb";
+
+	Pattern pattern = Pattern.compile("\\b");
+	Matcher matcher = pattern.matcher(text);
+
+	while(matcher.find()){
+    System.out.println("Found match at: "  + matcher.start() + " to " + matcher.end());
+	}
+	
+OUTPUT :
+
+Found match at: 0 to 0
+Found match at: 4 to 4
+Found match at: 5 to 5
+Found match at: 8 to 8
+Found match at: 9 to 9
+Found match at: 10 to 10
+Found match at: 11 to 11
+Found match at: 17 to 17
+Found match at: 18 to 18
+Found match at: 22 to 22
+--------------------------------
+6. find all the locations where a word starts with the letter l (lowercase). In fact it will also find the ends of these matches, meaning the last character of the pattern, which is the lowercase l letter
+
+	String text = "Mary had a little lamb";
+
+	Pattern pattern = Pattern.compile("\\bl");
+	Matcher matcher = pattern.matcher(text);
+
+	while(matcher.find()){
+    System.out.println("Found match at: "  + matcher.start() + " to " + matcher.end());
+	}
+	
+OUTPUT :
+Found match at: 11 to 12
+Found match at: 18 to 19
+--------------------------------
+7. Non-Word Boundaries
+
+	String text = "Mary had a little lamb";
+
+	Pattern pattern = Pattern.compile("\\B");
+	Matcher matcher = pattern.matcher(text);
+
+	while(matcher.find()){
+    System.out.println("Found match at: "  + matcher.start() + " to " + matcher.end());
+	}
+	
+OUTPUT :
+
+Found match at: 1 to 1
+Found match at: 2 to 2
+Found match at: 3 to 3
+Found match at: 6 to 6
+Found match at: 7 to 7
+Found match at: 12 to 12
+Found match at: 13 to 13
+Found match at: 14 to 14
+Found match at: 15 to 15
+Found match at: 16 to 16
+Found match at: 19 to 19
+Found match at: 20 to 20
+Found match at: 21 to 21
+--------------------------------
+8. implicit and operator
+
+	String text = "Cindarella and Sleeping Beauty sat in a tree";
+
+	Pattern pattern = Pattern.compile("[Cc][Ii].*");
+	Matcher matcher = pattern.matcher(text);
+
+	System.out.println("matcher.matches() = " + matcher.matches());
+	
+OUTPUT :
+matcher.matches() = true
+	
+OR operator
+
+	String text = "Cindarella and Sleeping Beauty sat in a tree";
+
+	Pattern pattern = Pattern.compile(".*Ariel.*|.*Sleeping Beauty.*");
+	Matcher matcher = pattern.matcher(text);
+
+	System.out.println("matcher.matches() = " + matcher.matches());
+	
+OUTPUT :
+matcher.matches() = true
+--------------------------------
+9. 
+	import java.util.regex.Pattern;
+
+	public class PatternMatchesExample {
+
+		public static void main(String[] args) {
+
+			String text    =
+				"This is the text to be searched " +
+				"for occurrences of the pattern.";
+
+			String pattern = ".*is.*";
+
+			boolean matches = Pattern.matches(pattern, text);
+
+			System.out.println("matches = " + matches);
+		}
+	}
+
+OUTPUT :
+matches = true	
+--------	
+If you need to match for multiple occurrences, and even access the various matches, or just need non-default settings, you need to compile a Pattern instance using the Pattern.compile() method.
+
+	import java.util.regex.Pattern;
+
+	public class PatternCompileExample {
+		public static void main(String[] args) {
+
+			String text    =
+					"This is the text to be searched " +
+					"for occurrences of the http:// pattern.";
+
+			String patternString = ".*http://.*";
+
+			Pattern pattern = Pattern.compile(patternString);
+		}
+	}
+--------	
+pattern matching with special flags :
+	Pattern pattern = Pattern.compile(patternString, Pattern.CASE_INSENSITIVE);
+--------		
+	import java.util.regex.Pattern;
+	import java.util.regex.Matcher;
+
+	public class PatternMatcherExample {
+		public static void main(String[] args) {
+
+			String text    =
+				"This is the text to be searched " +
+				"for occurrences of the http:// pattern.";
+
+			String patternString = ".*http://.*";
+
+			Pattern pattern = Pattern.compile(patternString, Pattern.CASE_INSENSITIVE);
+
+			Matcher matcher = pattern.matcher(text);
+
+			boolean matches = matcher.matches();
+
+			System.out.println("matches = " + matches);
+		}
+	}
+
+OUTPUT :
+matches = true
+--------
+	import java.util.regex.Pattern;
+
+	public class PatternSplitExample {
+
+		public static void main(String[] args) {
+    
+			String text = "A sep Text sep With sep Many sep Separators";
+        
+			String patternString = "sep";
+			Pattern pattern = Pattern.compile(patternString);
+        
+			String[] split = pattern.split(text);
+        
+			System.out.println("split.length = " + split.length);
+        
+			for(String element : split){
+				System.out.println("element = " + element);
+			}
+		}
+	}
+	
+OUTPUT :
+split.length = 5
+element = A 
+element =  Text 
+element =  With 
+element =  Many 
+element =  Separators
+--------
+	import java.util.regex.Pattern;
+
+	public class PatternPatternExample {
+
+		public static void main(String[] args) {
+    
+			String patternString = "sep";
+			Pattern pattern = Pattern.compile(patternString);
+        
+			String pattern2 = pattern.pattern();
+		}
+	}
+
+--------
+	
+	import java.util.regex.Pattern;
+	import java.util.regex.Matcher;
+
+	public class MatcherFindStartEndExample {
+
+		public static void main(String[] args) {
+
+			String text    =
+					"This is the text which is to be searched " +
+					"for occurrences of the word 'is'.";
+
+			String patternString = "is";
+
+			Pattern pattern = Pattern.compile(patternString);
+			Matcher matcher = pattern.matcher(text);
+
+			int count = 0;
+			while(matcher.find()) {
+				count++;
+				System.out.println("found: " + count + " : "
+						+ matcher.start() + " - " + matcher.end());
+			}
+		}
+	}
+
+OUTPUT :
+found: 1 : 2 - 4
+found: 2 : 5 - 7
+found: 3 : 23 - 25
+found: 4 : 70 - 72
+--------
+group() : This example searches the text for occurrences of the word John. For each match found, group number 1 is extracted, which is what matched the group marked with parentheses.
+	
+	import java.util.regex.Pattern;
+	import java.util.regex.Matcher;
+
+	public class MatcherGroupExample {
+
+		public static void main(String[] args) {
+
+			String text    =
+					"John writes about this, and John writes about that," +
+							" and John writes about everything. "
+					;
+
+			String patternString1 = "(John)";
+
+			Pattern pattern = Pattern.compile(patternString1);
+			Matcher matcher = pattern.matcher(text);
+
+			while(matcher.find()) {
+				System.out.println("found: " + matcher.group(1));
+			}
+		}
+	}
+
+OUTPUT :
+found: John
+found: John
+found: John
+--------
+Multiple Groups :
+
+	import java.util.regex.Pattern;
+	import java.util.regex.Matcher;
+
+	public class MatcherGroupExample {
+
+		public static void main(String[] args) {
+
+			String text    =
+					"John writes about this, and John Doe writes about that," +
+							" and John Wayne writes about everything."
+					;
+
+			String patternString1 = "(John) (.+?) ";
+
+			Pattern pattern = Pattern.compile(patternString1);
+			Matcher matcher = pattern.matcher(text);
+
+			while(matcher.find()) {
+				System.out.println("found: " + matcher.group(1) +
+								" "       + matcher.group(2));
+			}
+		}
+	}
+	
+OUTPUT :
+found: John writes
+found: John Doe
+found: John Wayne	
+--------
+	import java.util.regex.Pattern;
+	import java.util.regex.Matcher;
+
+	public class MatcherGroupsExample {
+
+		public static void main(String[] args) {
+
+			String text    =
+					"John writes about this, and John Doe writes about that," +
+							" and John Wayne writes about everything."
+					;
+
+			String patternString1 = "((John) (.+?)) ";
+
+			Pattern pattern = Pattern.compile(patternString1);
+			Matcher matcher = pattern.matcher(text);
+
+			while(matcher.find()) {
+				System.out.println("found: <"  + matcher.group(1) +
+								"> <"       + matcher.group(2) +
+								"> <"       + matcher.group(3) + ">");
+			}
+		}
+	}
+	
+OUTPUT :
+found: <John writes> <John> <writes>
+found: <John Doe> <John> <Doe>
+found: <John Wayne> <John> <Wayne>
+--------
+replaceAll() + replaceFirst() :
+	
+	import java.util.regex.Pattern;
+	import java.util.regex.Matcher;
+
+	public class MatcherReplaceExample {
+
+		public static void main(String[] args) {
+
+			String text    =
+					"John writes about this, and John Doe writes about that," +
+							" and John Wayne writes about everything."
+					;
+
+			String patternString1 = "((John) (.+?)) ";
+
+			Pattern pattern = Pattern.compile(patternString1);
+			Matcher matcher = pattern.matcher(text);
+
+			String replaceAll = matcher.replaceAll("Joe Blocks ");
+			System.out.println("replaceAll   = " + replaceAll);
+
+			String replaceFirst = matcher.replaceFirst("Joe Blocks ");
+			System.out.println("replaceFirst = " + replaceFirst);
+		}
+	}
+
+OUTPUT :
+replaceAll   = Joe Blocks about this, and Joe Blocks writes about that,
+    and Joe Blocks writes about everything.
+replaceFirst = Joe Blocks about this, and John Doe writes about that,
+    and John Wayne writes about everything.
+--------
+appendReplacement() + appendTail() :
+	
+	import java.util.regex.Pattern;
+	import java.util.regex.Matcher;
+
+	public class MatcherReplaceExample {
+
+		public static void main(String[] args) {
+
+			String text    =
+					"John writes about this, and John Doe writes about that," +
+							" and John Wayne writes about everything."
+					;
+
+			String patternString1 = "((John) (.+?)) ";
+
+			Pattern      pattern      = Pattern.compile(patternString1);
+			Matcher      matcher      = pattern.matcher(text);
+			StringBuffer stringBuffer = new StringBuffer();
+
+			while(matcher.find()){
+				matcher.appendReplacement(stringBuffer, "Joe Blocks ");
+				System.out.println(stringBuffer.toString());
+			}
+			matcher.appendTail(stringBuffer);
+
+			System.out.println(stringBuffer.toString());
+		}
+	}
+	
+OUTPUT :
+Joe Blocks 
+Joe Blocks about this, and Joe Blocks 
+Joe Blocks about this, and Joe Blocks writes about that, and Joe Blocks 
+Joe Blocks about this, and Joe Blocks writes about that, and Joe Blocks writes about everything.
+--------------------------------
+10. lookingAt() : The Matcher lookingAt() method works like the matches() method with one major difference. The lookingAt() method only matches the regular expression against the beginning of the text, whereas matches() matches the regular expression against the whole text. In other words, if the regular expression matches the beginning of a text but not the whole text, lookingAt() will return true, whereas matches() will return false.
+
+	import java.util.regex.Pattern;
+	import java.util.regex.Matcher;
+
+	public class CreateMatcherExample {
+
+		public static void main(String[] args) {
+
+			String text    =
+					"This is the text to be searched " +
+					"for occurrences of the http:// pattern.";
+
+			String patternString = "This is the";
+
+			Pattern pattern = Pattern.compile(patternString, Pattern.CASE_INSENSITIVE);
+			Matcher matcher = pattern.matcher(text);
+
+			System.out.println("lookingAt = " + matcher.lookingAt());
+			System.out.println("matches   = " + matcher.matches());
+		}
+	}
+	
+OUTPUT :
+true
+false
+--------------------------------
+11. 
+--------------------------------
+--------------------------------
