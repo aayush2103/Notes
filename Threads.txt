@@ -1,0 +1,169 @@
+-------------------------------
+			THREADS
+-------------------------------
+--  Thread creation can happen in two ways :
+		1. extending the Thread class from java.lang package :
+			> Write a class that extends Thread class
+			> override/redefine the run method of thread class to define operations that need to be performed by the Thread
+			> create instance of subclass of Thread and start invoking start method.
+			
+			class UploadResult extends Thread{
+				@Override
+				public void run(){
+					//Thread implementation
+				}
+			}
+			class Test{
+				public static void main(String[] args){
+					UploadResult uploadThread = new UploadResult();
+					uploadThread.start();
+				}
+			}
+			
+			- the start() method begins the thread execution after which the JVM invokes its run() method.
+			
+		2. implementing the Runnable interface from java.lang.Runnable :
+			> write a class that implements the Runnable interface
+			> Implement the run method to define the operations to be performed by the Thread
+			> Create instances of Thread class by passing the instance of the class that implements the Runnable interface. Then invoke the start method.
+			
+			class UploadResult implements Runnable{
+				@Override
+				public void run(){
+					//Thread implementation
+				}
+			}
+			class Test{
+				public static void main(String[] args){
+					UploadResult uploadRunable = new UploadResult();
+					Thread threadObj = new Thread(uploadRunable);
+					threadObj.start();
+				}
+			}
+	
+--  Methods in Thread :
+		> void start() - begins the thread's execution. JVM invokes the run() method.
+		> void run() - contains the code which needs to be executed by the thread.
+		> void sleep(int duration) - for the specified milliseconds of duration, it suspends the execution of the thread.
+		> void yield() - pauses the execution of the thread temporarily and allows other threads with same priority to start their execution/continue.
+		> void join() - waits for the Thread to die.
+		> void isAlive() - returns whether the Thread is alive or not.
+
+--  Thread Lifecycle :
+		> New
+		> Runnable
+		> Running
+		> Non-Runnable (sleeping, waiting, blocked)
+		> Dead
+		
+	Flow :
+		> thread object created 
+			> [NEWBORN] > start() 
+				> [RUNNABLE] > schedule and being run by a processor 
+					> [RUNNING] 
+						> yield() or end of time slice > [RUNNABLE]
+						> wait() (when this thread needs a resource used by another thread)
+							> [WAITING](NON-RUNNABLE) > notify(), notifyAll() (when resource becomes available)> [RUNNABLE] 
+						> sleep() (if thread needs to pause for a certain time)
+							> [SLEEPING] (NON-RUNNABLE) > sleep interval expires > [RUNNABLE]
+						> I/O request
+							> [BLOCKED] (NON-RUNNABLE) > I/O completion > [RUNNABLE]
+				> run() returns   (when all the operations are complete, thread terminates )
+					> [DEAD]
+					
+--  Thread Scheduling and Priority
+		
+	Scheduler uses 2 techniques :
+		> PREEMPTIVE - thread with higher priority preempts the thread with lower priority and grabs/avails the CPU
+		> TIME SLICED - also named as round robin scheduling which makes each thread get some time of the CPU.
+		
+	- Java runtime system - preemptive, but depends on the implementation
+	- Solaris - preemptive
+	- Windows and Macintosh - time sliced
+	
+	- priority can be set for a thread using "setPriority()" method just before starting the thread
+	- "getPriority()" method will return the priority of the thread on which it is invoked
+	
+	- Priority of the thread varies from Thread.MIN_PRIORITY to Thread.MAX_PRIORITY i.e. from 1 to 10 having 5 as a default priority, 
+		Thread.NORM_PRIORITY.
+		
+--  SYNCHRONIZATION :
+
+	- In a multithreaded environment, two or more threads may access a thread resource. Synchronization is used to ensure that only one thread can
+		access the sharerd resource at a time.
+	- Every object has a built in mutually exclusive lock called "monitor". Only one thread can acquire the monitor on an object at a time.
+		On Synchronization a thread obtains the lock to an object, and other threads wait until the lock is released.
+	- "synchronized" keyword can be used only with a method or a block of code.
+			//Method
+			public synchronized void myMethod(){
+				//Code
+			}
+			
+			OR
+			//Block of code
+			synchronized(this or object){
+				//Code
+			}
+		
+--  INTER-THREAD COMMUNICATION :
+	
+	- mechanism which allows the communication to happen among the synchronized threads. It helps the thread to release lock or monitor on an object
+	  for other threads. Can be possible with the help of methods : 
+		> notify() - the single thread which is waiting on this object's monitor will be notified to resume.
+		> notifyAll() - all threads which are waiting on this object's monitor wil be resumed.
+		> wait() - moves current thread to wait until another thread invokes the notifyAll() or notify() method for this object.
+		> wait(long timeout) - makes current thread to wait until either a specified time has elapsed or another thread invokes the notifyAll() or 
+		  notify() method for this object.
+		 
+--	THREAD-GROUPS :
+	
+	- when many threads perform similar tasks, its easier to manage them when grouped together. 
+	- ThreadGroups can be formed using the ThreadGroup class. It represents a group of threads and grants a single-point of control on the same.
+	- Constructors :
+		> ThreadGroup(String name) - with the given name it creates a new thread group.
+		> ThreadGroup(ThreadGroup parent, String name) - Under the given parent group, it creates a thread group with the name given.
+		
+	- Methods :
+		> int activeCount() - in the current group, the no. of threads running will be returned.
+		> void destroy() - thread group and all its sub-groups will be destroyed.
+		> ThreadGroup getParent() - the parent group of this group will be returned.
+		> void list() - prints information about this grouop in standard console.
+		> int activeGroupCount() - returns the no. of active groups in this thread group.
+		> String getName() - the group name will be returned.
+		> void interrupt() - all threads of this group will be interrupted.
+		
+--	DAEMON THREADS :
+
+	- these are the threads which run in the background and serves other threads.
+	- a program won't wait for a daemon thread to complete execution.
+	- it can be created by calling the setDaemon(true) method before calling its start() method. check can be performed by isDaemon() methos.
+	- eg, - garbage Collector
+	- if setDaemon(true) called after start() method, throws a runtime exception of "IllegalThreadStateException".
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		

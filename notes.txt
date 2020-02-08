@@ -1,0 +1,58 @@
+Java oracle tutorial : https://docs.oracle.com/javase/tutorial/java/TOC.html
+XML tutorial : https://www.w3schools.com/xml/xml_xquery.asp
+XML charsets : https://www.w3schools.com/charsets/default.asp
+Maven documentation : https://maven.apache.org/ 
+Maven Settings : https://maven.apache.org/ref/3.6.1/maven-settings/settings.html
+Maven Profile : https://maven.apache.org/ref/2.2.1/maven-profile/profiles.html
+Lex : https://lex.infosysapps.com/viewer/lex_auth_01257769063253606458/lex_28450346353764463000
+hackerrank solutions : https://github.com/RodneyShag/HackerRank_solutions
+recursion (solving a maze) : https://www.cs.bu.edu/teaching/alg/maze/
+Kadane's algorithm : largest sum subarray
+Regex, Pattern, Matcher : http://tutorials.jenkov.com/java-regex/index.html
+OuterClass Accessing Private : https://stackoverflow.com/questions/1801718/why-can-outer-java-classes-access-inner-class-private-members
+class : https://docs.oracle.com/javase/tutorial/reflect/class/classNew.html
+Automatic Resource Management (ARM) : try-with-resource
+Locality of Reference : https://en.wikipedia.org/wiki/Locality_of_reference
+JMS : https://howtodoinjava.com/jms/jms-java-message-service-tutorial/
+Servlet : https://www.javatpoint.com/servlet-tutorial
+-------------------
+CLASSES
+-------------------
+regex.Matcher
+regex.Pattern
+PriorityQueue : https://docs.oracle.com/javase/7/docs/api/java/util/PriorityQueue.html
+Comparator
+Deque
+BitSet
+BigDecimal, BigInteger
+Threads
+Runnable
+ExecutorService
+Executors
+-------------------
+NOTES
+-------------------
+-- CMS - Content Management System
+-- comparator initialization for comparing students based on order
+	> highest cgpa > case-sensitive name > ascending id
+	Comparator.comparing(Student::getCgpa).reversed()
+		.thenComparing(Student::getName)
+		.thenComparing(Student::getId))
+
+-- check for method overload
+	for (Method method : Printer.class.getDeclaredMethods()) {
+            String name = method.getName();
+
+            if(name.equals("printArray"))
+                count++;
+        }
+
+        if(count > 1)System.out.println("Method overloading is not allowed!");
+
+-- 
+-------------------
+OO PRINCIPLES
+-------------------
+-- Encapsulate what varies
+-- Code to an interface rather than an implementation
+-- Each class in your application should have only one reason to change

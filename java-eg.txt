@@ -1,0 +1,1594 @@
+1.printf()
+	// A Java program to demonstrate working of printf() in Java 
+class JavaFormatter1 
+{ 
+  public static void main(String args[]) 
+  { 
+    int x = 100; 
+    System.out.printf("Printing simple integer: x = %d\n", x); 
+  
+    // this will print it upto 2 decimal places 
+    System.out.printf("Formatted with precison: PI = %.2f\n", Math.PI); 
+  
+    float n = 5.2f; 
+  
+    // automatically appends zero to the rightmost part of decimal 
+    System.out.printf("Formatted to specific width: n = %.4f\n", n); 
+  
+    n = 2324435.3f; 
+  
+    // here number is formatted from right margin and occupies a 
+    // width of 20 characters 
+    System.out.printf("Formatted to right margin: n = %20.4f\n", n); 
+  } 
+} 
+
+OUTPUT
+Printing simple integer: x = 100
+Formatted with precison: PI = 3.14
+Formatted to specific width: n = 5.2000
+Formatted to right margin: n =         2324435.2500
+---------------------------
+2. DecimatFormat
+
+// Java program to demonstrate working of DecimalFormat 
+import java.text.DecimalFormat; 
+  
+class JavaFormatter2 
+{ 
+  public static void main(String args[]) 
+  { 
+    double num = 123.4567; 
+  
+    // prints only numeric part of a floating number 
+    DecimalFormat ft = new DecimalFormat("####"); 
+    System.out.println("Without fraction part: num = " + ft.format(num)); 
+  
+    // this will print it upto 2 decimal places 
+    ft = new DecimalFormat("#.##"); 
+    System.out.println("Formatted to Give precison: num = " + ft.format(num)); 
+  
+    // automatically appends zero to the rightmost part of decimal 
+    // instead of #,we use digit 0 
+    ft = new DecimalFormat("#.000000"); 
+    System.out.println("appended zeroes to right: num = " + ft.format(num)); 
+  
+    // automatically appends zero to the leftmost of decimal number 
+    // instead of #,we use digit 0 
+    ft = new DecimalFormat("00000.00"); 
+    System.out.println("formatting Numeric part : num = "+ft.format(num)); 
+  
+    // formatting money in dollars 
+    double income = 23456.789; 
+    ft = new DecimalFormat("$###,###.##"); 
+    System.out.println("your Formatted Dream Income : " + ft.format(income)); 
+  } 
+} 
+
+OUTPUT
+Without fraction part: num = 123
+Formatted to Give precison: num = 123.46
+appended zeroes to right: num = 123.456700
+formatting Numeric part : num = 00123.46
+your Formatted Dream Income : $23,456.79
+-----------------
+3. SimpleDatetFormat
+
+// Java program to demonstrate working of SimpleDateFormat 
+import java.text.ParseException; 
+import java.text.SimpleDateFormat; 
+import java.util.Date; 
+  
+class Formatter3 
+{ 
+  public static void main(String args[]) throws ParseException 
+  { 
+    // Formatting as per given pattern in the argument 
+    SimpleDateFormat ft = new SimpleDateFormat("dd-MM-yyyy"); 
+    String str = ft.format(new Date()); 
+    System.out.println("Formatted Date : " + str); 
+  
+    // parsing a given String 
+    str = "02/18/1995"; 
+    ft = new SimpleDateFormat("MM/dd/yyyy"); 
+    Date date = ft.parse(str); 
+  
+    // this will print the date as per parsed string 
+    System.out.println("Parsed Date : " + date); 
+  } 
+} 
+
+OUTPUT
+Formatted Date : 09-08-2018
+Parsed Date : Sat Feb 18 00:00:00 UTC 1995
+-------------------
+4.internal code to find name of day of a date
+
+public class demo1 {
+	public static String findDay(int month, int day, int year) {
+		long total=day;
+		for(int i=1;i<year;i++) {
+			if(leap(i))
+				total+=366;
+			else
+				total+=365;
+		}
+		for(int i=1;i<month;i++) {
+			if(i==1 || i==3 || i==5 || i==7 || i==8 || i==10 || i==12)
+				total+=31;				
+			else if(i==2) {
+				if(leap(year))	total+=29;
+				else	total+=28;
+			}
+			else
+				total+=30;
+		}
+		int a=(int)total%7;
+		String str=(a==1)?"MONDAY":(a==2)?"TUESDAY":(a==3)?"WEDNESDAY":						(a==4)?"THURSDAY":(a==5)?"FRIDAY":(a==6)?"SATURDAY":"SUNDAY";
+		return str;
+	}
+	public static boolean leap(int year) {
+		if((year%4==0 && year%100!=0) || year%400==0)
+			return true;
+		return false;
+	}
+	
+	public static void main(String args[]) {
+	   String res=findDay(1,16,2019);
+	   System.out.println(res);
+	}
+}
+OUTPUT
+WEDNESDAY
+------------
+5. arranging array of strings in a dictionary format(lexicographically)
+
+public class demo1 {
+	
+	public static void main(String args[]) {
+	   String str="welcometojava";
+	   int k=3;
+	   String[] arr = new String[str.length()-k+1];
+	   for(int i=0;i<str.length()-k+1;i++) {
+		   arr[i]=str.substring(i,i+k);
+	   }
+	   String temp="";
+	   for(int i=0;i<arr.length;i++) {
+		   for(int j=0;j<arr.length-1;j++) {
+			   if(arr[j].compareTo(arr[j+1])>0) {
+				   temp=arr[j];
+				   arr[j]=arr[j+1];
+				   arr[j+1]=temp;
+			   }
+		   }
+	   }
+	   for(String s:arr)
+		   System.out.print(s+" ");
+	}
+}
+OUTPUT
+arr : wel elc lco com ome met eto toj oja jav ava
+sorted: ava com elc eto jav lco met oja ome toj wel
+------------
+6. java-string-tokens-English.pdf
+
+import java.io.*;
+import java.util.*;
+
+public class Solution {
+
+    public static void main(String[] args) {
+        Scanner scan = new Scanner(System.in);
+            String str = scan.nextLine();
+            // Write your code here.
+            scan.close();
+            str=str.trim();
+            if(str.equals(""))
+                System.out.println(0);
+            else {
+                String[] tokens=str.split("[ ?!.,'_@]+");
+                System.out.println(tokens.length);
+                for(String s:tokens)
+                    System.out.println(s);
+            }
+    }
+}
+
+INPUT
+He is a very very good boy, isn't he?
+
+OUTPUT
+10
+He
+is
+a
+very
+very
+good
+boy
+isn
+t
+he
+------------
+7. IP address validator
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import java.util.Scanner;
+
+public class pattern1 {
+	 public static void main(String[] args){
+	        Scanner in = new Scanner(System.in);
+	        while(in.hasNext()){
+	            String IP = in.next();
+	            System.out.println(IP.matches(new MyRegex().pattern));
+	        }
+
+	    }
+}
+class MyRegex{
+	String pat="(\\d{1,2}|(0|1)\\d{2}|2[0-4]\\d|25[0-5])";
+	public String pattern=pat+"."+pat+"."+pat+"."+pat;
+}
+------------
+8. tag-content-extractor.pdf
+
+import java.util.*;
+import java.util.regex.Pattern;
+import java.util.regex.Matcher;
+
+public class Solution{
+	public static void main(String[] args){
+		
+		Scanner in = new Scanner(System.in);
+		int testCases = Integer.parseInt(in.nextLine());
+		while(testCases>0){
+			String line = in.nextLine();
+			
+          	//Write your code here
+			
+            boolean flag=false;
+            Pattern p=Pattern.compile("<(.+)>([^<]+)</\\1>");
+            Matcher m=p.matcher(line);
+            
+            while(m.find()) {
+                System.out.println(m.group(2));
+                flag=true;
+            }
+            if(!flag) {
+                System.out.println("None");
+            }
+			testCases--;
+		}
+	}
+}
+
+INPUT : 
+	4
+	<h1>Nayeem loves counseling</h1>
+	<h1><h1>Sanjay has no watch</h1></h1><par>So wait for a while</par>
+	<Amee>safat codes like a ninja</amee>
+	<SA premium>Imtiaz has a secret crush</SA premium>
+
+OUTPUT :
+	Nayeem loves counseling
+	Sanjay has no watch
+	So wait for a while
+	None
+	Imtiaz has a secret crush
+------------
+9. java-priority-queue.pdf
+
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.Iterator;
+import java.util.List;
+import java.util.PriorityQueue;
+import java.util.Scanner;
+
+public class priorityQ {
+
+	private final static Scanner scan = new Scanner(System.in);
+    private final static Priorities priorities = new Priorities();
+    
+    public static void main(String[] args) {
+        int totalEvents = Integer.parseInt(scan.nextLine());    
+        List<String> events = new ArrayList<>();
+        
+        while (totalEvents-- != 0) {
+            String event = scan.nextLine();
+            events.add(event);
+        }
+        
+        List<Student> students = priorities.getStudents(events);
+        
+        if (students.isEmpty()) {
+            System.out.println("EMPTY");
+        } else {
+            for (Student st: students) {
+                System.out.println(st.getName());
+            }
+        }
+    }
+}
+
+class Priorities{
+	public List<Student> getStudents(List<String> events){
+		PriorityQueue<Student> pq=new PriorityQueue(events.size(), 
+			Comparator.comparing(Student::getCgpa).reversed()
+						.thenComparing(Student::getName)
+						.thenComparing(Student::getId));
+		
+		for(String event : events) {
+			if(event.contains("ENTER")) {
+				String[] values=event.split(" ");
+				Student stu=new Student(Integer.parseInt(values[3]), values[1], Double.parseDouble(values[2]));
+				pq.add(stu);
+			}
+			else if(event.contains("SERVED"))
+				pq.poll();
+		}
+		List<Student> list=new ArrayList<Student>();
+		Iterator it=pq.iterator();
+		
+		while(it.hasNext())
+			list.add(pq.poll());
+		
+		return list;
+	}
+}
+
+class Student{
+	
+	private int id;
+	private String name;
+	private double cgpa;
+	
+	public Student(int id, String name, double cgpa) {
+		this.id=id;
+		this.name=name;
+		this.cgpa=cgpa;
+	}
+	
+	public int getId() {
+		return this.id;
+	}
+	public String getName() {
+		return this.name;
+	}
+	public double getCgpa() {
+		return this.cgpa;
+	}
+}
+
+INPUT:
+12
+ENTER John 3.75 50
+ENTER Mark 3.8 24
+ENTER Shafaet 3.7 35
+SERVED
+SERVED
+ENTER Samiha 3.85 36
+SERVED
+ENTER Ashley 3.9 42
+ENTER Maria 3.6 46
+ENTER Anik 3.95 49
+ENTER Dan 3.95 50
+SERVED
+
+OUTPUT:
+Dan
+Ashley
+Shafaet
+Maria
+------------
+10. java-arrayList.pdf 
+
+import java.io.*;
+import java.util.*;
+
+public class arraylist {
+	
+	public static void main(String[] args) {
+        /* Enter your code here. Read input from STDIN. Print output to STDOUT.*/
+		Scanner scan=new Scanner(System.in);
+		int n=Integer.parseInt(scan.nextLine());
+		List<String[]> list=new ArrayList<>(n);
+		for(int i=0;i<n;i++) {
+			list.add(scan.nextLine().split(" "));
+		}
+		int q=Integer.parseInt(scan.nextLine());
+
+		for(int i=0;i<q;i++) {
+			String[] str=scan.nextLine().split(" ");
+			int a=Integer.parseInt(str[0]);
+			int b=Integer.parseInt(str[1]);
+			try {
+				String[] values=list.get(a-1);
+				System.out.println(values[b]);
+			}
+			catch(Exception e) {
+				System.out.println("ERROR!");
+			}
+			
+		}
+    }
+}
+
+INPUT :
+5					
+5 41 77 74 22 44
+1 12
+4 37 34 36 52
+0
+3 20 22 33
+5
+1 3
+3 4
+3 1
+4 3
+5 5
+
+OUTPUT :
+74
+52
+37
+ERROR!
+ERROR!
+
+//other solution :
+
+import java.util.*;
+
+public class Solution {
+    public static void main(String[] args) {
+        Scanner in = new Scanner(System.in);
+        int n = in.nextInt();
+        ArrayList<ArrayList<Integer>> rows = new ArrayList<>();
+        
+        for (int i = 0; i < n; i++) {
+            int d = in.nextInt();
+            ArrayList<Integer> row = new ArrayList<>();
+            
+            for (int j = 0; j < d; j++) {
+                row.add(in.nextInt());
+            }
+            
+            rows.add(row);
+        }
+        
+        int q = in.nextInt();
+        
+        for (int i = 0; i < q; i++) {
+            int x = in.nextInt();
+            int y = in.nextInt();
+            
+            try {
+                System.out.println(rows.get(x - 1).get(y - 1));
+            } catch (IndexOutOfBoundsException e) {
+                System.out.println("ERROR!");
+            }
+        }
+    }
+}
+------------
+11. java-1d-array.pdf
+
+import java.util.*;
+
+public class Solution {
+
+    public static boolean canWin(int leap, int[] game) {
+        // Return true if you can win the game; otherwise, return false.
+        
+        return isSolvable(leap, game, 0);
+    }
+    public static boolean isSolvable(int leap, int[] game, int i) {
+        if(i<0 || game[i]==1)
+            return false;
+        if((i+leap>=game.length) || (i+1)>=game.length)
+            return true;
+        
+        game[i]=1;
+        
+        return isSolvable(leap, game, i+1) || 
+               isSolvable(leap, game, i-1) ||
+               isSolvable(leap, game, i+leap);
+    }
+
+    public static void main(String[] args) {
+        Scanner scan = new Scanner(System.in);
+        int q = scan.nextInt();
+        while (q-- > 0) {
+            int n = scan.nextInt();
+            int leap = scan.nextInt();
+            
+            int[] game = new int[n];
+            for (int i = 0; i < n; i++) {
+                game[i] = scan.nextInt();
+            }
+
+            System.out.println( (canWin(leap, game)) ? "YES" : "NO" );
+        }
+        scan.close();
+    }
+}
+
+INPUT :
+4
+5 3
+0 0 0 0 0
+6 5
+0 0 0 1 1 1
+6 3
+0 0 1 1 1 0
+3 1
+0 1 0
+
+OUTPUT :
+YES
+YES
+NO
+NO
+------------
+12. List
+
+import java.io.*;
+import java.util.*;
+
+public class javaList {
+
+	public static void main(String[] args) {
+		/* Enter your code here. Read input from STDIN. Print output to STDOUT. Your class should be named Solution. */
+		Scanner scan=new Scanner(System.in);
+		List<Integer> list=new ArrayList<>();
+		int n=scan.nextInt();
+		for(int i=0;i<n;i++) {
+			list.add(scan.nextInt());
+		}
+		int x,y;
+		String op;
+		int q=scan.nextInt();
+		for(int i=0;i<q;i++) {
+			//scan.nextLine();
+			op=scan.next();//op=scan.nextLine();
+			if(op.equals("Insert")) {
+				x=scan.nextInt();
+				y=scan.nextInt();
+				list.add(x,y);
+			}
+			else if(op.equals("Delete")) {
+				x=scan.nextInt();
+				list.remove(x);
+			}
+		}
+		for(Integer i : list) {
+			System.out.print(i+" ");
+		}
+		scan.close();
+	}
+}
+
+INPUT :
+5
+12 0 1 78 12
+2
+Insert
+5 23
+Delete
+0
+
+OUTPUT :
+0 1 78 12 23
+------------
+13. Map 
+
+import java.util.*;
+import java.io.*;
+
+public class javaMap {
+
+	public static void main(String[] args) {
+		
+		Scanner in = new Scanner(System.in);
+		Map<String, Integer> dir=new HashMap<>();
+		int n=in.nextInt();
+		for(int i=0;i<n;i++)
+		{
+			in.nextLine();
+			dir.put(in.nextLine(), in.nextInt());
+		}
+		String s="";
+		in.nextLine();
+		while(in.hasNext())
+		{
+			s=in.nextLine();
+			Integer num=dir.get(s);
+			if(num!=null) 
+				System.out.println(s+"="+num);
+			else
+				System.out.println("Not found");
+		}
+		in.close();
+	}
+
+}
+
+INPUT :
+3
+uncle sam
+99912222
+tom
+11122222
+harry
+12299933
+
+OUTPUT :
+uncle sam=99912222
+Not found
+harry=12299933
+
+//using 26 hash maps for each letter(a-z) improves performance and avoids time-out errors
+import java.util.*;
+import java.io.*;
+
+class Solution{
+   public static void main(String []argh)
+   {
+      Scanner sc = new Scanner(System.in);
+		int n = Integer.parseInt(sc.nextLine());
+		List<Map<String, Integer>> index = new ArrayList<Map<String, Integer>>();
+
+		
+		for (int i=0; i<26;i++){
+			index.add(new HashMap<String, Integer>());
+		}
+		
+		for (int i=0; i<n; i++){	
+			String name = sc.nextLine();
+			int number  = Integer.parseInt(sc.nextLine());					
+			  index.get((int) name.charAt(0) - 97).put(name, number);
+		}		
+	
+		
+		
+		while (sc.hasNextLine()){
+			String name = sc.nextLine();
+			
+			try{			
+				int temp = index.get((int) name.charAt(0) - 97).get(name);
+				System.out.println(name + "=" + temp);
+			} catch (NullPointerException e) {
+				System.out.println("Not found");
+			}			
+		} 
+	}
+}
+------------
+14. java-stack.pdf 
+
+import java.util.*;
+
+public class javaStack {
+	public static void main(String []argh)
+	{
+		Scanner sc = new Scanner(System.in);
+		LinkedList<Character> list=new LinkedList<>();
+		while (sc.hasNext()) {
+			String input=sc.next();
+            //Complete the code
+			if(input.length()%2!=0) {
+				System.out.println("false");
+				continue;
+			}
+			list.add(input.charAt(0));
+			for(int i=1;i<input.length();i++) {
+				if(list.isEmpty()) {
+					//System.out.println("adding ");
+					list.add(input.charAt(i++));
+				}
+				char c=list.get(0);
+				char c1=input.charAt(i);
+				//System.out.print("c : "+c+" c1 : "+c1);
+				if((c=='{' && c1=='}') || (c=='(' && c1==')') || (c=='[' && c1==']')) { 
+					//System.out.print(" match ");
+					list.pop();
+				}
+				else {
+					//System.out.println(" no match ");
+					list.addFirst(c1);
+				}
+			}
+			if(list.isEmpty())
+				System.out.println("true");
+			else {
+				list.clear();
+				System.out.println("false");
+			}
+		}	
+	}
+}
+
+INPUT :
+{}()
+({()})
+{}(
+[]
+
+OUTPUT :
+true
+true
+false
+true
+------------
+15. java-arrayHourGlass.pdf
+
+import java.util.*;
+
+public class ArrayHourGlass {
+	private static final Scanner scanner = new Scanner(System.in);
+
+    public static void main(String[] args) {
+        int[][] arr = new int[6][6];
+
+        for (int i = 0; i < 6; i++) {
+            String[] arrRowItems = scanner.nextLine().split(" ");
+            scanner.skip("(\r\n|[\n\r\u2028\u2029\u0085])?");
+
+            for (int j = 0; j < 6; j++) {
+                int arrItem = Integer.parseInt(arrRowItems[j]);
+                arr[i][j] = arrItem;
+            }
+        }
+        scanner.close();
+        int max=Integer.MIN_VALUE, sum;
+        for(int i=0;i<6;i++) {
+        	
+        	for(int j=0;j<6;j++) {
+	        	if(i+2<6 && j+2<6) {
+	        		sum=0;
+	        		sum+=arr[i][j]+arr[i][j+1]+arr[i][j+2];
+	        		sum+=arr[i+1][j+1];
+	        		sum+=arr[i+2][j]+arr[i+2][j+1]+arr[i+2][j+2];
+	        		max=(max<sum)?sum:max;
+	        	}  
+	       	}
+        }
+        System.out.println(max);
+    }
+
+}
+
+INPUT :
+0 -4 -6 0 -7 -6
+-1 -2 -6 -8 -3 -1
+-8 -4 -2 -8 -8 -6
+-3 -1 -2 -5 -7 -4
+-3 -5 -3 -6 -6 -6
+-3 -6 0 -8 -6 -7
+
+OUTPUT :
+-19
+------------
+16. java-negative-subarray.pdf
+
+import java.util.Scanner;
+
+public class Subarray {
+
+	public static void main(String[] args) {
+		Scanner scan=new Scanner(System.in);
+		int[] arr=new int[scan.nextInt()];
+		for(int i=0;i<arr.length;i++) {
+			arr[i]=scan.nextInt();
+		}
+		scan.close();
+		
+		int count=0;
+		for(int n=1;n<=arr.length;n++) {
+			for(int i=0;i<arr.length;i++) {
+				int a=0,sum=0;
+				while(a<n && (i+a)<arr.length && i<=arr.length-n) {
+					sum+=arr[i+a];
+					a++;
+				}
+				if(sum<0) {
+					count++;
+				}
+			}
+		}
+		System.out.println(count);
+	}
+
+}
+
+INPUT :
+5
+1 -2 4 -5 1
+
+OUTPUT :
+9
+------------
+17. java-generics 
+//Method overload checking
+ 
+import java.lang.reflect.Method;
+
+class Printer
+{
+   //Write your code here
+   public void printArray(Object[] obj){
+       for(Object o: obj){
+           System.out.println(o); 
+       }
+   }
+}
+
+public class generics {
+	public static void main( String args[] ) {
+        Printer myPrinter = new Printer();
+        Integer[] intArray = { 1, 2, 3 };
+        String[] stringArray = {"Hello", "World"};
+        myPrinter.printArray(intArray);
+        myPrinter.printArray(stringArray);
+        int count = 0;
+
+        for (Method method : Printer.class.getDeclaredMethods()) {
+            String name = method.getName();
+
+            if(name.equals("printArray"))
+                count++;
+        }
+
+        if(count > 1)System.out.println("Method overloading is not allowed!"); 
+    }
+}
+
+OUTPUT :
+1
+2
+3
+Hello
+World
+------------
+18. java-comparator.pdf 
+
+import java.util.*;
+
+//Write your Checker class here
+class Checker implements Comparator<Player>{
+	@Override
+	public int compare(Player p1, Player p2) {
+		if(p1.score==p2.score)
+			return p1.name.compareTo(p2.name);
+		else
+			return p2.score-p1.score;
+	}
+}
+
+class Player{
+	 String name;
+	 int score;
+	 
+	 Player(String name, int score){
+	     this.name = name;
+	     this.score = score;
+	 }
+}
+
+public class ComparatorExample {
+	 public static void main(String[] args) {
+	     Scanner scan = new Scanner(System.in);
+	     int n = scan.nextInt();
+
+	     Player[] player = new Player[n];
+	     Checker checker = new Checker();
+	     
+	     for(int i = 0; i < n; i++){
+	         player[i] = new Player(scan.next(), scan.nextInt());
+	     }
+	     scan.close();
+	  
+	     Arrays.sort(player, checker);
+	     for(int i = 0; i < player.length; i++){
+	         System.out.printf("%s %s\n", player[i].name, player[i].score);
+	     }
+	 }
+}
+
+INPUT :
+5
+amy 100
+david 100
+heraldo 50
+aakansha 75
+aleksa 150
+
+OUTPUT :
+aleksa 150
+amy 100
+david 100
+aakansha 75
+heraldo 50
+------------
+19. java-deque.pdf
+
+import java.util.*;
+
+public class dequeExample {
+	public static void main(String[] args) {
+        Scanner in = new Scanner(System.in);
+        Deque deque = new ArrayDeque<>();
+        int n = in.nextInt();
+        int m = in.nextInt();
+        int max=0;
+        HashSet hs=new HashSet<>();
+        
+        for (int i = 0; i < n; i++) {
+            int num = in.nextInt();
+            deque.add(num);
+            hs.add(num);
+            
+            if(deque.size()==m+1) {
+            	int out=(int)deque.remove();
+            	if(!deque.contains(out))
+            		hs.remove(out);
+            }
+            max=Math.max(hs.size(), max);
+            if(max==m)
+            	break;
+        }
+        System.out.println(max);
+    }
+}
+
+INPUT :
+6 3 
+5 3 5 2 3 2
+
+OUTPUT :
+3
+
+space complexity : O(n) using HashMap
+
+public class test {
+    public static void main(String[] args) {
+        HashMap<Integer, Integer> map = new HashMap<>();
+        Deque<Integer> deque          = new ArrayDeque<>();
+        
+        Scanner scan = new Scanner(System.in);
+        int n = scan.nextInt();
+        int m = scan.nextInt();        
+        int max = map.size();
+        
+        for (int i = 0; i < n; i++) {
+            /* Remove old value (if necessary) */
+            if (i >= m) {
+                int old = deque.remove();
+                if (map.get(old) == 1) {
+                    map.remove(old);
+                } else {
+                    map.put(old, map.get(old) - 1);
+                }
+            }
+            /* Add new value */
+            int num = scan.nextInt();
+            deque.add(num);
+            map.merge(num, 1, Integer::sum);
+            
+            max = Math.max(max, map.size());
+						
+            /* If all integers are unique, break out of loop */
+            if (max == m) {
+                break;
+            }
+        }
+        
+        scan.close();
+        System.out.println(max);
+    }
+}
+
+Using Array :
+
+public static void main(String[] args) {
+            Scanner in = new Scanner(System.in);
+            Deque <Integer> deq = new ArrayDeque<>();
+            int n = in.nextInt();
+            int m = in.nextInt();
+            int [] a = new int [ 10000001 ];
+            long max = 0;
+            long current = 0;
+            
+            for ( int i = 0; i<n; i++) {
+                if ( i >=m ) {
+                    // pop off last one
+                    int f = deq.removeLast();
+                    if ( a[f] >= 1 ) {
+                        a[f]--;
+                        if (a[f]==0)
+                            current--;
+                    }
+                }
+                
+                int x = in.nextInt();
+                if (  a[x] == 0 ) {
+                    // new unique
+                    current++;
+                    max = Math.max(current, max );
+                } 
+                a[x]++;
+                deq.addFirst(x);  
+            }           
+            System.out.println(max);
+        }
+------------
+20. java-bitset.pdf
+
+import java.io.*;
+import java.util.*;
+
+public class BitSetDemo {
+	
+	public static void main(String[] args) {
+        /* Enter your code here. Read input from STDIN. Print output to STDOUT. Your class should be named Solution. */
+		Scanner scan=new Scanner(System.in);
+		int n = scan.nextInt();
+		BitSet b1=new BitSet(n);
+		BitSet b2=new BitSet(n);
+		BitSet[] arr= {b1, b2};
+		int m=scan.nextInt();
+		for(int i=0;i<m;i++) {
+			switch(scan.next()) {
+				case "AND":
+					arr[scan.nextInt()-1].and(arr[scan.nextInt()-1]);
+					break;
+				case "OR":
+					arr[scan.nextInt()-1].or(arr[scan.nextInt()-1]);
+					break;
+				case "XOR":
+					arr[scan.nextInt()-1].xor(arr[scan.nextInt()-1]);
+					break;
+				case "FLIP":
+					arr[scan.nextInt()-1].flip(scan.nextInt());
+					break;
+				case "SET":
+					arr[scan.nextInt()-1].set(scan.nextInt());
+			}
+			System.out.println(b1.cardinality()+" "+b2.cardinality());
+		}
+		scan.close();
+	}
+}
+
+INPUT :
+5 4
+AND 1 2
+SET 1 4
+FLIP 2 2
+OR 2 1 
+
+OUTPUT :
+0 0 
+1 0
+1 1 
+1 2
+
+Using lambda's
+
+public static void main(String[] args) {
+    Scanner sc = new Scanner(System.in);
+    int setSize = sc.nextInt();
+    int noOps = sc.nextInt();
+    BitSet[] bitSets = new BitSet[]{new BitSet(setSize), new BitSet(setSize)};
+    Map<String, BiConsumer<Integer,Integer>> ops = new HashMap<>();
+    ops.put("AND", (index1, index2) -> bitSets[index1-1].and(bitSets[index2-1]));
+    ops.put("OR", (index1, index2) -> bitSets[index1-1].or(bitSets[index2-1]));
+    ops.put("XOR", (index1, index2) -> bitSets[index1-1].xor(bitSets[index2-1]));
+    ops.put("SET", (index1, index2) -> bitSets[index1-1].set(index2));
+    ops.put("FLIP", (index1, index2) -> bitSets[index1-1].flip(index2));
+    for (int i = 0; i < noOps; i++){
+        ops.get(sc.next()).accept(sc.nextInt(), sc.nextInt());    
+        System.out.println(bitSets[0].cardinality() + " " + bitSets[1].cardinality());
+    }
+}
+------------
+21. java-bigdecimal.pdf 
+		All you need is a comparator. Why? Because you need to keep the strings in the array, but still compare the strings by their BigDecimal values. This is achieved through the comparator.
+		Converting the strings to BigDecimals and storing the BiDecimal values will lead to the problem of losing leading zeros on certain string values, so you need the comparator.
+
+import java.math.BigDecimal;
+import java.util.*;
+
+public class bigdecimal {
+    public static void main(String []args){
+        //Input
+        Scanner sc= new Scanner(System.in);
+        int n=sc.nextInt();
+        String []s=new String[n+2];
+        for(int i=0;i<n;i++){
+            s[i]=sc.next();
+        }
+        sc.close();
+
+        //Write your code here
+        Arrays.sort(s, 0, n, new Comparator<String>() {
+        	@Override
+        	public int compare(String a1, String b1) {
+        		//converting to BigDecimal inside compare method to preserve the string value in code
+        		BigDecimal a=new BigDecimal(a1);
+        		BigDecimal b=new BigDecimal(b1);
+        		//descending order
+        		return b.compareTo(a);
+        	}
+        });
+        
+        //Output
+        for(int i=0;i<n;i++)
+        {
+            System.out.println(s[i]);
+        }
+    }
+}
+
+INPUT :
+9
+-100
+50
+0
+56.6
+90
+0.12
+.12
+02.34
+000.000
+
+OUTPUT :
+90
+56.6
+50
+02.34
+0.12
+.12
+0
+000.000
+-100
+------------
+22. java-primality-test.pdf
+
+    String n = scanner.nextLine();
+    BigInteger val=new BigInteger(n);
+    System.out.println((val.isProbablePrime(100))?"prime":"not prime");
+    scanner.close();
+		
+------------
+23. instanceof
+
+import java.util.*;
+
+
+class Student{}
+class Rockstar{   }
+class Hacker{}
+
+
+public class InstanceOFTutorial{
+	
+   static String count(ArrayList mylist){
+      int a = 0,b = 0,c = 0;
+      for(int i = 0; i < mylist.size(); i++){
+         Object element=mylist.get(i);
+         if(element instanceof Student)
+            a++;
+         if(element instanceof Rockstar)
+            b++;
+         if(element instanceof Hacker)
+            c++;
+      }
+      String ret = Integer.toString(a)+" "+ Integer.toString(b)+" "+ Integer.toString(c);
+      return ret;
+   }
+
+   public static void main(String []args){
+      ArrayList mylist = new ArrayList();
+      Scanner sc = new Scanner(System.in);
+      int t = sc.nextInt();
+      for(int i=0; i<t; i++){
+         String s=sc.next();
+         if(s.equals("Student"))mylist.add(new Student());
+         if(s.equals("Rockstar"))mylist.add(new Rockstar());
+         if(s.equals("Hacker"))mylist.add(new Hacker());
+      }
+      System.out.println(count(mylist));
+   }
+}
+
+INPUT :
+5
+Student
+Student
+Rockstar
+Student
+Hacker
+
+OUTPUT :
+3 1 1
+------------
+24. Iterator
+
+import java.util.*;
+public class Main{
+	
+   static Iterator func(ArrayList mylist){
+      Iterator it=mylist.iterator();
+      while(it.hasNext()){
+         Object element = it.next();
+         if(element instanceof String)//Hints: use instanceof operator
+
+			break;
+		}
+      return it;
+      
+   }
+   @SuppressWarnings({ "unchecked" })
+   public static void main(String []args){
+      ArrayList mylist = new ArrayList();
+      Scanner sc = new Scanner(System.in);
+      int n = sc.nextInt();
+      int m = sc.nextInt();
+      for(int i = 0;i<n;i++){
+         mylist.add(sc.nextInt());
+      }
+      
+      mylist.add("###");
+      for(int i=0;i<m;i++){
+         mylist.add(sc.next());
+      }
+      
+      Iterator it=func(mylist);
+      while(it.hasNext()){
+         Object element = it.next();
+         System.out.println((String)element);
+      }
+   }
+}
+
+INPUT :
+12
+23
+"###"
+"hello"
+"java"
+
+OUTPUT :
+hello
+java
+------------
+25. can-you-access.pdf
+
+package hackerRank;
+
+import java.io.*;
+import java.lang.reflect.*;
+import java.util.*;
+import java.util.regex.*;
+import java.security.*;
+
+public class PrivateAccess {
+	public static void main(String[] args) throws Exception {
+		DoNotTerminate.forbidExit();	
+
+		try{
+			BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+			int num = Integer.parseInt(br.readLine().trim());
+			Object o;// Must be used to hold the reference of the instance of the class Solution.Inner.Private
+			System.out.println(num+" is "+((PrivateAccess.Inner.Private)(o=new PrivateAccess.Inner().new Private())).powerof2(num));
+			System.out.println("An instance of class: " + o.getClass().getCanonicalName() + " has been created");
+		
+		}//end of try
+		
+		catch (DoNotTerminate.ExitTrappedException e) {
+			System.out.println("Unsuccessful Termination!!");
+		}
+	}//end of main
+	static class Inner{
+		private class Private{
+			private String powerof2(int num){
+				return ((num&num-1)==0)?"power of 2":"not a power of 2";
+			}
+		}
+	}//end of Inner	
+}
+
+class DoNotTerminate { //This class prevents exit(0)
+	 
+    public static class ExitTrappedException extends SecurityException {
+
+		private static final long serialVersionUID = 1L;
+    }
+ 
+    public static void forbidExit() {
+        final SecurityManager securityManager = new SecurityManager() {
+            @Override
+            public void checkPermission(Permission permission) {
+                if (permission.getName().contains("exitVM")) {
+                    throw new ExitTrappedException();
+                }
+            }
+        };
+        System.setSecurityManager(securityManager);
+    }
+}	
+	
+INPUT :
+7
+8
+
+OUTPUT :
+7 is not power of 2
+An instance of class: hackerRank.PrivateAccess.Inner.Private has been created
+
+8 is power of 2
+An instance of class: hackerRank.PrivateAccess.Inner.Private has been created
+
+	OR 
+o = new Inner().new Private();
+System.out.println(num + " is " + ((Solution.Inner.Private)o).powerof2(num));
+
+	OR
+System.out.println(num + " is " + ((Inner.Private) (o = new Inner().new Private())).powerof2(num));
+
+	OR
+o = new Object();
+Solution.Inner instance = new Solution.Inner();
+Inner.Private inner = instance.new Private();
+o = (Object) inner;      
+System.out.println(num + " is " + inner.powerof2(num)) ;
+------------
+26. prime-checker.pdf 
+
+import java.io.*;
+import java.util.*;
+import java.text.*;
+import java.math.*;
+import java.util.regex.*;
+import java.lang.reflect.*;
+import static java.lang.System.in;
+class Prime{
+    
+    public void checkPrime(int ...n){
+        StringBuilder sb=new StringBuilder("");
+        for(int i=0;i<n.length;i++){
+            if(n[i]==1)
+                continue;
+            else if(n[i]==2)
+                sb.append(n[i]+((i!=n.length-1)?" ":""));
+            else {
+                int num=2;
+                boolean flag=false;
+                while(num!=(n[i]/2)+1) {
+                    if(n[i]%num==0) {
+                        flag=true;
+                        break;
+                    }
+                    num++;
+                }
+                if(!flag)
+                    sb.append(n[i]+((i!=n.length-1)?" ":""));
+            }
+        }
+        System.out.println(sb);
+    }
+}
+
+public class PrimeChecker {
+
+	public static void main(String[] args) {
+		try{
+		BufferedReader br=new BufferedReader(new InputStreamReader(in));
+		int n1=Integer.parseInt(br.readLine());
+		int n2=Integer.parseInt(br.readLine());
+		int n3=Integer.parseInt(br.readLine());
+		int n4=Integer.parseInt(br.readLine());
+		int n5=Integer.parseInt(br.readLine());
+		Prime ob=new Prime();
+		ob.checkPrime(n1);
+		ob.checkPrime(n1,n2);
+		ob.checkPrime(n1,n2,n3);
+		ob.checkPrime(n1,n2,n3,n4,n5);	
+		Method[] methods=Prime.class.getDeclaredMethods();
+		Set<String> set=new HashSet<>();
+		boolean overload=false;
+		for(int i=0;i<methods.length;i++)
+		{
+			if(set.contains(methods[i].getName()))
+			{
+				overload=true;
+				break;
+			}
+			set.add(methods[i].getName());
+			
+		}
+		if(overload)
+		{
+			throw new Exception("Overloading not allowed");
+		}
+		}
+		catch(Exception e)
+		{
+			System.out.println(e);
+		}
+	}
+	
+}
+
+INPUT :
+2
+1
+3
+4
+5
+
+OUTPUT :
+2 
+2 
+2 3 
+2 3 5 
+
+	OR	(O(n)^(1/2))
+class Prime {
+    void checkPrime(int... numbers) {
+        for (int num : numbers) {
+            if (isPrime(num)) {
+                System.out.print(num + " ");
+            }
+        }
+        System.out.println();
+    }
+    
+    boolean isPrime(int n) {
+        if (n < 2) {
+            return false;
+        } else if (n == 2) {
+            return true;
+        } else if (n % 2 == 0) {
+            return false;
+        }
+        int sqrt = (int) Math.sqrt(n);
+        for (int i = 3; i <= sqrt; i += 2) {
+            if (n % i == 0) {
+                return false;
+            }
+        }
+        return true;
+    }     
+}
+	
+------------
+27. java-annotations.pdf
+	
+	import java.lang.annotation.*;
+	import java.lang.reflect.*;
+	import java.util.*;
+
+	@Target(ElementType.METHOD)
+	@Retention(RetentionPolicy.RUNTIME)
+	@interface FamilyBudget {
+		String userRole() default "GUEST";
+		int budgetLimit() default 100;
+	}
+
+	class FamilyMember {
+		@FamilyBudget(userRole="SENIOR")
+		public void seniorMember(int budget, int moneySpend) {
+			System.out.println("Senior Member");
+			System.out.println("Spend: " + moneySpend);
+			System.out.println("Budget Left: " + (budget - moneySpend));
+		}
+
+		@FamilyBudget(userRole="JUNIOR", budgetLimit=50)
+		public void juniorUser(int budget, int moneySpend) {
+			System.out.println("Junior Member");
+			System.out.println("Spend: " + moneySpend);
+			System.out.println("Budget Left: " + (budget - moneySpend));
+		}
+	}
+
+	public class Solution {
+		public static void main(String[] args) {
+			Scanner in = new Scanner(System.in);
+			int testCases = Integer.parseInt(in.nextLine());
+			while (testCases > 0) {
+				String role = in.next();
+				int spend = in.nextInt();
+				try {
+					Class annotatedClass = FamilyMember.class;
+					Method[] methods = annotatedClass.getMethods();
+					for (Method method : methods) {
+						if (method.isAnnotationPresent(FamilyBudget.class)) {
+							FamilyBudget family = method
+									.getAnnotation(FamilyBudget.class);
+							String userRole = family.userRole();
+							int budgetLimit = family.budgetLimit();
+							if (userRole.equals(role)) {
+								if(budgetLimit >= spend){
+									method.invoke(FamilyMember.class.newInstance(),
+											budgetLimit, spend);
+								}else{
+									System.out.println("Budget Limit Over");
+								}
+							}
+						}
+					}
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				testCases--;
+			}
+		}
+	}
+
+INPUT :
+3
+SENIOR 75
+JUNIOR 45
+SENIOR 40
+
+OUTPUT :
+Senior Member
+Spend: 75
+Budget Left: 25
+Junior Member
+Spend: 45
+Budget Left: 5
+Senior Member
+Spend: 40
+Budget Left: 60
+------------
+28. Multiple Inheritance
+
+	interface Greeting{
+		default void hello() {
+			System.out.println("hello from A");
+		}
+	}
+	interface GreetingImpl extends Greeting{
+		default void hello() {
+			System.out.println("hello from A");
+		}
+	}
+	//public class demo implements Greeting, GreetingImpl{
+	public class demo implements GreetingImpl, Greeting{
+		public static void main(String[] args) {
+			new demo().hello();
+		}
+	}
+	
+OUTPUT :
+hello from B
+
+EXPLANATION :
+	This can be resolved with the help of three rules:
+
+	Rule 1 : Classes always win. A method definition in the class or its super class takes precedence over the default method definition available 	 in the interface.
+
+	Rule 2 : Otherwise, sub-interfaces win: the method with the exact signature in the most specific default-functionality providing interface will be selected.
+
+	Rule 3 : If the choice continues to be ambiguous, the class that inherits multiple interfaces should explicitly select the default method implementation to be used just by overriding it and the overridden method shoud have the explicit call to the desired default behaviour
+
+	Now let us try to apply these rules to our Greeting example:
+
+	In our example Rule 1 does not apply as we do not have any class implementing the default interface.
+
+	As per Rule 2 "the most specific default providing interface" - so in our example interface GreetingExtn overrides the implementation of default method of interface Greeting and hence is the most specific. Therefore, the implementation of GreetingExtn hello() method will be called.
+------------
+29. 
+------------
+
+
+
+
+
+
+
+

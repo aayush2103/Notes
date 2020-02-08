@@ -1,0 +1,203 @@
+----------------------------------------------
+		LAMBDA EXPRESSIONS
+----------------------------------------------
+
+-	Lambda expressions provide implementation logic for functional interfaces(implementations with only one method).
+-	They are the essence of functional programming in java. they are functional constructs without classes which can be passed like objects and 
+	executed as required. They also make the modifiers, return types and parameter types completely optional.
+	
+	eg. public void sortEmployeesByCountry(List<Employee> empList){
+			empList.sort((Employee emp1, Employee emp2) -> emp1.getCountry().compareTo(emp2.getCountry());
+		}
+		
+		OR
+		
+		Comparator<Employee> comparator = (Employee emp1, Employee emp2) -> emp1.getCountry().compareTo(emp2.getCountry());
+		empList.sort(comparator);
+
+-	It comprises of three parts :
+		(arguments) -> (body)
+		
+		1. arguments : 
+				single argument : argument -> (return argument*argument)
+				multiple argument : (int arg1, String arg2) -> {//code}
+				no argument : () -> {//code}
+		2. the arrow token : "->"
+		3. body : 
+				single line : (Employee e1, Employee e2) -> e1.getCountry().compareTo(e1.getCountry()))
+					return type will be the type of the expression that the body evaluates to
+				block : (Employee e1, Employee e2) -> {
+							int val = e1.getCountry().compareTo(e1.getCountry());
+							return val;
+						}
+						
+-	METHOD REFERENCES :
+		eg. class Employee{
+				private Integer empId;
+				private String empName;
+				private String country;
+
+				//other methods
+
+				public static int compareByCountry(Employee e1, Employee e2){
+					return e1.getCountry().compareTo(e2.getCountry());
+				}	
+			}
+			
+			Lambda expression to be used in this case : 
+				empList.sort((e1, e2) -> Employee.compareByCountry(e1, e2));
+				
+			In such cases where lambda expression simply calls existing methods, above can be written as :
+				empList.sort(Employee::compareByCountry);
+				
+-	PREDEFINED FUNCTIONAL INTERFACES :
+		------------------------------------------------------------------------------------------------------------
+		Type		Functional 		Interface			Abstract Method	Description
+		------------------------------------------------------------------------------------------------------------
+		Function	Function<T, R>	R apply(T t)		Function that accepts single argument and produces result  
+		Predicate	Predicate<T>	boolean test(T t)	Boolean-valued function that takes single argument
+		Consumer	Consumer<T>	    void accept(T t)	Function that accepts single argument but returns no result
+		Supplier	Supplier<T>	    T get()				Function that denotes a supplier of results
+		------------------------------------------------------------------------------------------------------------
+		public class TechSolLuckyDraw{
+			public static void main(String args[]){
+				//lstEmpIds id the populated list of employee ids
+				printEvenIds(lstEmpIds);
+				printOddIds(lstEmpIds);
+				printIdsForStock(lstEmpIds);
+			}
+			public static void printEvenIds(List<Integer> lstEmpIds){
+				for(Integer id : lstEmpIds){
+					if(id % 2 ==0)
+						System.out.println("Even Employee Id: "+id);
+				}
+			}
+			public static void printOddIds(List<Integer> lstEmpIds){
+				for(Integer id : lstEmpIds){
+					if(id % 2 !=0)
+						System.out.println("Odd Employee Id: "+id);
+				}
+			}
+			public static void printIdsForStock(List<Integer> lstEmpIds){
+				for(Integer id : lstEmpIds){
+					if(id < 1500)
+						System.out.println("Employee Id less than 1500: "+id);
+				}
+			}
+		}
+		
+		Using PREDICATE :
+			import java.util.function.Predicate;
+			
+			public class TechSolLuckyDraw{
+				public static void main(String args[]){
+					System.out.println("Printing even empIds");
+					evaluate(lstEmpIds, (n) -> n%2 ==0);
+					System.out.println("Printing odd empIds");
+					evaluate(lstEmpIds, (n) -> n%2 !=0);
+					System.out.println("Printing empIds less than 1500");
+					evaluate(lstEmpIds, (n) -> n < 1500);
+				}
+				public static void evaluate(List<Integer> lstEmpIds, Predicate<Integer> predicateArg){
+					for(int id : lstEmpIds){
+						if(predicateArg.test(id))
+							System.out.println(id);
+					}
+				}
+			}
+			
+		Using FUNCTION :	when input and result are of different types
+			- In this scenario we need to accept the employee object as input and provide the incremented salaries as the result.
+			
+			import java.util.List;
+			import java.util.function.Function;
+			 
+			public class EmployeeService {
+				//main method
+				public static void main(String pars[]) {
+					List<Employee> lstEmp = Employee.getEmpList();
+					for (Employee e : lstEmp)  {
+						double sal = computeSalary(e, e1 -> e1.getSal() * 1.01);    // 10% salary increment
+						System.out.println(e.getName() + ": old salary: " + e.getSal() + ", new salary: " + sal);
+					}
+				}
+			 
+				public static double computeSalary(Employee e, Function<Employee, Double> fn) {
+					return fn.apply(e);
+				}
+			}
+			
+			Here we define computeSalary method with Employee e  and Function fn which takes Employee as input and Double as return value. We pass e1.getSal() * 1.01 to the computeSalary() method in order to increment the salary by 10%, and this becomes the implementation for the apply() method. So for each employee passed the salary increment is applied using fn.apply().
+			
+		Using CONSUMER : accepts a parameter without returning any value
+			- For the HR team, salary component should be included, whereas for managers, the report should not have the salary component.
+			
+			import java.util.List;
+			import java.util.function.Consumer;
+			 
+			public class EmployeeService {
+				public static void main(String[] args) {
+					List<Employee> lstEmp = Employee.getEmpList();
+			 
+					System.out.println("***** Generating HR Report *****");
+					generateReport(lstEmp, e -> System.out.println(e.getId() + " : " + e.getName() + " : " + e.getRole() + " : " + e.getSal()));
+			 
+					System.out.println("\n***** Generating Manager Report *****");
+					generateReport(lstEmp, e -> System.out.println(e.getId() + " : " + e.getName() + " : " + e.getRole()));
+				}
+			 
+				public static void generateReport(List<Employee> lstEmp, Consumer<Employee> consumer) {
+					for (Employee e : lstEmp) {
+						consumer.accept(e);
+					}
+				}
+			}
+			
+		Using SUPPLIER :
+			-  generate the salary slip for all the employees, i.e. both full time and part time employees.
+			- As we have seen earlier, the FulltimeEmployee and PartTimeEmployee classes extend from Employee class. We have added generateSalarySlip() method in these classes to generate the salary slip. For the given scenario the Supplier interface can be used which has an abstract get() method:
+			
+			import java.util.List;
+			import java.util.function.Supplier;
+			 
+			public class SalaryGenerator {
+				public static void main(String[] args) {
+					List<? extends Employee> lstEmp = Employee.getEmpList();
+					for (Employee e : lstEmp) {
+						generate(() -> e);
+					}
+				}
+			 
+				public static void generate(Supplier<? extends Employee> supplier) {
+					supplier.get().generateSalarySlip();
+				}
+			}
+			
+			Here we pass e (instance variable of employee) to the generate() method in order to generate the salary slip, and this becomes the implementation for the get() method. So for each employee, irrespective of full time or part time, supplier.get() returns an instance of Employee on which the generateSalarySlip() method is called.
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			

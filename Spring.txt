@@ -1,0 +1,476 @@
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+								SPRING Fundamentals
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+
+-	What is spring ? 
+	
+	> It is a framework built for reducing the complexities around Java Enterprise development and later providing Java enterprise developments without
+	  EJB's.
+	> Can be essentially used with or without EJB's.
+	> Allowed us to do enterprise development without an application server.
+	> Completely POJO(Plain old java object) based. Any code you write in Spring can be written without using Spring at all. Spring dosen't do any    magical thing. It just allows us to write better cleaner code which is interface driven.
+	> It is lightweight, unobtrusive - should'nt be getting in your way, if it is , then you are using it wrong. It also uses AOP/Proxies to apply 	  things like transaction and stuff to get those cross-cutting concerns out of your application. So your code should be more lightweight and smaller using spring.
+
+-	What problem is Spring trying to solve ?
+
+	It increases our testability, maintainability - ability to maintain our code, scalability - decouples things and makes us able to add cache in the layers, reduce code complexity, puts the focus on our business - helps get complex code done faster.
+	
+-	Business focus
+	
+	----------
+	public Car getbyId(String id){
+		Connection con = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		
+		try{
+			String sql = "select * from CAR where id = ?";
+			con = DriverManager.getConnection("localhost:3306/cars");
+			stmt = con.prepareStatement{(sql);
+			stmt.setString(1, id);
+			rs = stmt.executeQuery();
+			if(rs.next()){
+				Car car = new Car();
+				car.setMake(rs.getString());
+				return car;
+			}
+			else
+				return null;
+		} catch(SQLException e) {e.printStackTrace();}
+		finally {
+			try{
+				if (rs != null && !rs.isClosed()){
+					rs.close();
+				}
+			} catch(Exception e){}
+		}
+		return null;
+	}
+	----------
+	
+	The only things in above code which matters is setting sql statement and getting result. Spring can help remove other parts of the code by injecting other resources into our code.
+	
+-	Solution
+
+	We can remove configuration or lookup code and can focus on the business need. It makes possible to write Annotation base or XML based code
+	through Interface Driven Development.
+	
+-	After using Spring for the above code.
+
+	public Car findCar(String id){
+		return getEntityManager().find(Car.class, id);
+	}
+	
+	Above is the example of a template method pattern.
+	
+-	ApplicationContext
+
+	It is the configured spring container with all of the dependencies wired up in it.
+	
+*	Spring can also be used as a registry. It can auto-wire our application.
+	It is all about :
+		- removing Configuration code from your Application - Configuration code makes application brittle and hard to move in difefrent environments.
+		- Difficulties in testing - its hard to test not because of the code complexity but because of the way the code was written.
+		
+-	Annotations
+
+	@Configuration - class level, spring main configuration file
+	@Bean - method level annotation, methods used in conjunction with the Spring bean, providing a name is optional.
+			these methods are "singletons" by default i.e only 1 instance of this bean is created and only execute once and are reffered thereafter.
+	
+	----------
+	@Configuration
+	public class AppConfig{
+		@Bean(name = "customerRepository")
+		public CustomerRepository getCustomerRepository(){
+			return new HibernateCustomerRepositoryImpl();
+		}
+	}
+	
+	> CustomerRepository(Interface) > HibernateCustomerRepositoryImpl(Class implementing) CustomerRepository
+	----------
+	
+-	Setter Injection
+
+	simple as a method call, "Mystery" of injection goes away, Setter injection simply calling a setter.
+	This bean method will inject the bean to the method which calls it.
+	
+	----------
+	@Bean(name = "customerService")
+	public CustomerService getCustomerService(){
+		CustomerServiceImpl customerService = new CustomerServiceImpl();
+		customerService.setCustomerRepository(getCustomerRepository());
+		
+		return customerService;
+	}
+	
+	@Bean(name = "customerRepository")
+	public customerRepository getCustomerRepository(){
+		return new HibernateCustomerRepositoryImpl();
+	}
+	-----------
+	
+*	ApplicationContext appContext = new AnnotationConfigApplicationContext(AppConfig.class);
+	
+	The above line will call the Spring configuration file i.e. "AppConfig" and create a registry with the beans mentioned in that file.
+		
+-	Constructor Injection	
+
+	Similar to Setter Injection, bean method called inside constructor to inject dependency
+	
+	-----------
+	@Bean(name = "customerService")
+	public CustomerService getCustomerService(){
+		CustomerServiceImpl customerService = new CustomerServiceImpl(getCustomerRepository()); 
+	}
+	
+	@Bean(name = "cutomerRepository")
+	public CustomerRepository getCustomerRepository(){
+		return new HibernateCustomerRepositoryImpl();
+	}
+	-----------
+	
+-	Scopes
+
+	Mainly 5 scopes - 
+		valid in any configurtion
+		 > singleton - restricts the instantiation of a class to just 1 object, default bean scope inside of the spring, one instance per spring
+					   container or ApplicationContext, requires AOP jar separately when not using maven, in maven its a transitive dependency
+					   and is already available in project.
+					   
+					   ------------
+					   @Service(name = "customerService")
+					   @Scope("singleton")
+					   public class CustomerServiceImpl implements CustomerService {
+					   ------------
+					   @Scope(value = "singleton")
+					   @Scope(value = BeanDefinition.SCOPE_SINGLETON)
+					   
+					   To check - 
+							-----------
+							CustomerService service = appContext.getBean("customerService", CustomerService.class);
+							System.out.println(service);
+							CustomerService service2 = appContext.getBean("customerService", CustomerService.class);
+							System.out.println(service2);
+							-----------
+							This should print the same object address as below indicating single instance of that object being reffered to
+								OUTPUT : com.pluralsight.service.CustomerServiceImpl@6babf3bf
+										 com.pluralsight.service.CustomerServiceImpl@6babf3bf
+					   
+		 > prototype - new(unique) bean per request i.e. opposite of a singleton
+						------------
+					   @Service(name = "customerService")
+					   @Scope("prototype")
+					   public class CustomerServiceImpl implements CustomerService {
+					   ------------
+					   @Scope(value = "prototype")
+					   @Scope(value = BeanDefinition.SCOPE_PROTOTYPE)
+		 
+						To check - 
+							-----------
+							CustomerService service = appContext.getBean("customerService", CustomerService.class);
+							System.out.println(service);
+							CustomerService service2 = appContext.getBean("customerService", CustomerService.class);
+							System.out.println(service2);
+							-----------
+							This should print different object address as below indicating unique instance of that object
+								OUTPUT : com.pluralsight.service.CustomerServiceImpl@4bb33f74
+										 com.pluralsight.service.CustomerServiceImpl@759d26fb
+						
+		valid only in web-aware spring projects
+		> Request - returns a bean per http request for the lifecycle of a bean request
+		> Session - return a single bean per http session which will live as long as that user session is alive
+		> Global - returns a single bean per application which will live for the duration of that application until its undeployed on the server
+				   or the server is rebooted
+				   
+-	Autowired
+
+	> Used to reduce the wiring up and configuration of the code.
+	> To add it - @ComponentScan({"com.pluralsight"}) to begin looking for autowired annotation
+	> And then add any of below annotations to autowire classes or @Autowired annotation to auto-wire methods.
+	> Doing this basically calls the autowired method whenever the instance of that class/object is created.
+	
+-	Stereotype Annotations
+
+	1. @Component - same as @Bean
+	2. @Repository - used to denote a class which is being used as a repository object.
+	3. @Service - does not means a web service or a microservice, rather where you would put your business logic
+	4. @Controller - this is where you would create web or micro services for application
+	
+	> Add @ComponentScan({"package folder from where you want to start scanning autowiring e.g. com.pluralsight"})
+	> Using these annotations we can remove the @Bean method from spring main configuration file (in this case AppConfig.java) and auto-wire
+	  our respective classes.
+	  
+---------------------------------------------------------------------------------
+		SPRING CONFIGURATION USING XML
+---------------------------------------------------------------------------------
+
+-	Why use xml?
+
+	> it was the first approach to spring, somethings are simpler with xml, natural separation of concerns with xml 
+	
+-	Namespaces
+
+	-----------
+	<?xml version="1.0" encoding="UTF-8"?>
+	<beans xmlns="http://www.springframework.org/schema/beans"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	</beans>
+	-----------
+	> Included at the start of an xml file and acts like a dictionary which contains properties for bean creation tags.
+	
+	> eg. of a bean 
+		------------
+		<bean
+			name="customerService"
+			class="com.pluralsight.service.CustomerServiceImpl"
+			autowire="byName">
+			
+			<property name="0"
+					  ref="customerRepository">
+			</property>
+		</bean>
+		------------
+		> beans are like replacing keyword "new"
+		
+-	Setter Injection
+
+	------------
+	<bean name="speakerRepository" 
+		  class="com.pluralsight.repository.HibernateSpeakerRepositoryImpl" />
+		  
+	<bean name="speakerService"
+		  class="com.pluralsight.service.SpeakerServiceImpl">
+		<property name="speakerRepository" ref="speakerRepository" />	  
+	</bean>
+	------------
+	
+-	Constructor Injection
+
+	> these are index based
+	
+	------------
+	<bean name="speakerRepository" 
+		  class="com.pluralsight.repository.HibernateSpeakerRepositoryImpl" />
+		  
+	<bean name="speakerService" class="com.pluralsight.service.SpeakerServiceImpl">
+		<constructor-arg index="0" ref="speakerRepository" />	  
+	</bean>
+	------------
+	
+-	Autowire
+
+	> 4 types of autowire that can be done on a bean :
+		1. byType - this allows a property to be autowired if exactly one bean of that property type exists within the container
+		2. byName - multiple instances of the same property object
+		3. constructor
+				--------------
+				<bean name="speakerService" class="com.pluralsight.service.SpeakerServiceImpl" autowire="constructor">
+					<!-- <constructor-arg index="0" ref="speakerRepository" /> -->	  
+				</bean>
+				--------------
+		4. no or none
+		
+-	Bean Lifecycle
+
+	> Instantiation > Populate Properties - read from either a properties file or injected in from other resources > BeanNameAware >
+	  BeanFactoryAware > Pre Initialization - utilising BeanPostProcessors > initializeBean > initMethod > Post Initialization - utilising BeanPostProcessors
+	  
+	> Add dependency to pom.xml
+		-------------
+		<dependency>
+			<groupId>javax.annotation</groupId>
+			<artifactId>javax-annotation-api</artifactId>
+			<version>1.3.2</version>
+		</dependency>
+		-------------
+		@PostConstruct
+		private void initialize(){
+			//body
+		}
+		
+-	FactoryBean
+
+	> configuration very similar to the init method
+	> it builds on the Factory Method Pattern
+	> useful in integrating a legacy code into application without creating a constructor which implements contracts
+	> can also work with static methods inside a class
+	
+-	SpEL - Spring Expression Language
+
+	> used to manipulate the object graph - once an object is created, it can be manipulated using SpEL
+	> used to Evaluate values at runtime
+	> used to evaluate or manipulate your configuration
+	
+	----------
+	@Value("{ #T(java.lang.Math).random() * 100 }")
+	private double seedNum;
+	----------
+	> above lines will generate a random number and assign it to seedNum at runtime
+	
+-	Spring AOP Proxies
+
+	> proxies are a great way to inject behavious into the code base without modifying the underlying code
+	----------
+	ProxyFactory factory = new ProxyFactory(new SimplePojo());
+	factory.addInterface(Pojo.class);
+	factory.addAdvice(new RetryAdvice());
+	factory.setExposeProxy(true);
+	
+	Pojo pojo = (Pojo) factory.getProxy();
+	
+	//this is a method call on the proxy
+	pojo.foo();
+	----------
+	
+-	BeanProfiles
+
+	> help to adapt to environments
+	> setup specific code which gets run only on specific environments so we can swap out configurations at runtime
+	> great way for us to have effective runtime configurations
+	
+	----------
+	@Repository("speakerRepository")
+	@Profile("dev")
+	public class HibernateSpeakerRepositoryImpl implements SpeakerRepository
+	----------
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+								SPRING MVC(Model-View-Controller)
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+-	> Web application frameworks for developing applications	
+	> POJO based and interface driven
+	> based on a dispatcher servlet/Front Controller pattern
+	> very lightweight and unobtrusive compared to other frameworks
+	> Support for Themes, Locales/i18n, Restful services, Annotation based configuration, seamless integration with other spring Services/Beans
+
+-	Request/Response Lifecycle
+		Incoming Request --> Front Controller --(Delegate Request)--> Controller(handles the request)routes traffic --(Handle Request)--> Backend
+		(web services, DB or anything that we are gathering data from)hands back data in form of Model to us --(Create Model)--> Controller --(Delegate
+		Rendering, passes the Model)--> Front Controller --(Render Response)--> View Template --(Return Control)--> Front Controller -> Return Response
+			> Controler - Backend > Model
+			> Front Controller - View Template -> View
+			> Front Controller - Controller -> Controller
+			
+-	Vocabulary
+		> Dispatcher Servlet - The entry/configuration point for the application (Front Controller)
+		> Controller - Command pattern object that handles the request and determines which view to route to, what model we should get and handles
+					   that information back and forth (simple POJO's)
+		> Request Mapping - the url and request type that a method is tied to
+		> View Resolver - Used to locate JSP pages or whatever view we are using (contains info about where to actually find the page)
+		> Servlet-config - Configuration file per DispatcherServlet (this is where spring knows to configure our application and wire up)
+		> POJO - plain old java object
+		> Bean - a spring configured POJO
+		
+-	Maven- Spring Dependencies
+		> spring-webmvc
+		> servlet-api
+		> jstl
+		
+		The last two is also provided by tomcat, but it would help us compile our code and provide suggestions
+		-----------------
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-webmvc</artifactId>
+			<version>3.1.2.RELEASE</version>
+		</dependency>
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>servlet-api</artifactId>
+			<version>2.5</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>jstl</artifactId>
+			<version>1.2</version>
+			<scope>provided</scope>
+		</dependency>
+		----------------
+		- Scope of 'provided' means not to package it with war file as they will be provided by the Tomcat server on which we will deploy our project.
+		
+-	Configuration
+	
+	4 basic parts that we need to have configured to use Spring MVC in our application
+		> configure web.xml
+		> configure servlet-config.xml
+		> Add Controller - simple java class that is annotated
+		> Add view - jsp, freemarker, velocity
+		
+-	Tomcat
+		
+	just a Web Container
+	
+	Installation :
+		> goto "tomcat.apache.org", select version to be downloaded from left hand side menu option and click on ".zip" download option.
+		
+	> InternalResourceViewResolver - maps jsp pages with its locations.
+	> <mvc:annotation-driven/> - means we are going to use annotation for our spring configuration
+
+	> Controllers :
+		> annotation based simple POJO's , have "@Controller" annotation at the top of File.
+		> path set using annotation - "@RequestMapping"
+		> handles incoming requests and building the response
+		> business logic should not be handled here
+		> works with the service and repository tier for business logic and data gathering
+		> handles exceptions and routes the view accordingly.
+	
+	> Service :
+		> Annotated with @Service
+		> the service tier describes the verbs(actions) of a system
+		> where the business logic resides
+		> ensures that the business object is in a valid statement
+		> where transactions often begin(two phase commits)
+		> often has the same methods as the repository, but different focus
+	
+	> Repository :
+		> Annotated with @Repository
+		> the repository tier describes the nouns(data) of a system
+		> focused on persistinh and interacting with the database
+		> one-to-one mapping with an object
+		> often a one-to-one mapping with a database table.
+		
+-	Controllers : 
+		> 			--(request)---> | Contro- | -----> | Service layer/ | 
+					<--(response)-- |   ller  | <----- | Business Layer |
+		
+		> Responsibilities :
+			- Interpret user input and transform to input to a model
+			- Provide access to business logic
+			- Determines view based off of logic
+			- Interprets Exceptions from the business logic/service tier
+	
+	> return "forward:addMoreMinutes.html";
+		- the above line means that it will bypass the view resolver, goto request and then come back searching for "addMoreMinutes" view resolver.
+		- ".html" is included because in our web.xml file, we have mapped the 'url-pattern' as "*.html".
+	
+	> return "redirect:addMoreMinutes.html";
+		- the above line means that a new request will be created and then it will come back for "/addMoreMinutes"
+	
+-	To include any resource such as pdf, files, images etc.
+		> servlet-config.xml
+			<mvc:resources location="pdfs" mapping="/pdfs/**" />
+	
+		> web.xml
+			add another servlet mapping with
+					<url-pattern>/pdfs/**</url-pattern>
+	
+-	INTERCEPTORS :
+		- Registered and part of the request lifecycle.
+		- have the ability to prehandle and posthandle web requests.
+		- callbacks methods used to override or change values.
+		- commonly used for Locale changing.
+		
+			<bean class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
+				<property name="paramName" value="language" />
+			</bean>
+	
+	
+	
+	
+	
+	
+	
+	
+	
