@@ -465,7 +465,101 @@
 			<bean class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
 				<property name="paramName" value="language" />
 			</bean>
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+								SPRING BOOT
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+-	What is Spring Boot ?
+		> takes an opinionated view on how a spring app should be constructed.
+		> fully wired application from controller to database in just a matter of seconds.
+		> prefers sprinh framework like Spring MVC and Spring Data which is one way it makes it opinionated, but this also serves another
+		  purpose, it makes building applications very quick.
+		> got away from container dependency and wants applications to be standalone java apps which makes a lot of sense for cloud deployement.
+		> Instead of deploying a war file to a tomcat container for eg., boot embeds tomcat inside of an app and produces a self contained
+		  jar file that can be run on its own using the java command.
+
+-	Spring Initializer url -> start.spring.io
+		> specify Maven Project, Java, latest spring-boot version, group, artifact, java 11, Dependencies- Spring Web
+		> click on 'Generate' -> .zip file gets downloaded.
+
+-	--------------------
+	@SpringBootApplication
+	public class ConferenceBootApplication{
+		public static void main(String[] args){
+			SpringApplication.run(ConferenceBootApplication.class, args);
+		}
+	}
+	--------------------
 	
+	> The annotation "@SpringBootApplication" :
+		- this tells the spring boot loader to run the application and configure and run it like a spring boot app. 
+
+-	Spring Boot Starters :
+		-------------------
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+		-------------------
+		> The above dependency can be seen in spring boot app after selecting it on intializer.
+		> This dependency resolves all the dependencies and versions match needed to run a spring web app.
+		> Spring gets to know which version of dependencies to use from below parent info :
+			----------------------
+			<parent>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-starter-parent</artifactId>
+				<version>2.2.4.RELEASE</version>
+				<relativePath/> <!-- lookup parent from repository -->
+			</parent>
+			----------------------
+		> This is often reffered to as the "BOM (Build of Materials)".
+
+-	DB setup :
+		> https://github.com/dlbunker/ps-first-spring-boot-app/
+		> install postgreSQL in your system.
+		> installation includes psql and pgadmin4 setup.
+		> open up pgadmin4 > pops up into browser
+			- create a new server by entering name, connection url, hostname, port, user and password.
+		> create database : create database database_name;
+		> insert tables and datas into it. (refer create_tables.sql and insert_data.sql)
+		> to start a connection in psql cmd line : \c database_name;
+
+	> @RestController - means that this will respond to payloads incoming and outgoing as json rest endpoints.
+	> @RequestMapping - tells the router what the mapping url will look like.
+	> When there is a many to many mapping called by the server url, it will loop back and forth to give too many data.
+	  In this case : sessions and speakers are many to many mapped with each other (each session has many speakers and each speaker is in
+	  many sessions) >> This is the problem of SERIALIZATION.
+		> To resolve this, add annotation "@JsonIgnore" (import com.fasterxml.jackson.annotation.JsonIgnore) before speaker's column
+		  which is mapped to many-to-many table.
+		> When serialization is used, loading hibernate properties with eager and lazy initializations is not needed.
+			>> Adding "@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})" to each model entity class wil solve other
+			   serialization issues.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 	
 	
 	
