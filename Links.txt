@@ -1,0 +1,238 @@
+-------------------------------------------------------------------------------------------------------------------------------
+							LEARNING LINKS
+-------------------------------------------------------------------------------------------------------------------------------
+
+			JAVA
+------------------------------------------------------------------------------------------------------------
+
+https://www.hackerrank.com/domains/java
+https://www.journaldev.com/370/java-programming-interview-questions
+Java interview coding questions : https://javaconceptoftheday.com/java-interview-programs-with-solutions/
+
+Core Java - JVM : https://www.youtube.com/playlist?list=PLd3UqWTnYXOl3pHYnuCUoyD_GFKp6SPRA
+Core Java - Garbage Collection : https://www.youtube.com/watch?v=UnaNQgzw4zY
+Java interview coding questions : https://javaconceptoftheday.com/java-interview-programs-with-solutions/
+ArrayList method examples - https://javaconceptoftheday.com/java-arraylist-programming-examples/
+Java Polymorphism - https://www.baeldung.com/java-polymorphism
+Java Comparator vs Comparable - https://www.baeldung.com/java-comparator-comparable
+Internal working of a HashMap - https://www.geeksforgeeks.org/internal-working-of-hashmap-java/
+Difference between HashMap and HashTable - https://www.baeldung.com/hashmap-hashtable-differences
+https://www.baeldung.com/java-polymorphism
+https://www.baeldung.com/java-comparator-comparable
+https://www.geeksforgeeks.org/output-of-java-program-set-16-threads/
+Java oracle tutorial : https://docs.oracle.com/javase/tutorial/java/TOC.html
+OuterClass Accessing Private : https://stackoverflow.com/questions/1801718/why-can-outer-java-classes-access-inner-class-private-members
+class : https://docs.oracle.com/javase/tutorial/reflect/class/classNew.html
+JMS : https://howtodoinjava.com/jms/jms-java-message-service-tutorial/
+Generics in Java : https://docs.oracle.com/javase/tutorial/java/generics/index.html
+Aggregate Operations in Streams : https://docs.oracle.com/javase/tutorial/collections/streams/index.html
+ArrayList method examples - https://javaconceptoftheday.com/java-arraylist-programming-examples/
+
+@RequestParam and @PathVariable diff : https://javarevisited.blogspot.com/2017/10/differences-between-requestparam-and-pathvariable-annotations-spring-mvc.html
+
+hasPrevious method in which Iterator, ListIterator ?
+@ManyToMany unidirectional ? lazy init ?
+new method in java 8 forEach() ?
+Java 9 of() methods with 0-10 vars or vararg ?
+start() in which Thread or Runnable ?
+failedStage() of CompletableFuture returns what ?
+Criteria
+Comparable vs Comparator
+stream vs collection
+streams filter and map method
+constructor injecton vs setter injection
+
+classes :
+	- regex.Matcher
+	- regex.Pattern
+	- PriorityQueue : https://docs.oracle.com/javase/7/docs/api/java/util/PriorityQueue.html
+	- Comparator
+	- Deque
+	- BitSet
+	- BigDecimal, BigInteger
+	- Threads
+	- Runnable
+	- ExecutorService
+	- Executors
+
+OO PRINCIPLES :
+-- Encapsulate what varies
+-- Code to an interface rather than an implementation
+-- Each class in your application should have only one reason to change
+
+
+-- comparator initialization for comparing students based on order
+	> highest cgpa > case-sensitive name > ascending id
+	Comparator.comparing(Student::getCgpa).reversed()
+		.thenComparing(Student::getName)
+		.thenComparing(Student::getId))
+
+-- check for method overload
+	for (Method method : Printer.class.getDeclaredMethods()) {
+            String name = method.getName();
+
+            if(name.equals("printArray"))
+                count++;
+        }
+
+        if(count > 1)System.out.println("Method overloading is not allowed!");
+
+------------------------------------------------------------------------------------------------------------
+
+			DSA
+------------------------------------------------------------------------------------------------------------
+
+Algorithms and Data structure :
+	- https://www.youtube.com/watch?v=8hly31xKli0
+	- https://www.youtube.com/watch?v=RBSGKlAvoiM
+
+https://www.geeksforgeeks.org/data-structures/?ref=shm
+https://www.geeksforgeeks.org/data-structures/?ref=shm
+recursion (solving a maze) : https://www.cs.bu.edu/teaching/alg/maze/
+Kadane's algorithm : largest sum subarray
+if queue empty then what does poll and remove returns ?
+
+------------------------------------------------------------------------------------------------------------
+
+			SPRING
+------------------------------------------------------------------------------------------------------------
+
+https://www.baeldung.com/jpa-cascade-types
+Spring bean lifecycle - https://www.geeksforgeeks.org/bean-life-cycle-in-java-spring/
+Spring bean scopes - https://www.baeldung.com/spring-bean-scopes
+JPA Cascade types - https://www.baeldung.com/jpa-cascade-types
+Spring Basics : https://docs.spring.io/spring/docs/current/spring-framework-reference/core.html#beans-introduction
+Spring data JPA : https://docs.spring.io/spring-data/jpa/docs/current/reference/html/#project
+Spring Cloud : https://spring.io/projects/spring-cloud
+Spring Hateoas : https://github.com/spring-projects/spring-hateoas
+Spring core : https://docs.spring.io/spring-framework/docs/5.2.9.RELEASE/spring-framework-reference/core.html#beans-scanning-filters
+Spring Integration : https://docs.spring.io/spring-framework/docs/5.2.9.RELEASE/spring-framework-reference/integration.html#scheduling
+REST Template :  https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/web/client/RestTemplate.html
+what is cascade
+spring beans lifecycle
+diff between @Service and @Repository
+@Autowired vs @Bean
+how to load spring container in Junit tests
+chunk in Spring batch
+what is dependency management
+
+------------------------------------------------------------------------------------------------------------
+
+			SQL + Hibernate
+------------------------------------------------------------------------------------------------------------
+
+https://www.baeldung.com/hibernate-save-persist-update-merge-saveorupdate
+get vs load in hibernate - https://www.baeldung.com/hibernate-proxy-load-method
+Hibernate persistent context methods - https://www.baeldung.com/hibernate-save-persist-update-merge-saveorupdate
+save vs persist method in hibernate
+get vs load method in hibernate
+transaction
+Hibernate persistent context methods - https://www.baeldung.com/hibernate-save-persist-update-merge-saveorupdate
+get vs load in hibernate - https://www.baeldung.com/hibernate-proxy-load-method
+
+
+
+Here , I have listed out all SQL interview questions for your easy reference.
+
+1. Amazon SQL Interview Question for Data Analyst Position [2-3 Year Of Experience ] | Data Analytics
+https://lnkd.in/g2RzsKdq
+
+2. Airbnb SQL Interview Question | Convert Comma Separated Values into Rows | Data Analytics
+https://lnkd.in/gpMbU-dF
+
+3. Adobe Interesting SQL Interview Question | Solving Using 2 Approaches | Data Analytics
+https://lnkd.in/g_-_9ymd
+
+4. Spotify SQL Interview Problem | Top 5 Artists | Aggregation and Window Functions in SQL
+https://lnkd.in/gtfaugd3
+
+5. L&T SQL Interview Problem | Print Highest and Lowest Salary Employees in Each Department
+https://lnkd.in/ggY82FJW
+
+6. Ameriprise LLC Company SQL Interview Problem | Data Analytics
+https://lnkd.in/gS_Yqq6c
+
+7. Tiger Analytics SQL Interview Question for Data Engineering Position
+https://lnkd.in/ghjE_CXp
+
+8. PWC SQL Interview Question | BIG 4 |Normal vs Mentos Life 😎
+https://lnkd.in/g9SkkX9x
+
+9. Honeywell SQL Interview Question | Print Movie Stars (⭐ ⭐ ⭐ ⭐⭐) For best movie in each Genre
+https://lnkd.in/gSDgB9Me
+
+10. Angel One Easy-Peasy SQL Interview Question for a Data Science Position
+https://lnkd.in/geaU3we7
+
+11. Practice FAANG SQL Interview Questions For Free | Ace The SQL Interview | Data Analytics
+https://lnkd.in/g4AFgen3
+
+12. Accenture SQL Interview Question | Database Case Sensitivity vs Insensitivity
+https://lnkd.in/gR6F_8zf
+
+13. American Express SQL Interview Question and Solution | Page Recommendation
+https://lnkd.in/g_sMN26m
+
+14. Fractal Analytics SQL Interview Question (Game of Thrones Database) | SQL for Data Engineer
+https://lnkd.in/gGcsBms5
+
+15. Netflix Data Cleaning and Analysis Project | End to End Data Engineering Project (SQL + Python)
+https://lnkd.in/gS8mT7Fn
+
+16. Swiggy Data Analyst SQL Interview Question and Answer
+https://lnkd.in/gSyhmmhd
+
+17. Cracked Myntra as Data Analyst with 1 Year Experience
+https://lnkd.in/gekpAit8
+
+18. PWC SQL Interview Question for a Data Analyst Position | SQL For Analytics
+https://lnkd.in/gyD5Pjny
+
+19. PayPal Data Engineer SQL Interview Question (and a secret time saving trick)
+https://lnkd.in/gAJ_Ug79
+
+20. Adobe Interesting SQL Interview Question | Solving Using 2 Approaches | Data Analytics
+https://lnkd.in/gEEAfi8j
+
+21. Walmart Labs SQL Interview Question for Senior Data Analyst Position | Data Analytics
+https://lnkd.in/gRBPb-ms
+
+22. PayPal SQL Interview Problem (Level Hard) | Advanced SQL Problem
+https://lnkd.in/gGZaYt6N
+
+------------------------------------------------------------------------------------------------------------
+							ETC's
+------------------------------------------------------------------------------------------------------------
+
+
+https://www.youtube.com/watch?v=EeRFOVMf7rE&list=PLyHJZXNdCXsdWEXkvki9SyWNMcChAl8su&index=55
+https://www.youtube.com/watch?v=EeRFOVMf7rE&list=PLyHJZXNdCXsdWEXkvki9SyWNMcChAl8su&index=55
+
+XML tutorial : https://www.w3schools.com/xml/xml_xquery.asp
+XML charsets : https://www.w3schools.com/charsets/default.asp
+Maven documentation : https://maven.apache.org/ 
+Maven Settings : https://maven.apache.org/ref/3.6.1/maven-settings/settings.html
+Maven Profile : https://maven.apache.org/ref/2.2.1/maven-profile/profiles.html
+Lex : https://lex.infosysapps.com/viewer/lex_auth_01257769063253606458/lex_28450346353764463000
+hackerrank solutions : https://github.com/RodneyShag/HackerRank_solutions
+Regex, Pattern, Matcher : http://tutorials.jenkov.com/java-regex/index.html
+Automatic Resource Management (ARM) : try-with-resource
+Locality of Reference : https://en.wikipedia.org/wiki/Locality_of_reference
+Servlet : https://www.javatpoint.com/servlet-tutorial
+Udacity Github : https://github.com/udacity
+JSON : https://www.w3schools.com/whatis/whatis_json.asp
+<input type"file"> : https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/file
+Freemarker : https://freemarker.apache.org/
+Log4j Logging : https://logging.apache.org/log4j/2.0/manual/architecture.html
+
+Thymeleaf Doc : https://www.thymeleaf.org/doc/tutorials/2.1/usingthymeleaf.html
+Thymeleaf features : https://github.com/LaunchCodeEducation/cheatsheets/tree/master/thymeleaf
+GraphQL : https://graphql.org/
+QueryDsl : http://www.querydsl.com/
+Vavr : https://www.vavr.io/
+Kotlin Null safety : https://kotlinlang.org/docs/reference/null-safety.html
+OpenAPI Specification : https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3.0.0.md
+
+udacity-TicTacToe project : https://github.com/udacity/ud282
+
+-------------------------------------------------------------------------------------------------------------------------------

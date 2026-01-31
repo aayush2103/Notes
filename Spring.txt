@@ -69,7 +69,7 @@
 	
 *	Spring can also be used as a registry. It can auto-wire our application.
 	It is all about :
-		- removing Configuration code from your Application - Configuration code makes application brittle and hard to move in difefrent environments.
+		- removing Configuration code from your Application - Configuration code makes application brittle and hard to move in different environments.
 		- Difficulties in testing - its hard to test not because of the code complexity but because of the way the code was written.
 		
 -	Annotations
@@ -427,7 +427,7 @@
 	> Repository :
 		> Annotated with @Repository
 		> the repository tier describes the nouns(data) of a system
-		> focused on persistinh and interacting with the database
+		> focused on persisting and interacting with the database
 		> one-to-one mapping with an object
 		> often a one-to-one mapping with a database table.
 		
@@ -472,7 +472,7 @@
 -	What is Spring Boot ?
 		> takes an opinionated view on how a spring app should be constructed.
 		> fully wired application from controller to database in just a matter of seconds.
-		> prefers sprinh framework like Spring MVC and Spring Data which is one way it makes it opinionated, but this also serves another
+		> prefers spring framework like Spring MVC and Spring Data which is one way it makes it opinionated, but this also serves another
 		  purpose, it makes building applications very quick.
 		> got away from container dependency and wants applications to be standalone java apps which makes a lot of sense for cloud deployement.
 		> Instead of deploying a war file to a tomcat container for eg., boot embeds tomcat inside of an app and produces a self contained
@@ -534,6 +534,9 @@
 		> When serialization is used, loading hibernate properties with eager and lazy initializations is not needed.
 			>> Adding "@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})" to each model entity class wil solve other
 			   serialization issues.
+	> @ServletComponentScan - is making SpringBoot scan for @WebServlet annotation and it's only performed when using
+	  an embedded web server such as SpringBoot.
+		-- https://docs.spring.io/spring-boot/docs/current/api/org/springframework/boot/web/servlet/ServletComponentScan.html
 
 
 
