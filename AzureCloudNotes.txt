@@ -1,0 +1,305 @@
+------------------------------------------------------------------------------------------------------------------
+							DEVELOPING SOLUTIOMS FOR MICROSOFT AZURE
+------------------------------------------------------------------------------------------------------------------
+IMPLEMENTING BATCH JOBS BY USING AZURE BATCH SERVICES
+------------------------------------------------------------------------------------------------------------------
+AZURE BATCH SERVICE
+--------------------
+-	Though Batch Processing began with main frame computers, it still pays an important role in Business, 
+	Engineering, Science and other areas that require running lots of Automated tasks and High performance workloads
+	like Simulations and Risk Analysis, processing Bills and payrolls, Rendering Animated Films etc.
+- 	Every application has limites capability to handle and process work. When an application is assigned a
+	workload beyond its capability, it might take a long time to complete or often it just crashes. It becomes
+	even more severe in cases where a workload requires high compute resources such as Servers or Database
+	systems to be assigned than what was assigned at the creation of the workload.
+-	In respective of the platform or industry, the problem of heavy workloads must be addressed efficiently
+	and optimally to ensure project timelines and deliverables are met in a timely manner.
+-	One solution for heavy workload processing and boosting application performance is to split the workload
+	into smaller chunks on an increased no. of servers to carry out parallel execution of the smaller
+	workloads.
+- 	The shortcoming of this approach is the complexity and cost to setup, maintain and deploy these environments.
+	This is where Azure Batch Processing, a toll from Microsoft Azure services helps. It can reduce both the
+	cost and complexity of running the application in a cloud environment.
+-	Azure Batch is a new service to run large scale parallel applications on demand. It creates amd manages a
+	Pool of 'Compute Notes' which are nothing but VMs, installs the application you want to run and schedules
+	jobs to run on the Notes.
+-	There is no need to manually create, configure and manage a High Performance Compute cluster, individual
+	VMs and Virtual Networks or complex job or Task Scheduling infrastructure. Azure Batch simplifies or
+	automates these tasks.
+	
+	------------------------
+	AZURE BATCH WORKFLOW
+	------------------------
+	-	The following Workflow is typical of nearly all applications and services that use the batch service for
+		processing parallel workloads.
+
+	-	>>>>>> Refer PIC - Azure_Batch_Service-Workflow1.PNG <<<<<<
+			1. Upload the data files that you want to process to an Azure Storage account
+					> Batch includes built in support for accessing Azure based storage and your tasks can 
+					  download these files to Compute Notes when these tasks run.
+			2. Upload the application files that your tasks will run. These files can be binary or scripts
+			   and their dependencies are executed by the tasks in your jobs. Your tasks can download these
+			   files from your storage account or you can use the application package feature of batch for
+			   application management and deployement.
+			3. Create a pool of compute notes. When you create a pool, you specify the number of compute notes
+			   for the pool, their size and the Operating system. When each task in your job runs, it is assigned 
+			   to execute on one of the notes in your pool.
+			4. Create a Job. A Job manages a colection of tasks. You associate each job to a specific pool where
+			   that jobs task will run.
+			5. Add tasks to the jobs. Each task runs the application or script that you uploaded to process the 
+			   data files it downloads from your Azure storage account.
+			6. As each task completes it can upload its Output back to the Storage Account.
+			7. Monitor jobs progress and retrive the tasks Output from your Azure Storage.
+		
+	---------------------------------
+	>> Implementing batch jobs by using Azure Batch Service
+	---------------------------------
+		1. Sign in to the Azure portal at https://portal.azure.com.
+		2. Select Create a resource – Compute – Batch Service
+		3. Select the subscription, provide the resource group name, batch account name and location. Select 'Review + Create'.
+		4. Once the validation is successful, select 'Create'.
+		5. Once the deployment is successful, navigate to the batch service in portal.
+		6. Select Settings – 'Keys'.
+		7. Copy the Batch account, URL and Primary access key.
+		8. Download the client application. Open program.cs file in GoGame client application and update the batch account details.
+				---------------------------
+					// Batch accoutn credentials            
+					private const string BatchAccountName = "";
+					private const string BatchAccountKey = "";
+					private const string BatchAccountUrl = "";
+				---------------------------
+		9. Create a storage account to upload the game files.
+				> Select Create a resource – 'Storage'.
+				> Select 'Storage Account'.
+				> Select Subscription, provide resource group name, storage account name, location and select account kind 
+				  as 'BlobStorage'. Retain the default values for other properties. Select 'Review + Create'.
+				> Once the validation is passed, select 'Create'.
+		10. Once the deployment is successful, navigate to the storage account and select 'Blobs' under Services.
+		11. Select 'Container' and add a new container by name action, to upload the details of action games.
+		12. Select Settings – 'Access Keys' and copy the storage account name and key (key1).
+		13. Update the storage account name and key in Program.cs file of the client application.
+				---------------------------
+					// Storage account credentials
+					private const string StorageAccountName = "";
+					private const string StorageAccountKey = "";
+				---------------------------
+		14. The text files containing game details are the inputs for Batch process.
+				---------------------------
+					List<string> inputFilePaths = new List<string>
+					{
+						"Fragoria.txt",
+						"Hattrick.txt",
+						"Subspace.txt"
+					};
+				---------------------------
+			These files are uploaded to the ‘action’ container within the storage account blob.
+				---------------------------
+					private static ResourceFile UploadFileToContainer(CloudBlobClient blobClient, string containerName, string filePath)
+					{
+						Console.WriteLine("Uploading file {0} to container [{1}]...", filePath, containerName);
+						string blobName = Path.GetFileName(filePath);
+						filePath = Path.Combine(Environment.CurrentDirectory, filePath);
+						CloudBlobContainer container = blobClient.GetContainerReference(containerName);
+						CloudBlockBlob blobData = container.GetBlockBlobReference(blobName);
+						blobData.UploadFromFileAsync(filePath).Wait();
+						// Set the expiry time and permissions for the blob shared access signature. 
+						// In this case, no start time is specified, so the shared access signature becomes valid immediately
+						SharedAccessBlobPolicy sasConstraints = new SharedAccessBlobPolicy
+						{
+							SharedAccessExpiryTime = DateTime.UtcNow.AddHours(2),
+							Permissions = SharedAccessBlobPermissions.Read
+						};
+						// Construct the SAS URL for blob
+						string sasBlobToken = blobData.GetSharedAccessSignature(sasConstraints);
+						string blobSasUri = String.Format("{0}{1}", blobData.Uri, sasBlobToken);
+						return ResourceFile.FromUrl(blobSasUri, filePath);
+					}
+				---------------------------
+		15. The below code creates a pool of compute nodes running Windows Server.
+		16. The below code also creates a batch job.
+				---------------------------
+					private static void CreateBatchPool(BatchClient batchClient, VirtualMachineConfiguration vmConfiguration)
+					{
+						try
+						{
+							CloudPool pool = batchClient.PoolOperations.CreatePool(
+								poolId: PoolId,
+								targetDedicatedComputeNodes: PoolNodeCount,
+								virtualMachineSize: PoolVMSize,
+								virtualMachineConfiguration: vmConfiguration);
+
+							pool.Commit();
+						}
+						catch (BatchException be)
+						{
+							if (be.RequestInformation?.BatchError?.Code == BatchErrorCodeStrings.PoolExists)
+							{
+								Console.WriteLine("The pool {0} already existed when we tried to create it", PoolId);
+							}
+							else
+							{
+								throw; // Any other exception is unexpected
+							}
+						}
+					}
+				---------------------------
+		17. Three tasks are created to run on the nodes. Each task processes one of the input files using a Windows command line.
+				---------------------------
+					List<CloudTask> tasks = new List<CloudTask>();
+					// Create each of the tasks to process one of the input files. 
+					for (int i = 0; i < inputFiles.Count; i++)
+					{
+						string taskId = String.Format("Task{0}", i);
+						string inputFilename = inputFiles[i].FilePath;
+						string taskCommandLine = String.Format("cmd /c type {0}", inputFilename);
+						CloudTask task = new CloudTask(taskId, taskCommandLine);
+						task.ResourceFiles = new List<ResourceFile> { inputFiles[i] };
+						tasks.Add(task);
+					}
+					// Add all tasks to the job.
+					batchClient.JobOperations.AddTask(JobId, tasks);
+				---------------------------
+		18. Task output is redirected to Console.
+				---------------------------
+					Console.WriteLine();
+					Console.WriteLine("Printing task output...");
+					IEnumerable<CloudTask> completedtasks = batchClient.JobOperations.ListTasks(JobId);
+					foreach (CloudTask task in completedtasks)
+					{
+						string nodeId = String.Format(task.ComputeNodeInformation.ComputeNodeId);
+						Console.WriteLine("Task: {0}", task.Id);
+						Console.WriteLine("Node: {0}", nodeId);
+						Console.WriteLine("Standard out:");
+						Console.WriteLine(task.GetNodeFile(Constants.StandardOutFileName).ReadAsString());
+					}
+				---------------------------
+		19. Execute the application. Observe that the files are uploaded to storage account. Batch pool and batch 
+			job are created. Tasks are added to the job.
+		20. Navigate to the Batch account in the Azure portal.  Select Pools under Features section. Observe that 
+			the batch pool is created with 2 nodes, and verify the pool, compute nodes, job, and tasks are created.
+		21. Select Jobs under Features section. Observe that the batch job is created and it is active. Click on the job.
+		22. Observe that the tasks created during batch execution are listed.
+	---------------------------------
+	>> Creating an Azure Batch job using Azure CLI
+	---------------------------------
+		1. Sign in to Azure portal and launch the Cloud shell.
+		2. Create a resource group using the az group create command.
+				---------------------------
+					az group create --name batchdemo.rg --location southeastasia
+				---------------------------
+		3. Create a Batch account using the az batch account create command. 
+				---------------------------
+					az batch account create --name quicklearnbatch --resource-group batchdemo.rg --location southeastasia
+				---------------------------
+		4. Log in to the batch account using the az batch account login command.
+				---------------------------
+					az batch account login --name quicklearnbatch --resource-group batchdemo.rg --shared-key-auth
+				---------------------------
+		5. Create a pool of three Standard A1 v2 VMs running Ubuntu 16.04 using the az batch pool create command.
+				---------------------------
+					az batch pool create --id quicklearnpool --vm-size Standard_A1_v2 `
+						--target-dedicated-nodes 3 --image canonical:ubuntuserver:16.04-LTS `
+						--node-agent-sku-id "batch.node.ubuntu 16.04"
+				---------------------------
+			Note: Batch creates the pool immediately, but it takes a few minutes to allocate and start the compute nodes. During this time, the pool is in the "resizing" state.  Check whether the nodes are ready by using the az batch pool show command("steady").
+				---------------------------
+					az batch pool show --pool-id quicklearnpool --query "allocationState"
+				---------------------------
+		6. Create a Batch job, a logical grouping for all the tasks that will run on your nodes.
+				---------------------------
+					az batch job create --id quicklearnjob --pool-id quicklearnpool
+				---------------------------
+		7. Create the Batch tasks using the az batch task create command.
+				---------------------------
+					az batch task create `
+						--task-id task1 `
+						--job-id quicklearnjob `
+						--command-line "/bin/bash -c 'echo \\`$(printenv | grep `AZ_BATCH_TASK_ID) processed by; 
+						echo `$(printenv | grep `AZ_BATCG_NODE_ID)'"
+						
+					az batch task create `
+						--task-id task2 `
+						--job-id quicklearnjob `
+						--command-line "/bin/bash -c 'echi \\`$(printenv | grep `AZ_BATCH_TASK_ID) processed by; 
+						echo `$(printenv | grep `AZ_BATCH_NODE_ID)'"
+						
+					az batch task create `
+						--task-id task3 `
+						--job-id quicklearnjob `
+						--command-line "/bin/bash -c 'echo \\`$(printenv | grep `AZ_BATCH_TASK_ID) processed by; 
+						echo `$(printenv | grep `AZ_BATCH_NODE_ID)'"
+						
+					az batch task create `
+						--task-id task 4 `
+						--job-id quicklearnjob `
+						--command-line "/bin/bash -c 'echo \\`$(printenv | grep `AZ_BATCH_TASK_ID) processed by; 
+						echo `$(printenv | grep `AZ_BATCH_NODE_ID)'"
+				---------------------------
+			This command creates 4 parallel tasks and Azure Batch distributes the tasks to the compute nodes. The command 
+			output displays information about the task ID and node ID involved.
+			
+			Note:
+				- The --command-line argument does not directly run under a shell, so you have to explicitly invoke the 
+				shell using "/bin/bash -c" in order to use commands like printenv and grep.
+				- You can create a Batch job and add a series of tasks to the job at once by specifying the tasks in a 
+				JSON file, and passing it to the command.(https://docs.microsoft.com/en-us/azure/batch/scripts/batch-cli-sample-run-job)
+		---------------------------
+		Monitor Azure Batch job using Azure CLI
+		---------------------------
+		1. View the status of one of the tasks you created.
+				---------------------------
+					az batch task show --job-id quicklearnjob --task-id task1
+				---------------------------
+		2. Download the output for one of the tasks (task2) created.
+				---------------------------
+					az batch task file list --job-id quicklearnjob --task-id task2 --output table
+				---------------------------
+			>>>>>> Refer pic 'Azure_Batch_Service-taskOutputFile1.PNG' <<<<<<
+				---------------------------
+		3. Download the files generated by all the tasks created:
+				---------------------------
+					az batch task file download --job-id quicklearnjob --task-id task1 --file-path stdout.txt `
+						--destination ./task1_output.txt
+					
+					az batch task file download -job-id quicklearnjob --task-id task2 --file-path stdout.txt `
+						--destination ./task2_output.txt
+				---------------------------
+			Note: Tasks have a default working directory, and by default their work is directed to stdout.txt. By 
+				looping through we can redirect stdout.txt to numbered versions of stdout.txt, each of which shows the 
+				work of a given task and which node was used to execute it.
+				---------------------------
+		4. View the text contents of a couple of the sample files generated.
+				---------------------------
+					cat task1_output.txt && task2_output.txt
+				---------------------------
+			This output shows different tasks being scheduled onto different nodes as the Batch scheduler processes them.
+				---------------------------
+					\AZ_BATCH_TASK_ID=task1 processed by 
+					AZ_BATCH_NODE_ID=tvmps_904df844..._d
+					\AZ_BATCH_TASK_ID=task2 processed by 
+					AZ_BATCH_NODE_ID=tvmps_70c5eb13e..._d
+				---------------------------
+		5. Run the following command in the Cloud Shell to delete the Batch job:
+				---------------------------
+					az batch job delete --job-id quicklearnjob -y
+------------------------------------------------------------------------------------------------------------------
+AZURE KUBERNETES SERVICE (AKS)
+------------------------------------------------------------------------------------------------------------------
+- 	Have you ever came accross scenarios where your application works perfectly in Development and Testing environment
+	and fails in Production environment due to some dependencies not being present in prod env. This problem can be 
+	overcome with the help of containers.
+-	A 'CONTAINER' is a standard unit of software that packages the code and all the dependencies, so that the application
+	runs quickly, reliably and evenly from 1 computing env to another.
+-	Today, modern applications are increasingly built using containers. Even though containers are scalable, they are
+	not very easily scalable. In real time scenario, scaling upto 50 or 100 containers and managing the 
+	communication between them is not that easy.
+- 	AKS serves as a solution to this problem. Kubernetes is a rapidly evolving platform that manages container
+	based applications and their associated networking and storage components. The focus is on the application
+	workloads, not on the underlying infrastructure components.
+- 	AKS makes deploying and managing containerized applications easy. It manages your hosted Kubernetes env 
+	making it quick and easy to deploy and manage containerized applications without container orchestration 
+	expertize. It also eliminates the burden of ongoing operation and maintenance by Provisioning, Upgrading and
+	Scaling resources on demand without taking your applications offline.
+-	It offers serverless Kubernetes, which is an integrated CI/CD experience and enterprize grade security
+	and governance.
+------------------------------------------------------------------------------------------------------------------
