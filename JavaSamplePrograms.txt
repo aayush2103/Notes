@@ -1,0 +1,3132 @@
+1. Java Program To Reverse A String
+	----------------	
+		public class ReverseTheString
+		{
+			public static void main(String[] args)
+			{
+				String str = "MyJava";
+		 
+				//1. Using StringBuffer Class
+				
+				StringBuffer sbf = new StringBuffer(str);		 
+				System.out.println(sbf.reverse());    //Output : avaJyM
+		 
+				//2. Using iterative method
+		 
+				char[] strArray = str.toCharArray();
+				for (int i = strArray.length - 1; i >= 0; i--)
+				{
+					System.out.print(strArray[i]);    //Output : avaJyM
+				}
+		 
+				System.out.println();
+		 
+				//3. Using Recursive Method
+		 
+				System.out.println(recursiveMethod(str));    //Output : avaJyM
+			}
+		 
+			//Recursive method to reverse string
+		 
+			static String recursiveMethod(String str)
+			{
+				 if ((null == str) || (str.length() <= 1))
+				 {
+						return str;
+				 }
+		 
+				 return recursiveMethod(str.substring(1)) + str.charAt(0);
+			}
+		}
+	----------------
+2. How To Create Pyramid Of Numbers In Java?
+	a. Pattern 1 :
+		----------------
+			import java.util.Scanner;
+ 
+public class MainClass
+{
+    public static void main(String[] args)
+    {
+        Scanner sc = new Scanner(System.in);
+ 
+        //Taking noOfRows value from the user
+ 
+        System.out.println("How Many Rows You Want In Your Pyramid?");
+ 
+        int noOfRows = sc.nextInt();
+ 
+        //Initializing rowCount with 1
+ 
+        int rowCount = 1;
+ 
+        System.out.println("Here Is Your Pyramid");
+ 
+        //Implementing the logic
+ 
+        for (int i = noOfRows; i > 0; i--)
+        {
+            //Printing i spaces at the beginning of each row
+ 
+            for (int j = 1; j <= i; j++)
+            {
+                System.out.print(" ");
+            }
+ 
+            //Printing 'rowCount' value 'rowCount' times at the end of each row
+ 
+            for (int j = 1; j <= rowCount; j++)
+            {
+                System.out.print(rowCount+" ");
+            }
+ 
+            System.out.println();
+ 
+            //Incrementing the rowCount
+ 
+            rowCount++;
+        }
+    }
+}
+		----------------
+		Output :
+			How Many Rows You Want In Your Pyramid?
+9
+Here Is Your Pyramid
+         1
+        2 2
+       3 3 3
+      4 4 4 4
+     5 5 5 5 5
+    6 6 6 6 6 6
+   7 7 7 7 7 7 7
+  8 8 8 8 8 8 8 8
+ 9 9 9 9 9 9 9 9 9
+		----------------
+	b. Pattern 2 :	
+		----------------
+			import java.util.Scanner;
+ 
+public class MainClass
+{
+    public static void main(String[] args)
+    {
+        Scanner sc = new Scanner(System.in);
+ 
+        //Taking noOfRows value from the user
+ 
+        System.out.println("How Many Rows You Want In Your Pyramid?");
+ 
+        int noOfRows = sc.nextInt();
+ 
+        //Initializing rowCount with 1
+ 
+        int rowCount = 1;
+ 
+        System.out.println("Here Is Your Pyramid");
+ 
+        //Implementing the logic
+ 
+        for (int i = noOfRows; i > 0; i--)
+        {
+            //Printing i spaces at the beginning of each row
+ 
+            for (int j = 1; j <= i; j++)
+            {
+                System.out.print(" ");
+            }
+ 
+            //Printing 'j' value at the end of each row
+ 
+            for (int j = 1; j <= rowCount; j++)
+            {
+                System.out.print(j+" ");
+            }
+ 
+            System.out.println();
+ 
+            //Incrementing the rowCount
+ 
+            rowCount++;
+        }
+    }
+}
+		----------------
+		Output :
+			How Many Rows You Want In Your Pyramid?
+9
+Here Is Your Pyramid
+         1
+        1 2
+       1 2 3
+      1 2 3 4
+     1 2 3 4 5
+    1 2 3 4 5 6
+   1 2 3 4 5 6 7
+  1 2 3 4 5 6 7 8
+ 1 2 3 4 5 6 7 8 9
+		----------------
+	c. pattern 3 :	
+		----------------
+			import java.util.Scanner;
+ 
+public class MainClass
+{
+    public static void main(String[] args)
+    {
+        Scanner sc = new Scanner(System.in);
+ 
+        //Taking noOfRows value from the user
+ 
+        System.out.println("How Many Rows You Want In Your Pyramid?");
+ 
+        int noOfRows = sc.nextInt();
+ 
+        //Initializing rowCount with 1
+ 
+        int rowCount = 1;
+ 
+        System.out.println("Here Is Your Pyramid");
+ 
+        //Implementing the logic
+ 
+        for (int i = noOfRows; i > 0; i--)
+        {
+            //Printing i spaces at the beginning of each row
+ 
+            for (int j = 1; j <= i; j++)
+            {
+                System.out.print(" ");
+            }
+ 
+            //Printing * at the end of each row
+ 
+            for (int j = 1; j <= rowCount; j++)
+            {
+                System.out.print("* ");
+            }
+ 
+            System.out.println();
+ 
+            //Incrementing the rowCount
+ 
+            rowCount++;
+        }
+    }
+}
+		----------------
+		Output :
+			How Many Rows You Want In Your Pyramid?
+9
+Here Is Your Pyramid
+         *
+        * *
+       * * *
+      * * * *
+     * * * * *
+    * * * * * *
+   * * * * * * *
+  * * * * * * * *
+ * * * * * * * * *
+		----------------
+	d. Pattern 4 :
+		----------------
+			import java.util.Scanner;
+ 
+public class MainClass
+{
+    public static void main(String[] args)
+    {
+        Scanner sc = new Scanner(System.in);
+ 
+        //Taking noOfRows value from the user
+ 
+        System.out.println("How Many Rows You Want In Your Pyramid?");
+ 
+        int noOfRows = sc.nextInt();
+ 
+        //Initializing rowCount with 1
+ 
+        int rowCount = 1;
+ 
+        System.out.println("Here Is Your Pyramid");
+ 
+        //Implementing the logic
+ 
+        for (int i = noOfRows; i > 0; i--)
+        {
+            //Printing i*2 spaces at the beginning of each row
+ 
+            for (int j = 1; j <= i*2; j++)
+            {
+                System.out.print(" ");
+            }
+ 
+            //Printing j value where j value will be from 1 to rowCount
+ 
+            for (int j = 1; j <= rowCount; j++)          
+            {
+                System.out.print(j+" ");
+            }
+ 
+            //Printing j value where j value will be from rowCount-1 to 1
+             
+            for (int j = rowCount-1; j >= 1; j--)
+            {               
+                System.out.print(j+" ");            
+            }                       
+             
+            System.out.println();
+ 
+            //Incrementing the rowCount
+ 
+            rowCount++;
+        }
+    }
+}
+		----------------
+		Output :
+			How Many Rows You Want In Your Pyramid?
+9
+Here Is Your Pyramid
+                  1
+                1 2 1
+              1 2 3 2 1
+            1 2 3 4 3 2 1
+          1 2 3 4 5 4 3 2 1
+        1 2 3 4 5 6 5 4 3 2 1
+      1 2 3 4 5 6 7 6 5 4 3 2 1
+    1 2 3 4 5 6 7 8 7 6 5 4 3 2 1
+  1 2 3 4 5 6 7 8 9 8 7 6 5 4 3 2 1
+		----------------
+	e. Pattern 5 :
+		----------------
+			import java.util.Scanner;
+ 
+public class MainClass
+{
+    public static void main(String[] args)
+    {
+        Scanner sc = new Scanner(System.in);
+ 
+        //Taking noOfRows value from the user
+ 
+        System.out.println("How Many Rows You Want In Your Pyramid?");
+ 
+        int noOfRows = sc.nextInt();
+ 
+        //Initializing rowCount with noOfRows
+ 
+        int rowCount = noOfRows;
+ 
+        System.out.println("Here Is Your Pyramid");
+ 
+        //Implementing the logic
+ 
+        for (int i = 0; i < noOfRows; i++)
+        {
+            //Printing i*2 spaces at the beginning of each row
+ 
+            for (int j = 1; j <= i*2; j++)
+            {
+                System.out.print(" ");
+            }
+ 
+            //Printing j where j value will be from 1 to rowCount
+ 
+            for (int j = 1; j <= rowCount; j++)          
+            {
+                System.out.print(j+" ");
+            }
+ 
+            //Printing j where j value will be from rowCount-1 to 1
+             
+            for (int j = rowCount-1; j >= 1; j--)
+            {               
+                System.out.print(j+" ");            
+            }
+             
+            System.out.println();
+ 
+            //Decrementing the rowCount
+ 
+            rowCount--;
+        }
+    }
+}
+		----------------
+		Output :
+			How Many Rows You Want In Your Pyramid?
+9
+Here Is Your Pyramid
+1 2 3 4 5 6 7 8 9 8 7 6 5 4 3 2 1
+  1 2 3 4 5 6 7 8 7 6 5 4 3 2 1
+    1 2 3 4 5 6 7 6 5 4 3 2 1
+      1 2 3 4 5 6 5 4 3 2 1
+        1 2 3 4 5 4 3 2 1
+          1 2 3 4 3 2 1
+            1 2 3 2 1
+              1 2 1
+                1
+		----------------
+	f. Pattern 6 :
+		----------------
+			import java.util.Scanner;
+ 
+public class MainClass
+{
+    public static void main(String[] args)
+    {
+        Scanner sc = new Scanner(System.in);
+ 
+        //Taking noOfRows value from the user
+ 
+        System.out.println("How Many Rows You Want In Your Pyramid?");
+ 
+        int noOfRows = sc.nextInt();
+ 
+        //Initializing rowCount with 1
+ 
+        int rowCount = 1;
+ 
+        System.out.println("Here Is Your Pyramid");
+ 
+        //Implementing the logic
+ 
+        for (int i = noOfRows; i >= 1; i--)
+        {
+            //Printing i*2 spaces at the beginning of each row
+ 
+            for (int j = 1; j <= i*2; j++)
+            {
+                System.out.print(" ");
+            }
+ 
+            //Printing j where j value will be from i to noOfRows
+ 
+            for (int j = i; j <= noOfRows; j++)          
+            {
+                System.out.print(j+" ");
+            }
+ 
+            //Printing j where j value will be from noOfRows-1 to i
+             
+            for (int j = noOfRows-1; j >= i; j--)
+            {               
+                System.out.print(j+" ");            
+            }
+             
+            System.out.println();
+ 
+            //Incrementing the rowCount
+ 
+            rowCount++;
+        }
+    }
+}
+		----------------
+		Output :
+			How Many Rows You Want In Your Pyramid?
+9
+Here Is Your Pyramid
+                  9
+                8 9 8
+              7 8 9 8 7
+            6 7 8 9 8 7 6
+          5 6 7 8 9 8 7 6 5
+        4 5 6 7 8 9 8 7 6 5 4
+      3 4 5 6 7 8 9 8 7 6 5 4 3
+    2 3 4 5 6 7 8 9 8 7 6 5 4 3 2
+  1 2 3 4 5 6 7 8 9 8 7 6 5 4 3 2 1
+		----------------
+3. How To Remove White Spaces from String In Java?		
+		----------------
+			import java.util.Scanner;
+ 
+public class RemoveWhiteSpaces 
+{
+    public static void main(String[] args) 
+    {
+        Scanner sc = new Scanner(System.in);
+         
+        System.out.println("Enter input string to be cleaned from white spaces...!");
+         
+        String inputString = sc.nextLine();
+         
+        String stringWithoutSpaces = inputString.replaceAll("\\s+", "");
+         
+        System.out.println("Input String : "+inputString);
+         
+        System.out.println("Input String Without Spaces : "+stringWithoutSpaces);
+         
+        sc.close();
+    }
+}
+		----------------
+		Output :
+
+Enter input string to be cleaned from white spaces…!
+OneSpace TwoSpaces  ThreeSpaces   FourSpaces    Tab        End
+Input String : OneSpace TwoSpaces  ThreeSpaces   FourSpaces    Tab        End
+Input String Without Spaces : OneSpaceTwoSpacesThreeSpacesFourSpacesTabEnd
+		----------------
+			import java.util.Scanner;
+ 
+public class RemoveWhiteSpaces 
+{
+    public static void main(String[] args) 
+    {
+        Scanner sc = new Scanner(System.in);
+         
+        System.out.println("Enter input string to be cleaned from white spaces...!");
+         
+        String inputString = sc.nextLine();
+         
+        char[] charArray = inputString.toCharArray();
+         
+        String stringWithoutSpaces = "";
+         
+        for (int i = 0; i < charArray.length; i++) 
+        {
+            if ( (charArray[i] != ' ') && (charArray[i] != '\t') )
+            {
+                stringWithoutSpaces = stringWithoutSpaces + charArray[i];
+            }
+        }
+         
+        System.out.println("Input String : "+inputString);
+         
+        System.out.println("Input String Without Spaces : "+stringWithoutSpaces);
+         
+        sc.close();
+    }
+}
+		--------------------------------
+4. How To Find Duplicate Characters In A String In Java?
+		----------------
+			import java.util.HashMap;
+import java.util.Set;
+ 
+class DuplicateCharactersInString
+{
+    static void duplicateCharCount(String inputString)
+    {
+        //Creating a HashMap containing char as key and it's occurrences as value
+ 
+        HashMap<Character, Integer> charCountMap = new HashMap<Character, Integer>();
+ 
+        //Converting given string to char array
+ 
+        char[] strArray = inputString.toCharArray();
+ 
+        //checking each char of strArray
+ 
+        for (char c : strArray)
+        {
+            if(charCountMap.containsKey(c))
+            {
+                //If char is present in charCountMap, incrementing it's count by 1
+ 
+                charCountMap.put(c, charCountMap.get(c)+1);
+            }
+            else
+            {
+                //If char is not present in charCountMap,
+                //putting this char to charCountMap with 1 as it's value
+ 
+                charCountMap.put(c, 1);
+            }
+        }
+ 
+        //Getting a Set containing all keys of charCountMap
+ 
+        Set<Character> charsInString = charCountMap.keySet();
+ 
+        System.out.println("Duplicate Characters In "+inputString);
+ 
+        //Iterating through Set 'charsInString'
+ 
+        for (Character ch : charsInString)
+        {
+            if(charCountMap.get(ch) > 1)
+            {
+                //If any char has a count of more than 1, printing it's count
+ 
+                System.out.println(ch +" : "+ charCountMap.get(ch));
+            }
+        }
+    }
+ 
+    public static void main(String[] args)
+    {
+       duplicateCharCount("JavaJ2EE");
+ 
+       duplicateCharCount("Fresh Fish");
+ 
+       duplicateCharCount("Better Butter");
+    }
+}
+		----------------
+		Output :
+
+Duplicate Characters In JavaJ2EE
+E : 2
+a : 2
+J : 2
+Duplicate Characters In Fresh Fish
+F : 2
+s : 2
+h : 2
+Duplicate Characters In Better Butter
+t : 4
+e : 3
+r : 2
+B : 2
+		--------------------------------
+5. How To Check The Equality Of Two Arrays In Java?
+		----------------
+	a. Iterative Method :
+		----------------
+			public class EqualityOfTwoArrays
+{
+    public static void main(String[] args)
+    {   
+        int[] arrayOne = {2, 5, 1, 7, 4};
+         
+        int[] arrayTwo = {2, 5, 1, 7, 4};
+         
+        boolean equalOrNot = true;
+         
+        if(arrayOne.length == arrayTwo.length)
+        {
+            for (int i = 0; i < arrayOne.length; i++)
+            {
+                if(arrayOne[i] != arrayTwo[i])
+                {
+                    equalOrNot = false;
+                }
+            }
+        }
+        else
+        {
+            equalOrNot = false;
+        }
+         
+        if (equalOrNot)
+        {
+            System.out.println("Two Arrays Are Equal");
+        }
+        else
+        {
+            System.out.println("Two Arrays Are Not equal");
+        }
+    }
+}
+		----------------
+	b. Using Arrays.equals() Method :
+		----------------
+			class EqualityOfTwoArrays
+{
+    public static void main(String[] args)
+    {
+        String[] s1 = {"java", "j2ee", "struts", "hibernate"};
+ 
+        String[] s2 = {"jsp", "spring", "jdbc", "hibernate"};
+ 
+        String[] s3 = {"java", "j2ee", "struts", "hibernate"};
+ 
+        System.out.println(Arrays.equals(s1, s2));        //Output : false
+ 
+        System.out.println(Arrays.equals(s1, s3));      //Output : true
+    }
+}
+		----------------
+	c. Using Arrays.deepEquals() Method : used only for multidimensional array comparision
+		----------------
+			public class EqualityOfTwoArrays
+{
+    public static void main(String[] args)
+    {   
+        String[][] s1 = { {"java", "swings", "j2ee" }, { "struts", "jsp", "hibernate"} };
+ 
+        String[][] s2 = { {"java", "swings", "j2ee" }, { "struts", "jsp", "hibernate"} };
+ 
+        System.out.println(Arrays.deepEquals(s1, s2));     //Output : true
+         
+        //Calling equals() method on same arrays will return false
+         
+        System.out.println(Arrays.equals(s1, s2));        //Output : false
+         
+        //That's why use deepEquals() method to compare multidimensional arrays
+    }
+}
+		----------------
+		--------------------------------
+6. Write Java Program To Check Whether Two Strings Are Anagram Or Not?
+		----------------
+	a. Anagram Program In Java Using sort() and equals() Methods
+		----------------
+			public class AnagramProgram
+{
+    static void isAnagram(String s1, String s2)
+    {
+        //Removing all white spaces from s1 and s2
+ 
+        String copyOfs1 = s1.replaceAll("\\s", "");
+ 
+        String copyOfs2 = s2.replaceAll("\\s", "");
+ 
+        //Initially setting status as true
+ 
+        boolean status = true;
+ 
+        if(copyOfs1.length() != copyOfs2.length())
+        {
+            //Setting status as false if copyOfs1 and copyOfs2 doesn't have same length
+ 
+            status = false;
+        }
+        else
+        {
+            //Changing the case of characters of both copyOfs1 and copyOfs2 and converting them to char array
+ 
+            char[] s1Array = copyOfs1.toLowerCase().toCharArray();
+ 
+            char[] s2Array = copyOfs2.toLowerCase().toCharArray();
+ 
+            //Sorting both s1Array and s2Array
+ 
+            Arrays.sort(s1Array);
+ 
+            Arrays.sort(s2Array);
+ 
+            //Checking whether s1Array and s2Array are equal
+ 
+            status = Arrays.equals(s1Array, s2Array);
+        }
+ 
+        //Output
+ 
+        if(status)
+        {
+            System.out.println(s1+" and "+s2+" are anagrams");
+        }
+        else
+        {
+            System.out.println(s1+" and "+s2+" are not anagrams");
+        }
+    }
+ 
+    public static void main(String[] args)
+    {
+        isAnagram("Mother In Law", "Hitler Woman");
+ 
+        isAnagram("keEp", "peeK");
+ 
+        isAnagram("SiLeNt CAT", "LisTen AcT");
+ 
+        isAnagram("Debit Card", "Bad Credit");
+ 
+        isAnagram("School MASTER", "The ClassROOM");
+ 
+        isAnagram("DORMITORY", "Dirty Room");
+ 
+        isAnagram("ASTRONOMERS", "NO MORE STARS");
+ 
+        isAnagram("Toss", "Shot");
+ 
+        isAnagram("joy", "enjoy");
+    }
+}
+		--------------------------------
+		Output :
+Mother In Law and Hitler Woman are anagrams
+keEp and peeK are anagrams
+SiLeNt CAT and LisTen AcT are anagrams
+Debit Card and Bad Credit are anagrams
+School MASTER and The ClassROOM are anagrams
+DORMITORY and Dirty Room are anagrams
+ASTRONOMERS and NO MORE STARS are anagrams
+Toss and Shot are not anagrams
+joy and enjoy are not anagrams
+		----------------
+	b. Anagram Program In Java Using Iterative Method
+		----------------
+			public class AnagramProgram
+{
+    static void isAnagram(String s1, String s2)
+    {
+        //Removing white spaces from s1 and s2 and changing case to lower
+ 
+        String copyOfs1 = s1.replaceAll("\\s", "").toLowerCase();
+ 
+        String copyOfs2 = s2.replaceAll("\\s", "").toLowerCase();
+ 
+        //Initially setting status as true
+ 
+        boolean status = true;
+ 
+        if(copyOfs1.length() != copyOfs2.length())
+        {
+            //Setting status as false if copyOfs1 and copyOfs2 doesn't have same length
+ 
+            status = false;
+        }
+        else
+        {
+            //Converting copyOfs1 to char array
+ 
+            char[] s1ToArray = copyOfs1.toCharArray();
+ 
+            //Checking whether each character of s1ToArray is present in copyOfs2
+ 
+            for (char c : s1ToArray)
+            {
+                int index = copyOfs2.indexOf(c);
+ 
+                if(index != -1)
+                {
+                    //If character is present in copyOfs2, removing that char from copyOfs2
+ 
+                    copyOfs2 = copyOfs2.substring(0, index)+copyOfs2.substring(index+1, copyOfs2.length());
+                }
+                else
+                {
+                    //If character is not present in copyOfs2, setting status as false and breaking the loop
+ 
+                    status = false;
+ 
+                    break;
+                }
+            }
+        }
+ 
+        //Output
+ 
+        if(status)
+        {
+            System.out.println(s1+" and "+s2+" are anagrams");
+        }
+        else
+        {
+            System.out.println(s1+" and "+s2+" are not anagrams");
+        }
+    }
+ 
+    public static void main(String[] args)
+    {
+        isAnagram("Mother In Law", "Hitler Woman");
+ 
+        isAnagram("keEp", "peeK");
+ 
+        isAnagram("SiLeNt CAT", "LisTen AcT");
+ 
+        isAnagram("Debit Card", "Bad Credit");
+ 
+        isAnagram("School MASTER", "The ClassROOM");
+ 
+        isAnagram("DORMITORY", "Dirty Room");
+ 
+        isAnagram("ASTRONOMERS", "NO MORE STARS");
+ 
+        isAnagram("Toss", "Shot");
+ 
+        isAnagram("joy", "enjoy");
+    }
+}
+		--------------------------------
+		Output :
+Mother In Law and Hitler Woman are anagrams
+keEp and peeK are anagrams
+SiLeNt CAT and LisTen AcT are anagrams
+Debit Card and Bad Credit are anagrams
+School MASTER and The ClassROOM are anagrams
+DORMITORY and Dirty Room are anagrams
+ASTRONOMERS and NO MORE STARS are anagrams
+Toss and Shot are not anagrams
+joy and enjoy are not anagrams
+		----------------
+	c. Anagram Program In Java Using StringBuilder
+		----------------
+			public class AnagramProgram
+{
+    static void isAnagram(String s1, String s2)
+    {
+        //Removing white spaces from s1 and s2 and converting case to lower
+ 
+        String copyOfs1 = s1.replaceAll("\\s", "").toLowerCase();
+ 
+        String copyOfs2 = s2.replaceAll("\\s", "").toLowerCase();
+ 
+        //Initially setting status as true
+ 
+        boolean status = true;
+ 
+        if(copyOfs1.length() != copyOfs2.length())
+        {
+            //Setting status as false if copyOfs1 and copyOfs2 doesn't have same length
+ 
+            status = false;
+        }
+        else
+        {
+            //Converting copyOfs1 to char array
+ 
+            char[] s1Array = copyOfs1.toCharArray();
+ 
+            //Constructing StringBuilder from copyOfs2
+ 
+            StringBuilder sb = new StringBuilder(copyOfs2);
+ 
+            //Checking whether each character of s1Array is present in sb
+ 
+            for (char c : s1Array)
+            {
+                int index = sb.indexOf(""+c);
+ 
+                if (index != -1)
+                {
+                    //If present, removing that character from sb
+ 
+                    sb = sb.deleteCharAt(index);
+                }
+                else
+                {
+                    //If not present, setting status as false and breaking the loop
+ 
+                    status = false;
+ 
+                    break;
+                }
+            }
+        }
+ 
+        //Output
+ 
+        if(status)
+        {
+            System.out.println(s1+" and "+s2+" are anagrams");
+        }
+        else
+        {
+            System.out.println(s1+" and "+s2+" are not anagrams");
+        }
+    }
+ 
+    public static void main(String[] args)
+    {
+        isAnagram("Mother In Law", "Hitler Woman");
+ 
+        isAnagram("keEp", "peeK");
+ 
+        isAnagram("SiLeNt CAT", "LisTen AcT");
+ 
+        isAnagram("Debit Card", "Bad Credit");
+ 
+        isAnagram("School MASTER", "The ClassROOM");
+ 
+        isAnagram("DORMITORY", "Dirty Room");
+ 
+        isAnagram("ASTRONOMERS", "NO MORE STARS");
+ 
+        isAnagram("Toss", "Shot");
+ 
+        isAnagram("joy", "enjoy");
+    }
+}
+		--------------------------------
+	d. Anagram Program In Java Using HashMap
+		----------------
+			public class AnagramProgram {
+				static void isAnagram(String s1, String s2) {
+					//Removing white spaces from s1 and s2 and converting case to lower case
+					String copyOfs1 = s1.replaceAll("\\s", "").toLowerCase();
+					String copyOfs2 = s2.replaceAll("\\s", "").toLowerCase();
+					
+					//Initially setting status as true
+					boolean status = true;
+					
+					if(copyOfs1.length() != copyOfs2.length()) {
+						//Setting status as false if copyOfs1 and copyOfs2 doesn't have same length
+						status = false;
+					} else {
+						//Constructing a map containing character as a key and character occurrences as a value
+						HashMap<Character, Integer> map = new HashMap<Character, Integer>();
+						
+						for (int i = 0; i < copyOfs1.length(); i++) {
+							//Getting char from copyOfs1
+							char charAsKey = copyOfs1.charAt(i);
+
+							//Initializing char count to 0
+							int charCountAsValue = 0;
+
+							//Checking whether map contains this char
+							if(map.containsKey(charAsKey)) {
+								//If contains, retrieving it's count
+								charCountAsValue = map.get(charAsKey);
+							}
+
+							//Putting char and it's count to map with pre-incrementing char count
+							map.put(charAsKey, ++charCountAsValue);
+							
+							//Getting char from copyOfs2
+							charAsKey = copyOfs2.charAt(i);
+							
+							//Initializing char count to 0
+							charCountAsValue = 0;
+							
+							//Checking whether map contains this char
+							if(map.containsKey(charAsKey)) {
+								//If contains, retrieving it's count
+								charCountAsValue = map.get(charAsKey);
+							}
+
+							//Putting char and it's count to map with pre-decrementing char count
+							map.put(charAsKey, --charCountAsValue);
+						}
+
+						//Checking each character and it's count
+						for (int value : map.values()) {
+							if(value != 0) {
+								//If character count is not equal to 0, then setting status as false
+								status = false;
+							}
+						}
+					}
+					//Output
+					if(status) {
+						System.out.println(s1+" and "+s2+" are anagrams");
+					} else {
+						System.out.println(s1+" and "+s2+" are not anagrams");
+					}
+				}
+				
+				public static void main(String[] args) {
+					isAnagram("Mother In Law", "Hitler Woman");
+					isAnagram("keEp", "peeK");
+					isAnagram("SiLeNt CAT", "LisTen AcT");
+					isAnagram("Debit Card", "Bad Credit");
+					isAnagram("School MASTER", "The ClassROOM");
+					isAnagram("DORMITORY", "Dirty Room");
+					isAnagram("ASTRONOMERS", "NO MORE STARS");
+					isAnagram("Toss", "Shot");
+					isAnagram("joy", "enjoy");
+				}
+			}
+		----------------
+	e. practice :
+		----------------
+			import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
+
+public class HelloWorld{
+
+    public static void main(String []args){
+        Map<Character, Integer> map1 = new HashMap<>();
+        Map<Character, Integer> map2 = new HashMap<>();
+        
+        String str1 = "Mother In Law";
+        String str2 = "Hitler Woman";
+        
+        //convert both strings to lowercase or uppercase
+        str1 = str1.toLowerCase();
+        str2 = str2.toLowerCase();
+        
+        //get count of each letter in map
+        getCountOfEachLetter(str1, map1);
+        getCountOfEachLetter(str2, map2);
+        
+        //print map details
+        //printMapValue(map1);
+        //printMapValue(map2);
+        
+        //compare both maps
+        boolean isAnagram = isAnagram(map1, map2);
+        
+        System.out.println(isAnagram);
+    }
+    
+    private static void getCountOfEachLetter(String str, Map<Character, Integer> map){
+        char[] charArr = str.toCharArray();
+        
+        for(Character cha: charArr){
+            if(cha == ' '){
+                continue;
+            } else if(map.get(cha) != null){
+                map.put(cha, map.get(cha) + 1);
+            } else {
+                map.put(cha, 1);
+            }
+        }
+    }
+    
+    private static void printMapValue(Map<Character, Integer> map){
+        Set<Character> charSet = map.keySet();
+        
+        for(Character cha: charSet){
+            System.out.println(cha + " " + map.get(cha));
+        }
+        System.out.println();
+    }
+    
+    private static boolean isAnagram(Map<Character, Integer> map1, Map<Character, Integer> map2){
+        boolean isAnagram = true;
+        
+        if(map1.size() == map2.size()){
+            for(Character cha: map1.keySet()){
+                if(map1.get(cha) != map2.get(cha)){
+                    isAnagram = false;
+                    break;
+                }
+            }
+        } else {
+            isAnagram = false;
+        }
+        
+        return isAnagram;
+    }
+}
+		--------------------------------
+7. How To Find An Armstrong Number In Java?
+		----------------
+			public class MainClass
+{
+    static void checkArmstrongNumber(int number)
+    {
+        int copyOfNumber = number;
+ 
+        int noOfDigits = String.valueOf(number).length();
+ 
+        int sum = 0;
+ 
+        while (copyOfNumber != 0)
+        {
+            int lastDigit = copyOfNumber % 10;
+ 
+            int lastDigitToThePowerOfNoOfDigits = 1;
+ 
+            for(int i = 0; i < noOfDigits; i++)
+            {
+                lastDigitToThePowerOfNoOfDigits = lastDigitToThePowerOfNoOfDigits * lastDigit;
+            }
+ 
+            sum = sum + lastDigitToThePowerOfNoOfDigits;
+ 
+            copyOfNumber = copyOfNumber / 10;
+        }
+ 
+        if (sum == number)
+        {
+            System.out.println(number+" is an armstrong number");
+        }
+        else
+        {
+            System.out.println(number+" is not an armstrong number");
+        }
+    }
+ 
+    public static void main(String[] args)
+    {
+        checkArmstrongNumber(153);
+ 
+        checkArmstrongNumber(371);
+ 
+        checkArmstrongNumber(9474);
+ 
+        checkArmstrongNumber(54748);
+ 
+        checkArmstrongNumber(407);
+ 
+        checkArmstrongNumber(1674);
+    }
+}
+		--------------------------------
+		Output :
+153 is an armstrong number
+371 is an armstrong number
+9474 is an armstrong number
+54748 is an armstrong number
+407 is an armstrong number
+1674 is not an armstrong number
+		----------------
+8. How To Find Duplicates In Array In Java?
+		----------------
+			import java.util.Arrays;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map.Entry;
+import java.util.Set;
+import java.util.stream.Collectors;
+public class DuplicatesInArray 
+{
+//Method 1 : Brute Force Method
+private static void findDuplicatesUsingBruteForce(int[] inputArray)
+{
+for (int i = 0; i < inputArray.length; i++) 
+{
+for (int j = i+1; j < inputArray.length; j++) 
+{
+if(inputArray&#91;i&#93; == inputArray&#91;j&#93;)
+{
+System.out.println("Duplicate Element : "+inputArray&#91;i&#93;);
+}
+}
+}
+}
+//Method 2 : Sorting Method
+private static void findDuplicatesUsingSorting(int&#91;&#93; inputArray)
+{
+Arrays.f(inputArray);
+for (int i = 0; i < inputArray.length-1; i++)
+{
+if(inputArray&#91;i&#93; == inputArray&#91;i+1&#93;)
+{
+System.out.println("Duplicate Element : " + inputArray&#91;i&#93;);
+}
+}
+}
+//Method 3 : Using HashSet
+private static void findDuplicatesUsingHashSet(int&#91;&#93; inputArray)
+{
+HashSet<Integer> set = new HashSet<Integer>();
+for (int element : inputArray) 
+{
+if( ! set.add(element))
+{
+System.out.println("Duplicate Element : "+element);
+}
+}
+}
+//Method 4 : Using HashMap
+private static void findDuplicatesUsingHashMap(int[] inputArray)
+{
+HashMap<Integer, Integer> map = new HashMap<>();
+for (int element : inputArray) 
+{   
+if(map.get(element) == null)
+{
+map.put(element, 1);
+}
+else
+{
+map.put(element, map.get(element)+1);
+}
+}
+Set<Entry<Integer, Integer>> entrySet = map.entrySet();
+for (Entry<Integer, Integer> entry : entrySet) 
+{               
+if(entry.getValue() > 1)
+{
+System.out.println("Duplicate Element : "+entry.getKey()+" - found "+entry.getValue()+" times.");
+}
+}
+}
+//Method 5 : Using Java 8 Streams
+private static void findDuplicatesUsingJava8(int[] inputArray) 
+{   
+Set<Integer> uniqueElements = new HashSet<>();
+Set<Integer> duplicateElements =  Arrays.stream(inputArray)
+.filter(i -> !uniqueElements.add(i))
+.boxed()
+.collect(Collectors.toSet());
+System.out.println(duplicateElements);
+}
+public static void main(String[] args) 
+{
+int[] inputArray = new int[] {111, 333, 555, 777, 333, 444, 555};
+System.out.println("======Duplicates Using Brute Force======");
+findDuplicatesUsingBruteForce(inputArray);
+System.out.println("======Duplicates Using Sorting======");
+findDuplicatesUsingSorting(inputArray);
+System.out.println("======Duplicates Using HashSet======");
+findDuplicatesUsingHashSet(inputArray);
+System.out.println("======Duplicates Using HashMap======");
+findDuplicatesUsingHashMap(inputArray);
+System.out.println("======Duplicates Using Java 8 Streams======");
+findDuplicatesUsingJava8(inputArray);
+}
+}
+	--------------------------------
+		Output :
+
+======Duplicates Using Brute Force======
+Duplicate Element : 333
+Duplicate Element : 555
+======Duplicates Using Sorting======
+Duplicate Element : 333
+Duplicate Element : 555
+======Duplicates Using HashSet======
+Duplicate Element : 333
+Duplicate Element : 555
+======Duplicates Using HashMap======
+Duplicate Element : 555 – found 2 times.
+Duplicate Element : 333 – found 2 times.
+======Duplicates Using Java 8 Streams======
+[555, 333]
+	--------------------------------
+9. How To Find Second Largest Number In An Integer Array?
+	----------------
+		public class MainClass
+{
+    static int secondLargest(int[] input)
+    {
+        int firstLargest, secondLargest;
+ 
+        //Checking first two elements of input array
+ 
+        if(input[0] > input[1])
+        {
+            //If first element is greater than second element
+ 
+            firstLargest = input[0];
+ 
+            secondLargest = input[1];
+        }
+        else
+        {
+            //If second element is greater than first element
+ 
+            firstLargest = input[1];
+ 
+            secondLargest = input[0];
+        }
+ 
+        //Checking remaining elements of input array
+ 
+        for (int i = 2; i < input.length; i++)
+        {
+            if(input[i] > firstLargest)
+            {
+                //If element at 'i' is greater than 'firstLargest'
+ 
+                secondLargest = firstLargest;
+ 
+                firstLargest = input[i];
+            }
+            else if (input[i] < firstLargest && input[i] > secondLargest)
+            {
+                //If element at 'i' is smaller than 'firstLargest' and greater than 'secondLargest'
+ 
+                secondLargest = input[i];
+            }
+        }
+ 
+        return secondLargest;
+    }
+ 
+    public static void main(String[] args)
+    {
+        System.out.println(secondLargest(new int[] {45, 51, 28, 75, 49, 42}));
+ 
+        System.out.println(secondLargest(new int[] {985, 521, 975, 831, 479, 861}));
+ 
+        System.out.println(secondLargest(new int[] {9459, 9575, 5692, 1305, 1942, 9012}));
+ 
+        System.out.println(secondLargest(new int[] {47498, 14526, 74562, 42681, 75283, 45796}));
+    }
+}
+	----------------
+10. How To Perform Matrix Operations In Java?
+	----------------
+	a. Creation Of Matrix In Java
+		----------------
+			import java.util.Scanner;
+ 
+public class MatrixCreation
+{
+    public static void main(String[] args) 
+    {
+        Scanner sc = new Scanner(System.in);
+         
+        System.out.println("Enter The Number Of Rows");
+         
+        int row = sc.nextInt();
+         
+        System.out.println("Enter The Number Of Columns");
+         
+        int cols = sc.nextInt();
+         
+        //defining 2D array to hold matrix data
+         
+        int[][] matrix = new int[row][cols];
+         
+        System.out.println("Enter Matrix Data");
+         
+        for (int i = 0; i < row; i++)
+        {
+            for (int j = 0; j < cols; j++)
+            {
+                matrix[i][j] = sc.nextInt();
+            }
+        }
+         
+        System.out.println("Your Matrix is : ");
+         
+        for (int i = 0; i < row; i++)
+        {
+            for (int j = 0; j < cols; j++)
+            {
+                System.out.print(matrix[i][j]+"\t");
+            }
+             
+            System.out.println();
+        }
+    }
+}
+		----------------
+		Output :
+
+Enter The Number Of Rows
+3
+Enter The Number Of Columns
+2
+Enter Matrix Data
+5
+2
+8
+4
+9
+3
+Your Matrix is :
+5    2
+8    4
+9    3
+	----------------
+	b. Matrix Addition In Java
+	----------------
+		----------------
+		import java.util.Scanner;
+ 
+public class MatrixAddition
+{
+    public static void main(String[] args) 
+    {
+        Scanner sc = new Scanner(System.in);
+         
+        System.out.println("Enter The Number Of Rows");
+         
+        int row = sc.nextInt();
+         
+        System.out.println("Enter The Number Of Columns");
+         
+        int cols = sc.nextInt();
+         
+        int[][] matrix1 = new int[row][cols];
+         
+        int[][] matrix2 = new int[row][cols];
+         
+        int[][] sum = new int[row][cols];
+         
+        System.out.println("Enter The Data For First Matrix :");
+         
+        for (int i = 0; i < row; i++)
+        {
+            for (int j = 0; j < cols; j++)
+            {
+                matrix1[i][j] = sc.nextInt();
+            }
+        }
+         
+        System.out.println("Enter The Data For Second Matrix :");
+         
+        for (int i = 0; i < row; i++)
+        {
+            for (int j = 0; j < cols; j++)
+            {
+                matrix2[i][j] = sc.nextInt();
+            }
+        }
+         
+        System.out.println("First Matrix = ");
+         
+        for (int i = 0; i < row; i++)
+        {
+            for (int j = 0; j < cols; j++)
+            {
+                System.out.print(matrix1[i][j]+"\t");
+            }
+             
+            System.out.println();
+        }
+         
+        System.out.println("Second Matrix = ");
+         
+        for (int i = 0; i < row; i++)
+        {
+            for (int j = 0; j < cols; j++)
+            {
+                System.out.print(matrix2[i][j]+"\t");
+            }
+             
+            System.out.println();
+        }
+         
+        System.out.println("Sum = ");
+         
+        for (int i = 0; i < row; i++)
+        {
+            for (int j = 0; j < cols; j++)
+            {
+                sum[i][j] = matrix1[i][j] + matrix2[i][j];
+                 
+                System.out.print(sum[i][j]+"\t");
+            }
+             
+            System.out.println();
+        }
+    }
+}
+		----------------
+		Output :
+
+Enter The Number Of Rows
+3
+Enter The Number Of Columns
+2
+Enter The Data For First Matrix :
+5
+4
+8
+6
+1
+3
+Enter The Data For Second Matrix :
+9
+2
+8
+6
+3
+0
+First Matrix =
+5    4
+8    6
+1    3
+Second Matrix =
+9    2
+8    6
+3    0
+Sum =
+14    6
+16    12
+4     3
+	----------------
+	c. Matrix Subtraction In Java :
+	----------------
+	import java.util.Scanner;
+ 
+public class MatrixSubtraction
+{
+    public static void main(String[] args) 
+    {
+        Scanner sc = new Scanner(System.in);
+         
+        System.out.println("Enter The Number Of Rows");
+         
+        int row = sc.nextInt();
+         
+        System.out.println("Enter The Number Of Columns");
+         
+        int cols = sc.nextInt();
+         
+        int[][] matrix1 = new int[row][cols];
+         
+        int[][] matrix2 = new int[row][cols];
+         
+        int[][] sub = new int[row][cols];
+         
+        System.out.println("Enter The Data For First Matrix :");
+         
+        for (int i = 0; i < row; i++)
+        {
+            for (int j = 0; j < cols; j++)
+            {
+                matrix1[i][j] = sc.nextInt();
+            }
+        }
+         
+        System.out.println("Enter The Data For Second Matrix :");
+         
+        for (int i = 0; i < row; i++)
+        {
+            for (int j = 0; j < cols; j++)
+            {
+                matrix2[i][j] = sc.nextInt();
+            }
+        }
+         
+        System.out.println("First Matrix = ");
+         
+        for (int i = 0; i < row; i++)
+        {
+            for (int j = 0; j < cols; j++)
+            {
+                System.out.print(matrix1[i][j]+"\t");
+            }
+             
+            System.out.println();
+        }
+         
+        System.out.println("Second Matrix = ");
+         
+        for (int i = 0; i < row; i++)
+        {
+            for (int j = 0; j < cols; j++)
+            {
+                System.out.print(matrix2[i][j]+"\t");
+            }
+             
+            System.out.println();
+        }
+         
+        System.out.println("Subtraction = ");
+         
+        for (int i = 0; i < row; i++)
+        {
+            for (int j = 0; j < cols; j++)
+            {
+                sub[i][j] = matrix1[i][j] - matrix2[i][j];
+                 
+                System.out.print(sub[i][j]+"\t");
+            }
+             
+            System.out.println();
+        }
+    }
+}
+	----------------
+	Output :
+
+Enter The Number Of Rows
+2
+Enter The Number Of Columns
+3
+Enter The Data For First Matrix :
+7
+6
+9
+4
+8
+2
+Enter The Data For Second Matrix :
+6
+9
+1
+2
+5
+7
+First Matrix =
+7    6    9
+4    8    2
+Second Matrix =
+6    9    1
+2    5    7
+Subtraction =
+1    -3     8
+2     3    -5
+	----------------
+	d. Matrix Multiplication In Java :
+	----------------
+	import java.util.Scanner;
+ 
+public class MatrixMultiplication
+{
+    public static void main(String[] args) 
+    {
+        Scanner sc = new Scanner(System.in);
+         
+        System.out.println("Enter The Number Of Rows In First Matrix");
+         
+        int rowsInFirst = sc.nextInt();
+         
+        System.out.println("Enter The Number Of Columns In First Matrix / Rows In Second Matrix");
+         
+        int colsInFirstRowsInSecond = sc.nextInt();
+         
+        System.out.println("Enter The Number Of Columns In Second Matrix");
+         
+        int colsInSecond = sc.nextInt();
+         
+        int[][] matrix1 = new int[rowsInFirst][colsInFirstRowsInSecond];
+         
+        int[][] matrix2 = new int[colsInFirstRowsInSecond][colsInSecond];
+         
+        int[][] product = new int[rowsInFirst][colsInSecond];
+         
+        System.out.println("Enter The Data For First Matrix :");
+         
+        for (int i = 0; i < rowsInFirst; i++)
+        {
+            for (int j = 0; j < colsInFirstRowsInSecond; j++)
+            {
+                matrix1[i][j] = sc.nextInt();
+            }
+        }
+         
+        System.out.println("Enter The Data For Second Matrix :");
+         
+        for (int i = 0; i < colsInFirstRowsInSecond; i++)
+        {
+            for (int j = 0; j < colsInSecond; j++)
+            {
+                matrix2[i][j] = sc.nextInt();
+            }
+        }
+         
+        System.out.println("First Matrix = ");
+         
+        for (int i = 0; i < rowsInFirst; i++)
+        {
+            for (int j = 0; j < colsInFirstRowsInSecond; j++)
+            {
+                System.out.print(matrix1[i][j]+"\t");
+            }
+             
+            System.out.println();
+        }
+         
+        System.out.println("Second Matrix = ");
+         
+        for (int i = 0; i < colsInFirstRowsInSecond; i++)
+        {
+            for (int j = 0; j < colsInSecond; j++)
+            {
+                System.out.print(matrix2[i][j]+"\t");
+            }
+             
+            System.out.println();
+        }
+         
+        System.out.println("Product = ");
+         
+        for (int i = 0; i < rowsInFirst; i++)
+        {
+            for (int j = 0; j < colsInSecond; j++)
+            {
+                for (int k = 0; k < colsInFirstRowsInSecond; k++)
+                {
+                    product[i][j] +=  matrix1[i][k] * matrix2[k][j];
+                }
+            }
+        }
+         
+        for (int i = 0; i < rowsInFirst; i++)
+        {
+            for (int j = 0; j < colsInSecond; j++)
+            {
+                System.out.print(product[i][j]+"\t");
+            }
+             
+            System.out.println();
+        }
+    }
+}
+	----------------
+	Output :
+
+Enter The Number Of Rows In First Matrix
+2
+Enter The Number Of Columns In First Matrix / Rows In Second Matrix
+3
+Enter The Number Of Columns In Second Matrix
+2
+Enter The Data For First Matrix :
+7
+6
+1
+2
+3
+8
+Enter The Data For Second Matrix :
+4
+9
+1
+7
+3
+8
+First Matrix =
+7    6    1
+2    3    8
+Second Matrix =
+4    9
+1    7
+3    8
+Product =
+37    113
+35    103
+	----------------
+	e. Transpose Of A Matrix
+	----------------
+	import java.util.Scanner;
+ 
+public class MatrixTranspose
+{
+    public static void main(String[] args) 
+    {
+        Scanner sc = new Scanner(System.in);
+         
+        System.out.println("Enter The Number Of Rows");
+         
+        int rows = sc.nextInt();
+         
+        System.out.println("Enter The Number Of Columns");
+         
+        int cols = sc.nextInt();
+         
+        int[][] matrix = new int[rows][cols];
+     
+        int[][] transpose = new int[cols][rows];
+         
+        System.out.println("Enter The Data For Matrix :");
+         
+        for (int i = 0; i < rows; i++)
+        {
+            for (int j = 0; j < cols; j++)
+            {
+                matrix[i][j] = sc.nextInt();
+            }
+        }
+         
+        System.out.println("Your Matrix is :");
+         
+        for (int i = 0; i < rows; i++)
+        {
+            for (int j = 0; j < cols; j++)
+            {
+                System.out.print(matrix[i][j]+" ");
+            }
+             
+            System.out.println();
+        }
+         
+        System.out.println("Transpose of Matrix is :");
+         
+        for (int i = 0; i < rows; i++)
+        {
+            for (int j = 0; j < cols; j++)
+            {
+                transpose[j][i] = matrix[i][j];
+            }
+        }
+         
+        for (int i = 0; i < cols; i++)
+        {
+            for (int j = 0; j < rows; j++)
+            {
+                System.out.print(transpose[i][j]+"\t");
+            }
+             
+            System.out.println();
+        }
+    }
+}
+	----------------
+	Output :
+
+Enter The Number Of Rows
+2
+Enter The Number Of Columns
+3
+Enter The Data For Matrix :
+7
+2
+9
+1
+6
+3
+Your Matrix is :
+7    2    9
+1    6    3
+Transpose of Matrix is :
+7    1
+2    6
+9    3
+	----------------
+11. How To Find Largest Number Less Than Given Number And Without Given Digit?
+	----------------
+	public class LargestNumber
+{
+    static int getLLessThanN(int number, int digit)
+    {
+        //Converting digit to char
+ 
+        char c = Integer.toString(digit).charAt(0);
+ 
+        //Decrementing number & checking whether it contains digit
+ 
+        for (int i = number; i > 0; --i)
+        {
+            if(Integer.toString(i).indexOf(c) == -1)
+            {
+                //If 'i' doesn't contain 'c'
+ 
+                return i;
+            }
+        }
+ 
+        return -1;
+    }
+ 
+    public static void main(String[] args)
+    {
+        System.out.println(getLLessThanN(123, 2));
+ 
+        System.out.println(getLLessThanN(4582, 5));
+ 
+        System.out.println(getLLessThanN(98512, 5));
+ 
+        System.out.println(getLLessThanN(548624, 8));
+    }
+}
+	----------------
+	Output :
+
+119
+4499
+98499
+547999
+	----------------
+12. How To Find All Pairs of Elements In An Array Whose Sum Is Equal To A Given Number?
+	----------------
+	public class PairsOfElementsInArray
+{
+    static void findThePairs(int inputArray[], int inputNumber)
+    {
+        System.out.println("Pairs of elements whose sum is "+inputNumber+" are : ");
+ 
+        for (int i = 0; i < inputArray.length; i++)
+        {
+            for (int j = i+1; j < inputArray.length; j++)
+            {
+                if(inputArray[i]+inputArray[j] == inputNumber)
+                {
+                    System.out.println(inputArray[i]+" + "+inputArray[j]+" = "+inputNumber);
+                }
+            }
+        }
+    }
+ 
+    public static void main(String[] args)
+    {
+        findThePairs(new int[] {4, 6, 5, -10, 8, 5, 20}, 10);
+ 
+        findThePairs(new int[] {4, -5, 9, 11, 25, 13, 12, 8}, 20);
+ 
+        findThePairs(new int[] {12, 13, 40, 15, 8, 10, -15}, 25);
+ 
+        findThePairs(new int[] {12, 23, 125, 41, -75, 38, 27, 11}, 50);
+    }
+}
+	----------------
+	Output:
+	{4,6}, {5,5}, {-10,20}, 
+{-5,25}, {9,11}, {12,8}, 
+{12,13}, {40,-15}, {15,10}, 
+{12,38}, {23,27}, {125,-75},
+	----------------
+13. How To Find Continuous Sub Array Whose Sum Is Equal To Given Number?
+	----------------
+	import java.util.Arrays;
+ 
+public class SubArrayWhoseSumIsNumber
+{
+    static void findSubArray(int[] inputArray, int inputNumber)
+    {
+        //Initializing sum with the first element of the inputArray
+ 
+        int sum = inputArray[0];
+ 
+        //Initializing starting point with 0
+ 
+        int start = 0;
+ 
+        //Iterating through inputArray starting from second element
+ 
+        for (int i = 1; i < inputArray.length; i++)
+        {
+            //Adding inputArray[i] to the current 'sum'
+ 
+            sum = sum + inputArray[i];
+ 
+            //If sum is greater than inputNumber then following loop is executed until
+ 
+            //sum becomes either smaller than or equal to inputNumber
+ 
+            while(sum > inputNumber && start <= i-1)
+            {
+                //Removing starting elements from the 'sum'
+ 
+                sum = sum - inputArray[start];
+ 
+                //Incrementing start by 1
+ 
+                start++;
+            }
+ 
+            //If 'sum' is equal to 'inputNumber' then printing the sub array
+ 
+            if(sum == inputNumber)
+            {
+                System.out.println("Continuous sub array of "+Arrays.toString(inputArray)+" whose sum is "+inputNumber+" is ");
+ 
+                for (int j = start; j <= i; j++)
+                {
+                    System.out.print(inputArray[j]+" ");
+                }
+ 
+                System.out.println();
+            }
+        }
+    }
+ 
+    public static void main(String[] args)
+    {
+        findSubArray(new int[]{42, 15, 12, 8, 6, 32}, 26);
+ 
+        findSubArray(new int[]{12, 5, 31, 13, 21, 8}, 49);
+ 
+        findSubArray(new int[]{15, 51, 7, 81, 5, 11, 25}, 41);
+    }
+}
+	----------------
+	Output :
+
+Continuous sub array of [42, 15, 12, 8, 6, 32] whose sum is 26 is
+12 8 6
+Continuous sub array of [12, 5, 31, 13, 21, 8] whose sum is 49 is
+5 31 13
+Continuous sub array of [15, 51, 7, 81, 5, 11, 25] whose sum is 41 is
+5 11 25
+	----------------
+14. Decimal To Binary, Decimal To Octal And Decimal To HexaDecimal In Java
+	----------------
+	a. Java Program To Convert Decimal To Binary :
+	----------------
+	import java.util.Scanner;
+ 
+public class DecimalToBinary
+{   
+    public static void main(String[] args) 
+    {
+        Scanner sc = new Scanner(System.in);
+         
+        //Taking input from the user
+         
+        System.out.println("Enter The Decimal Number : ");
+         
+        int inputNumber = sc.nextInt();
+         
+        //Copying inputNumber into copyOfInputNumber
+         
+        int copyOfInputNumber = inputNumber;
+         
+        //Initializing binary to empty string
+         
+        String binary = "";
+         
+        //Defining rem to store remainder
+         
+        int rem = 0;
+         
+        //See the below explanation to know how this loop works
+         
+        while (inputNumber > 0)
+        {
+            rem = inputNumber % 2;
+             
+            binary =  rem + binary;
+             
+            inputNumber = inputNumber/2;
+        }
+         
+        System.out.println("Binary Equivalent of "+copyOfInputNumber+" is "+binary);
+    }
+}
+	----------------
+	Output :
+
+Enter The Decimal Number :
+50
+Binary Equivalent of 50 is 110010
+
+Explanation :
+
+Let inputNumber = 50.
+
+1st Iteration :
+As 50 > 0 (inputNumber > 0)
+
+rem = inputNumber%2 = 50%2 = 0
+
+binary = rem+binary = 0 + “” = “0”
+
+inputNumber = inputNumber/2 = 50/2 = 25
+
+2nd Iteration :
+As 25 > 0 (inputNumber > 0)
+
+rem = inputNumber%2 = 25%2 = 1
+
+binary = rem+binary = 1 + “0” = “10”
+
+inputNumber = inputNumber/2 = 25/2 = 12
+
+3rd Iteration :
+As 12 > 0 (inputNumber > 0)
+
+rem = inputNumber%2 = 12%2 = 0
+
+binary = rem+binary = 0 + “10” = “010”
+
+inputNumber = inputNumber/2 = 12/2 = 6
+
+4th Iteration :
+As 6 > 0 (inputNumber > 0)
+
+rem = inputNumber%2 = 6%2 = 0
+
+binary = rem+binary = 0 + “010” = “0010”
+
+inputNumber = inputNumber/2 = 6/2 = 3
+
+5th Iteration :
+As 3 > 0 (inputNumber > 0)
+
+rem = inputNumber%2 = 3%2 = 1
+
+binary = rem+binary = 1 + “0010” = “10010”
+
+inputNumber = inputNumber/2 = 3/2 = 1
+
+6th Iteration :
+As 1 > 0 (inputNumber > 0)
+
+rem = inputNumber%2 = 1%2 = 1
+
+binary = rem+binary = 1 + “10010” = “110010”
+
+inputNumber = inputNumber/2 = 1/2 = 0
+
+7th Iteration :
+As 0 == 0 (inputNumber = 0)
+
+Exit The Loop
+
+So, Binary Equivalent of 50 is 110010
+	----------------
+	b. Java Program To Convert Decimal To Octal :
+	----------------
+	import java.util.Scanner;
+ 
+public class DecimalToOctal
+{   
+    public static void main(String[] args) 
+    {
+        Scanner sc = new Scanner(System.in);
+         
+        //Taking input from the user
+         
+        System.out.println("Enter The Decimal Number : ");
+         
+        int inputNumber = sc.nextInt();
+         
+        //Copying inputNumber into copyOfInputNumber
+         
+        int copyOfInputNumber = inputNumber;
+         
+        //Initializing octal to empty string
+         
+        String octal = "";
+         
+        //Defining rem to store remainder
+         
+        int rem = 0;
+         
+        //See the below explanation to know how this loop works
+         
+        while (inputNumber > 0)
+        {
+            rem = inputNumber%8;
+             
+            octal =  rem + octal;
+             
+            inputNumber = inputNumber/8;
+        }
+         
+        System.out.println("Octal Equivalent of "+copyOfInputNumber+" is "+octal);
+    }
+}
+	----------------
+	Output :
+
+Enter The Decimal Number :
+1000
+Octal Equivalent of 1000 is 1750
+
+Explanation :
+
+Let inputNumber = 1000.
+
+1st Iteration :
+As 1000 > 0 (inputNumber > 0)
+
+rem = inputNumber%8 = 1000%8 = 0
+
+octal = rem+octal = 0 + “” = “0”
+
+inputNumber = inputNumber/8 = 1000/8 = 125
+
+2nd Iteration :
+As 125 > 0 (inputNumber > 0)
+
+rem = inputNumber%8 = 125%8 = 5
+
+octal = rem+octal = 5 + “0” = “50”
+
+inputNumber = inputNumber/8 = 125/8 = 15
+
+3rd Iteration :
+As 15 > 0 (inputNumber > 0)
+
+rem = inputNumber%8 = 15%8 = 7
+
+octal = rem+octal = 7 + “50” = “750”
+
+inputNumber = inputNumber/8 = 15/8 = 1
+
+4th Iteration :
+As 1 > 0 (inputNumber > 0)
+
+rem = inputNumber%8 = 1%8 = 1
+
+octal = rem+octal = 1 + “750” = “1750”
+
+inputNumber = inputNumber/8 = 1/8 = 0
+
+5th Iteration :
+As 0 == 0 (inputNumber = 0)
+
+Exit The Loop
+
+So, octal equivalent of 1000 is 1750.
+	----------------
+	c. Java Program To Convert Decimal To HexaDecimal :
+	----------------
+	import java.util.Scanner;
+ 
+public class DecimalToHexaDecimal
+{   
+    public static void main(String[] args) 
+    {
+        Scanner sc = new Scanner(System.in);
+         
+        //Taking input from the user
+         
+        System.out.println("Enter The Decimal Number : ");
+         
+        int inputNumber = sc.nextInt();
+         
+        //Copying inputNumber into copyOfInputNumber
+         
+        int copyOfInputNumber = inputNumber;
+         
+        //Initializing hexa to empty string
+         
+        String hexa = "";
+         
+        //Digits in HexaDecimal Number System
+         
+        char hexaDecimals[]={'0','1','2','3','4','5','6','7','8','9','A','B','C','D','E','F'};
+         
+        //Defining rem to store remainder
+         
+        int rem = 0;
+         
+        //See the below explanation to know how this loop works
+         
+        while (inputNumber > 0)
+        {
+            rem = inputNumber%16;
+             
+            hexa =  hexaDecimals[rem] + hexa;
+             
+            inputNumber = inputNumber/16;
+        }
+         
+        System.out.println("HexaDecimal Equivalent of "+copyOfInputNumber+" is "+hexa);
+    }
+}
+	----------------
+	Output :
+
+Enter The Decimal Number :
+2000
+HexaDecimal Equivalent of 2000 is 7D0
+
+Explanation :
+
+Let inputNumber = 2000
+
+1st Iteration :
+As 2000 > 0 (inputNumber > 0)
+
+rem = inputNumber%16 = 2000%16 = 0
+
+hexa = hexaDecimals[rem]+hexa = 0 + “” = “0”
+
+inputNumber = inputNumber/16 = 2000/16 = 125
+
+2nd Iteration :
+As 125 > 0 (inputNumber > 0)
+
+rem = inputNumber%16 = 125%16 = 13
+
+hexa = hexaDecimals[rem]+hexa = D + “0” = “D0”
+
+inputNumber = inputNumber/16 = 125/16 = 7
+
+3rd Iteration :
+As 7 > 0 (inputNumber > 0)
+
+rem = inputNumber%16 = 7%16 = 7
+
+hexa = hexaDecimals[rem]+hexa = 7 + “D0” = “7D0”
+
+inputNumber = inputNumber/16 = 7/16 = 0
+
+4th Iteration :
+As 0 == 0 (inputNumber == 0)
+
+Exit The Loop
+
+So, HexaDecimal equivalent of 2000 is 7D0
+	----------------
+15. How To Find All The Leaders In An Integer Array?
+	----------------
+	a. 
+	----------------
+	public class LeadersInArray
+{
+    static void findTheLeaders(int inputArray[])
+    {
+        //Getting the length of input array
+ 
+        int inputArrayLength = inputArray.length;
+ 
+        //Assuming the last element as max
+ 
+        int max = inputArray[inputArrayLength-1];
+ 
+        System.out.println("The leaders in "+Arrays.toString(inputArray)+" are : ");
+ 
+        //Printing the last element as it is always a leader
+ 
+        System.out.println(inputArray[inputArrayLength-1]);
+ 
+        //Traversing the remaining elements from right to left
+ 
+        for (int i = inputArray.length-2; i >= 0; i--)
+        {
+            //If the element is greater than max
+ 
+            if(inputArray[i] > max)
+            {
+                //Printing the element
+ 
+                System.out.println(inputArray[i]);
+ 
+                //Updating the max
+ 
+                max = inputArray[i];
+            }
+        }
+    }
+ 
+    public static void main(String[] args)
+    {
+        findTheLeaders(new int[] {12, 9, 7, 14, 8, 6, 3});
+ 
+        findTheLeaders(new int[] {8, 23, 19, 21, 15, 6, 11});
+ 
+        findTheLeaders(new int[] {55, 67, 71, 57, 51, 63, 38});
+ 
+        findTheLeaders(new int[] {21, 58, 44, 14, 51, 36, 23});
+    }
+}
+	----------------
+	b.
+	----------------
+	public class LeadersInArray
+{
+    static void findTheLeaders(int inputArray[])
+    {
+        System.out.println("The leaders in "+Arrays.toString(inputArray)+" are :");
+ 
+        for (int i = 0; i < inputArray.length; i++)
+        {
+            boolean flag = true;
+ 
+            for (int j = i+1; j < inputArray.length; j++)
+            {
+                if (inputArray[j] > inputArray[i])
+                {
+                    flag = false;
+ 
+                    break;
+                }
+            }
+ 
+            if (flag)
+            {
+                System.out.println(inputArray[i]);
+            }
+        }
+    }
+ 
+    public static void main(String[] args)
+    {
+        findTheLeaders(new int[] {12, 9, 7, 14, 8, 6, 3});
+ 
+        findTheLeaders(new int[] {8, 23, 19, 21, 15, 6, 11});
+ 
+        findTheLeaders(new int[] {55, 67, 71, 57, 51, 63, 38});
+ 
+        findTheLeaders(new int[] {21, 58, 44, 14, 51, 36, 23});
+    }
+}
+	----------------
+	Output :
+
+The leaders in [12, 9, 7, 14, 8, 6, 3] are :
+14
+8
+6
+3
+The leaders in [8, 23, 19, 21, 15, 6, 11] are :
+23
+21
+15
+11
+The leaders in [55, 67, 71, 57, 51, 63, 38] are :
+71
+63
+38
+The leaders in [21, 58, 44, 14, 51, 36, 23] are :
+58
+51
+36
+23
+	----------------
+16. How To Reverse And Add A Number Until You Get A Palindrome?
+	----------------
+	import java.util.Scanner;
+ 
+public class ReverseAddPalindrome
+{
+    //Method To Reverse A Number
+     
+    static int reverseNumber(int number)
+    {
+        int reverse = 0;
+         
+        int rem = 0;
+         
+        while (number != 0)
+        {
+            rem = number % 10;
+             
+            reverse = (reverse*10) + rem;
+             
+            number = number/10;
+        }
+         
+        return reverse;
+    }
+     
+    //Method To Check For Palindrome
+     
+    static boolean checkPalindrome(int number)
+    {
+        int reverse = reverseNumber(number);
+         
+        if(reverse == number)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+     
+    //Method To Reverse And Add Given Number Until You Get A Palindrome
+     
+    static void reverseAndAdd(int number)
+    {
+        if(checkPalindrome(number))
+        {
+            System.out.println("Given Number is already a palindrome");
+        }
+        else
+        {
+            while (!checkPalindrome(number))
+            {
+                int reverse = reverseNumber(number);
+                 
+                int sum = number + reverse;
+                 
+                System.out.println(number+" + "+reverse+" = "+sum);
+                 
+                number = sum;
+            }
+        }
+    }
+     
+    public static void main(String[] args) 
+    {
+        Scanner sc = new Scanner(System.in);
+         
+        System.out.println("Enter Number : ");
+         
+        int inputNumber = sc.nextInt();
+         
+        reverseAndAdd(inputNumber);
+    }
+}
+	----------------
+	Output :
+
+Enter Number :
+7325
+7325 + 5237 = 12562
+12562 + 26521 = 39083
+39083 + 38093 = 77176
+77176 + 67177 = 144353
+144353 + 353441 = 497794
+	----------------
+17. Java Program To Implement Selection Sort
+	----------------
+		public class SelectionSortInJava {
+			static void selectionSort(int[] inputArray) {
+				int temp, pos;
+		 
+				for (int i = 0; i < inputArray.length - 1; i++) {
+					pos = i;
+		 
+					//finding the position of smallest element between (i+1)th element and last element
+					for (int j = i+1; j < inputArray.length; j++) {
+						if(inputArray[j] < inputArray[pos]) {
+							pos = j;
+						}
+					}
+		 
+					//Swapping inputArray[i] and inputArray[pos]
+					temp = inputArray[i];
+					inputArray[i] = inputArray[pos];
+					inputArray[pos] = temp;
+				}
+		 
+				for (int i = 0; i < inputArray.length; i++) {
+					System.out.print(inputArray[i] + " ");
+				}
+		 
+				System.out.println();
+			}
+		 
+			public static void main(String[] args) {
+				selectionSort(new int[] {45, 84, 101, 62, 12, 45});
+				selectionSort(new int[] {62, -45, 14, 8, -52, 45});
+				selectionSort(new int[] {21, 12, 56, -48, 15, 45});
+			}
+		}
+	----------------
+	Output :
+	
+		12 45 45 62 84 101
+		-52 -45 8 14 45 62
+		-48 12 15 21 45 56
+	----------------
+	----------------
+18. How To Reverse The String With Preserving The Position Of Spaces?
+	----------------
+	public class MainClass {   
+		static void reverseString(String inputString) {
+			//Converting inputString to char array 'inputStringArray'
+			char[] inputStringArray = inputString.toCharArray();
+			 
+			//Defining a new char array 'resultArray' with same size as inputStringArray
+			char[] resultArray = new char[inputStringArray.length];
+			 
+			//First for loop : 
+			//For every space in the 'inputStringArray', 
+			//we insert spaces in the 'resultArray' at the corresponding positions
+			for (int i = 0; i < inputStringArray.length; i++) {
+				if (inputStringArray[i] == ' ') {
+					resultArray[i] = ' ';
+				}
+			}
+			 
+			//Initializing 'j' with length of resultArray
+			int j = resultArray.length-1;
+					 
+			//Second for loop :
+			//we copy every non-space character of inputStringArray 
+			//from first to last at 'j' position of resultArray
+			for (int i = 0; i < inputStringArray.length; i++) {
+				if (inputStringArray[i] != ' ') {
+					//If resultArray already has space at index j then decrementing 'j'
+					if(resultArray[j] == ' ') {
+						j--;
+					}
+					 
+					resultArray[j] = inputStringArray[i];
+					j--;
+				}
+			}
+			 
+			System.out.println(inputString+" ---> "+String.valueOf(resultArray));
+		}
+     
+		public static void main(String[] args) {
+			reverseString("I Am Not String");
+			reverseString("JAVA JSP ANDROID");
+			reverseString("1 22 333 4444 55555");
+		}
+	}
+	----------------
+	Output :
+
+		I Am Not String —> g ni rtS toNmAI
+		JAVA JSP ANDROID —> DIOR DNA PSJAVAJ
+		1 22 333 4444 55555 —> 5 55 554 4443 33221
+	----------------
+	----------------
+19. How To Find Roman Equivalent Of A Decimal Number In Java?
+	----------------
+		import java.util.Scanner;
+		
+		public class MainClass {
+			public static void main(String[] args) {
+				//String array containing 13 roman symbols
+				String[] romanSymbols = {"M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I"};
+				 
+				//int array containing 13 decimal numbers
+				int[] decimals = {1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1};
+				 
+				Scanner sc = new Scanner(System.in);
+				 
+				//Taking input from the user
+				System.out.println("Enter The Decimal Number Between 1 and 3999");
+				int inputNumber = sc.nextInt();
+				 
+				//Copying inputNumber into copyOfInputNumber
+				int copyOfInputNumber = inputNumber;
+				 
+				//Initializing 'roman' to empty string
+				String roman = "";
+				 
+				//Generating roman equivalent of inputNumber
+				if (inputNumber >= 1 && inputNumber <= 3999) {
+					for (int i = 0; i < 13; i++) {
+						while(inputNumber >= decimals[i]) {
+							inputNumber = inputNumber - decimals[i];
+							roman = roman + romanSymbols[i];
+						}
+					}
+					 
+					System.out.println("Roman Equivalent Of "+copyOfInputNumber+" is : "+roman);
+				} else {
+					System.out.println("Invalid Number");
+				}
+			}
+		}
+	----------------
+	Output :
+	
+		Enter The Decimal Number Between 1 and 3999
+		1546
+		Roman Equivalent Of 1546 is : MDXLVI
+	----------------
+	----------------
+20. How To Find Percentage Of Uppercase Letters, Lowercase Letters, Digits And Special Characters In String?
+	----------------
+		import java.text.DecimalFormat;
+	 
+		public class MainClass {		
+			static void characterPercentage(String inputString) {
+				//Getting total no of characters in the given string
+				int totalChars = inputString.length();
+				 
+				//Initializing upperCaseLetters, lowerCaseLetters, digits and others with 0
+				int upperCaseLetters = 0;
+				int lowerCaseLetters = 0;
+				int digits = 0;
+				int others = 0;
+				 
+				//Iterating through each character of inputString
+				for (int i = 0; i < inputString.length(); i++) {
+					char ch = inputString.charAt(i);
+					 
+					//If ch is in uppercase, then incrementing upperCaseLetters
+					if(Character.isUpperCase(ch)) {
+						upperCaseLetters++;
+					}
+					 
+					//If ch is in lowercase, then incrementing lowerCaseLetters
+					else if(Character.isLowerCase(ch)) {
+						lowerCaseLetters++;
+					}
+					 
+					//If ch is a digit, then incrementing digits
+					else if (Character.isDigit(ch)) {
+						digits++;
+					}
+					 
+					//If ch is a special character then incrementing others
+					else {
+						others++;
+					}
+				}
+				 
+				//Calculating percentage of uppercase letters, lowercase letters, digits and other characters
+				double upperCaseLetterPercentage = (upperCaseLetters * 100.0) / totalChars;
+				double lowerCaseLetterPercentage = (lowerCaseLetters * 100.0) / totalChars;
+				double digitsPercentage = (digits * 100.0) / totalChars;
+				double otherCharPercentage = (others * 100.0) / totalChars;
+				 
+				DecimalFormat formatter = new DecimalFormat("##.##");
+				 
+				//Printing percentage of uppercase letters, lowercase letters, digits and other characters
+				System.out.println("In '"+inputString+"' : ");
+				System.out.println("Uppercase letters are "+formatter.format(upperCaseLetterPercentage)+"% ");
+				System.out.println("Lowercase letters are "+formatter.format(lowerCaseLetterPercentage)+"%");
+				System.out.println("Digits Are "+formatter.format(digitsPercentage)+"%");
+				System.out.println("Other Characters Are "+formatter.format(otherCharPercentage)+"%");
+				System.out.println("-----------------------------");
+			}
+			 
+			public static void main(String[] args) {
+				characterPercentage("Tiger Runs @ The Speed Of 100 km/hour.");
+				characterPercentage("My e-mail : eMail_Address321@anymail.com");
+				characterPercentage("AUS : 123/3, 21.2 Overs");
+			}
+		}
+	----------------
+	Output :
+
+		In ‘Tiger Runs @ The Speed Of 100 km/hour.’ :
+		Uppercase letters are 13.16%
+		Lowercase letters are 52.63%
+		Digits Are 7.89%
+		Other Characters Are 26.32%
+		—————————–
+		In ‘My e-mail : eMail_Address321@anymail.com’ :
+		Uppercase letters are 7.5%
+		Lowercase letters are 65%
+		Digits Are 7.5%
+		Other Characters Are 20%
+		—————————–
+		In ‘AUS : 123/3, 21.2 Overs’ :
+		Uppercase letters are 17.39%
+		Lowercase letters are 17.39%
+		Digits Are 30.43%
+		Other Characters Are 34.78%
+	----------------
+	----------------
+21. How To Launch External Applications Through Java Program
+	----------------
+		public class LaunchingExternalApps {
+			public static void main(String[] args) {
+				Runtime runtime = Runtime.getRuntime();     //getting Runtime object
+		 
+				try {
+					runtime.exec("notepad.exe");        //opens new notepad instance
+		 
+					//OR runtime.exec("notepad");
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	----------------
+		public class LaunchingExternalApps {
+			public static void main(String[] args) {
+				Runtime runtime = Runtime.getRuntime();     //getting Runtime object
+		 
+				try {
+					runtime.exec("notepad I:\\sample.txt");        //opens "sample.txt" in notepad
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	----------------
+		public class LaunchingExternalApps {
+			public static void main(String[] args) {
+				Runtime runtime = Runtime.getRuntime();     //getting Runtime object
+		 
+				String[] s = new String[] {"C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe", "https://javaconceptoftheday.com/"};
+				try {
+					runtime.exec(s);        //opens "https://javaconceptoftheday.com/" in chrome browser
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	----------------
+		public class LaunchingExternalApps {
+			public static void main(String[] args) throws Exception {
+				Runtime runtime = Runtime.getRuntime();     //getting Runtime object
+				Process process = runtime.exec("notepad I:\\sample.txt");        //opens "sample.txt" in notepad
+				Thread.sleep(5000);
+				process.destroy();
+			}
+		}
+	----------------
+	----------------
+22. Java Puzzle – Find Missing Number In An Array
+	----------------
+		public class MissingNumberInArray {
+			//Method to calculate sum of 'n' numbers
+			static int sumOfNnumbers(int n) {
+				int sum = (n * (n+1))/ 2;
+				return sum;
+			}
+		 
+			//Method to calculate sum of all elements of array
+			static int sumOfElements(int[] array) {
+				int sum = 0;
+				for (int i = 0; i < array.length; i++) {
+					sum = sum + array[i];
+				}
+		 
+				return sum;
+			}
+		 
+			public static void main(String[] args) {
+				int n = 8;
+				int[] a = {1, 4, 5, 3, 7, 8, 6};
+		 
+				//Step 1
+				int sumOfNnumbers = sumOfNnumbers(n);
+		 
+				//Step 2
+				int sumOfElements = sumOfElements(a);
+		 
+				//Step 3
+				int missingNumber = sumOfNnumbers - sumOfElements;
+		 
+				System.out.println("Missing Number is = "+missingNumber);
+			}
+		}
+	----------------
+	----------------
+23. Java Program To Find Longest Substring Without Repeating Characters :
+	----------------
+		import java.util.LinkedHashMap;
+ 
+		public class MainClass {  
+			static void longestSubstring(String inputString) {
+				//Convert inputString to charArray
+				char[] charArray = inputString.toCharArray();
+				 
+				//Initialization
+				String longestSubstring = null;
+				int longestSubstringLength = 0;
+				 
+				//Creating LinkedHashMap with characters as keys and their position as values.				 
+				LinkedHashMap<Character, Integer> charPosMap = new LinkedHashMap<Character, Integer>();
+				 
+				//Iterating through charArray
+				for (int i = 0; i < charArray.length; i++) {
+					char ch = charArray[i];
+				 
+					//If ch is not present in charPosMap, adding ch into charPosMap along with its position
+					if(!charPosMap.containsKey(ch)) {
+						charPosMap.put(ch, i);
+					}
+					 
+					//If ch is already present in charPosMap, reposioning the cursor i to the position of ch and clearing the charPosMap
+					else {   
+						i = charPosMap.get(ch);
+						charPosMap.clear();
+					}
+					 
+					//Updating longestSubstring and longestSubstringLength
+					if(charPosMap.size() > longestSubstringLength) {
+						longestSubstringLength = charPosMap.size();
+						longestSubstring = charPosMap.keySet().toString();
+					}
+				}
+				 
+				System.out.println("Input String : "+inputString);
+				System.out.println("The longest substring : "+longestSubstring);
+				System.out.println("The longest Substring Length : "+longestSubstringLength);
+			}
+			 
+			public static void main(String[] args) {   
+				longestSubstring("javaconceptoftheday");
+				System.out.println("==========================");
+				longestSubstring("thelongestsubstring");
+			}   
+		}
+	----------------
+	Output :
+
+		Input String : javaconceptoftheday
+		The longest substring : [o, f, t, h, e, d, a, y]
+		The longest Substring Length : 8
+		==========================
+		Input String : thelongestsubstring
+		The longest substring : [u, b, s, t, r, i, n, g]
+		The longest Substring Length : 8
+	----------------
+	----------------
+24. Java Program To Reverse An Array Without Using An Additional Array :
+	----------------
+		import java.util.Arrays;
+ 
+		public class ArrayReverseExample {  
+			static void reverseArray(int inputArray[]) {
+				System.out.println("Array Before Reverse : "+Arrays.toString(inputArray));
+				int temp;
+				
+				for (int i = 0; i < inputArray.length/2; i++) {
+					temp = inputArray[i];
+					inputArray[i] = inputArray[inputArray.length-1-i];
+					inputArray[inputArray.length-1-i] = temp;
+				}
+				 
+				System.out.println("Array After Reverse : "+Arrays.toString(inputArray));
+			}
+			 
+			public static void main(String[] args) {   
+				reverseArray(new int[]{4, 5, 8, 9, 10});
+				System.out.println("-------------------------");
+				reverseArray(new int[]{12, 9, 21, 17, 33, 7});
+				System.out.println("-------------------------");
+				reverseArray(new int[]{891, 569, 921, 187, 343, 476, 555});
+			}   
+		}
+	----------------
+	Output :
+
+		Array Before Reverse : [4, 5, 8, 9, 10]
+		Array After Reverse : [10, 9, 8, 5, 4]
+		————————-
+		Array Before Reverse : [12, 9, 21, 17, 33, 7]
+		Array After Reverse : [7, 33, 17, 21, 9, 12]
+		————————-
+		Array Before Reverse : [891, 569, 921, 187, 343, 476, 555]
+		Array After Reverse : [555, 476, 343, 187, 921, 569, 891]	
+	----------------
+	----------------
+25. Java Program To Find The Most Repeated Word In Text File :
+	----------------
+		import java.io.BufferedReader;
+		import java.io.FileReader;
+		import java.io.IOException;
+		import java.util.HashMap;
+		import java.util.Map.Entry;
+		import java.util.Set;
+		 
+		public class RepeatedWordInFile {   
+			public static void main(String[] args) {   
+				//Creating wordCountMap which holds words as keys and their occurrences as values
+				HashMap<String, Integer> wordCountMap = new HashMap<String, Integer>();
+				BufferedReader reader = null;
+				 
+				try {
+					//Creating BufferedReader object
+					reader = new BufferedReader(new FileReader("C:\\sample.txt"));
+					 
+					//Reading the first line into currentLine
+					String currentLine = reader.readLine();
+					 
+					while (currentLine != null) {   
+						//splitting the currentLine into words
+						String[] words = currentLine.toLowerCase().split(" ");
+						 
+						//Iterating each word
+						for (String word : words) {
+							//if word is already present in wordCountMap, updating its count							 
+							if(wordCountMap.containsKey(word)) {   
+								wordCountMap.put(word, wordCountMap.get(word)+1);
+							}
+							 
+							//otherwise inserting the word as key and 1 as its value
+							else {
+								wordCountMap.put(word, 1);
+							}
+						}
+						 
+						//Reading next line into currentLine
+						currentLine = reader.readLine();
+					}
+					 
+					//Getting the most repeated word and its occurrence
+					String mostRepeatedWord = null;
+					int count = 0;
+					Set<Entry<String, Integer>> entrySet = wordCountMap.entrySet();
+					 
+					for (Entry<String, Integer> entry : entrySet) {
+						if(entry.getValue() > count) {
+							mostRepeatedWord = entry.getKey();
+							count = entry.getValue();
+						}
+					}
+					 
+					System.out.println("The most repeated word in input file is : "+mostRepeatedWord);
+					System.out.println("Number Of Occurrences : "+count);
+				} catch (IOException e) {
+					e.printStackTrace();
+				} finally {
+					try {
+						reader.close();           //Closing the reader
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				}
+			}   
+		}
+	----------------
+	Input File :
+
+		Java JDBC JSP Servlets
+		Struts Hibernate java Web Services
+		Spring JSF JAVA
+		Threads JaVa Concurrent Programming
+		jAvA Hadoop Jdbc jsf
+		spring Jsf jdbc hibernate
+
+		Output :
+
+		The most repeated word in input file is : java
+		Number Of Occurrences : 5
+	----------------
+	----------------
+26. How To Stop A Thread In Java Using A boolean Variable?
+	----------------
+		class MyThread extends Thread {
+			//Initially setting the flag as true
+			private volatile boolean flag = true;
+			 
+			//This method will set flag as false
+			public void stopRunning() {
+				flag = false;
+			}
+			 
+			@Override
+			public void run() {
+				//Keep the task in while loop
+				//This will make thread continue to run until flag becomes false
+				 
+				while (flag) {
+					System.out.println("I am running....");
+				}
+				 
+				System.out.println("Stopped Running....");
+			}
+		}
+		 
+		public class MainClass {   
+			public static void main(String[] args) {
+				MyThread thread = new MyThread();
+				thread.start();
+				 
+				try {
+					Thread.sleep(100);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+				 
+				//call stopRunning() method whenever you want to stop a thread
+				thread.stopRunning();
+			}   
+		}
+	----------------
+	----------------
+27. How To Stop A Thread In Java Using interrupt() Method?
+	----------------
+		class MyThread extends Thread {   
+			@Override
+			public void run() {
+				while (!Thread.interrupted()) {
+					System.out.println("I am running....");
+				}
+				 
+				System.out.println("Stopped Running.....");
+			}
+		}
+		 
+		public class MainClass {   
+			public static void main(String[] args) {
+				MyThread thread = new MyThread();
+				thread.start();
+				 
+				try {
+					Thread.sleep(100);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+				 
+				//interrupting the thread
+				thread.interrupt();
+			}   
+		}
+	----------------
+	----------------
+28. 
+	----------------
+	----------------
+	----------------
+	----------------
+	----------------
+	----------------
+	----------------
+	----------------
+	----------------
+	----------------
+	----------------
+	----------------
+	----------------
+	----------------
+	----------------
+	----------------
+	----------------
+	----------------
+	----------------
+	----------------
+	----------------
+	----------------
+	----------------
+	----------------
+	----------------
+	----------------
+	----------------
+	----------------
+	----------------
+	----------------
+	----------------
+	----------------
+	----------------
+	----------------
+	----------------
+	----------------
+	----------------
+	----------------
+	----------------
+	----------------
+	----------------
+	----------------
+	----------------
+	----------------
+	----------------
+	----------------
+	----------------
+	----------------
+	----------------
+	----------------
+	----------------
+	----------------
+	----------------
